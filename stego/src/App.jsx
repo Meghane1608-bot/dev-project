@@ -10,6 +10,7 @@ function App() {
   return (
     <>
       <h1>This is our Group Project</h1>
+      <p>Added a paragraph</p>
     </>
   )
 }

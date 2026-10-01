@@ -13,7 +13,7 @@ function App() {
       <p>Added a paragraph</p>
       <p>Added another paragraph</p>
       <p>Hi This is Meghane. I've made a change</p>
-      <p> This is Gugu</p>
+      <h2> Gugulethu please work</h2>
     </>
   )
 }

@@ -23,6 +23,7 @@ const Button =({reset,done, add}) => {
 //object that will make every filed value blank all at once for reset 
 const emptyForm ={
     categoryName: '',
+    categoryType : "",
     expectedIncome:'',
     limitAmount: '',
     budgetPeriod:''
@@ -41,6 +42,17 @@ const BudgetSetup = () => { ({categories , onAdd, onReset, onDone})
   }
 
 }
+
+//object 
+const isFormComplete = 
+form.categoryName !== "" &&
+form.categoryType !== "" &&
+form.budgetPeriod !== "" &&
+form.expectedIncome !== "" &&
+form.limitAmount !== "" &&
+Number(form.expectedIncome) > 0 &&
+Number(form.limitAmount) > 0;
+
 
 const handleReset = () => setForm(emptyForm) //clears the form
 const handleDone = () => onDone(form) //calls the onDone func and passes it in the current form

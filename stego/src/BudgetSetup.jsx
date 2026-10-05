@@ -74,7 +74,7 @@ const handleSelectChange = (name) => {
     //copy everything from prev
   }
 
-}
+
 
 
 
@@ -130,6 +130,7 @@ onValueChange={handleSelectChange("category")}
   </SelectContent>
 </Select> 
     
+
   <Field >
     <FieldLabel htmlFor="expectedIncome">
       Required Field <span className="text-destructive" > </span>
@@ -162,14 +163,28 @@ onValueChange={handleSelectChange("category")}
   <FieldDescription> 0 -100000</FieldDescription>
   </Field>
 
+{/*if the form isnt empty*/}
+{!isFormComplete && (
+        <p className="text-sm text-muted-foreground">
+          Fill in all fields marked * to enable Add.
+        </p>
+      )} 
+
+<p > Categories added : {categories.length} </p>
+
+<Button 
+add={handleAdd}
+done={onDone}
+reset={handleReset}
+addDisabled={!isFormComplete}
+doneDisabled={categories.length <=2}
+/>
 
   </div>
 
-
-
-    
-  </div>
+  
 )
+} 
 
 /*function App() {
   const [screen,setScreen] = useState(1) //setScreen will change the screen after clicking done
@@ -185,4 +200,4 @@ onValueChange={handleSelectChange("category")}
   )
 }*/
 
-export default App
+export default BudgetSetup

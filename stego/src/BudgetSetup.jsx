@@ -10,11 +10,12 @@ const Header = () => {
 }
 
 //button comp with two props and the onClicks call the functions 
-const Button =({reset,done}) => {
+const Button =({reset,done, add}) => {
     return(
         <div>
     <button type ="button" onClick={reset} > Reset </button>
     <button type ="button" onClick={done} > Done </button>
+     <button type ="button" onClick={add} > Done </button>  
         </div>
     )
 }
@@ -28,15 +29,19 @@ const emptyForm ={
 }
 
 //the screen itself that renders the button component and header component
-const BudgetSetup({onDone}) {
+const BudgetSetup = () => { ({categories , onAdd, onReset, onDone}) 
   const [form, setForm] = useState(emptyForm) //setForm will change the four fields of the form
-  
+  const [message , setMessage] = useState("") // message pop up once category added 
+
+
   const handleChange = (event) => {
     const {name, value} = event.target
     setForm((prev) => ({...prev, [name] :value})) 
-    //copy everuthing from prev
+    //copy everything from prev
   }
+
 }
+
 const handleReset = () => setForm(emptyForm) //clears the form
 const handleDone = () => onDone(form) //calls the onDone func and passes it in the current form
 

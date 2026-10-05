@@ -1,4 +1,13 @@
 import {useState} from 'react'
+//shadcn SElect component 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const Header = () => {
     return(
@@ -36,8 +45,8 @@ const BudgetSetup = () => { ({categories , onAdd, onReset, onDone})
 
 
   const handleChange = (event) => {
-    const {name, value} = (event.target.value)
-    setForm((prev) => ({...prev, [name] :value})) 
+    const {categoryName, value} = (event.target.value)
+    setForm((prev) => ({...prev, categoryName :value})) 
     //copy everything from prev
   }
 
@@ -66,16 +75,43 @@ const handleAdd = () => {
   setTimeout( () => setMessage('') , 3000)
 }
 
-const handleReset = () => setForm(emptyForm) //clears the form
-const handleDone = () => onDone(form) //calls the onDone func and passes it in the current form
+const handleReset = () => { 
+  //message pop up to tell them their cats will be deleted 
+  setForm(emptyForm) //clears the form
+} 
+//const handleDone = () => onDone(form) //calls the onDone func and passes it in the current form
+
+ /* const items = [
+  { label: "Set Category name", value: null },
+  { label: "Groceries", value: "Groceries" },
+  { label: "Transport", value: "Transport" },
+  {label : "Entertainment" value: "Entertainment"}
+  {label: "Bursary stipend" value: "Bursary stipend"}, 
+  {label: "Salary" value: "Salary"},
+] */
 
 return( 
   <div>
-    <select name="category" value={form.categoryName} onChange={handleChange} > 
+  {/*  select from shadcn ui */}
+<Select items={items}>
+  <SelectTrigger className="w-[180px]"> 
+    <SelectValue/>
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectLabel> Categories </SelectLabel>
+      {items.map((item) => (
+        <SelectItem key={item.value} value={item.value}>
+          {item.label}
+        </SelectItem>
+      ))}
+    </SelectGroup>
+  </SelectContent>
+</Select> 
     
 
 
-    </select>
+    
   </div>
 )
 

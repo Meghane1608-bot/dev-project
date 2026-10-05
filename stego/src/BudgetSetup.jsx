@@ -46,6 +46,16 @@ const emptyForm ={
     budgetPeriod:''
 }
 
+/* const categoryItems = [
+  { label: "Set Category name", value: null },
+  { label: "Groceries", value: "Groceries" },
+  { label: "Transport", value: "Transport" },
+  {label : "Entertainment" value: "Entertainment"}
+  {label: "Bursary stipend" value: "Bursary stipend"}, 
+  {label: "Salary" value: "Salary"},
+] */
+
+
 //the screen itself that renders the button component and header component
 const BudgetSetup = () => { ({categories , onAdd, onReset, onDone}) 
   const [form, setForm] = useState(emptyForm) //setForm will change the four fields of the form
@@ -58,7 +68,15 @@ const BudgetSetup = () => { ({categories , onAdd, onReset, onDone})
     //copy everything from prev
   }
 
+
+const handleSelectChange = (name) => {
+    setForm((prev) => ({...prev, name :value})) 
+    //copy everything from prev
+  }
+
 }
+
+
 
 //object 
 const isFormComplete = 
@@ -89,26 +107,21 @@ const handleReset = () => {
 } 
 //const handleDone = () => onDone(form) //calls the onDone func and passes it in the current form
 
- /* const items = [
-  { label: "Set Category name", value: null },
-  { label: "Groceries", value: "Groceries" },
-  { label: "Transport", value: "Transport" },
-  {label : "Entertainment" value: "Entertainment"}
-  {label: "Bursary stipend" value: "Bursary stipend"}, 
-  {label: "Salary" value: "Salary"},
-] */
-
+ 
 return( 
   <div>
   {/*  select from shadcn ui */}
-<Select items={items}>
-  <SelectTrigger className="w-[180px]"> 
+<Select items={categoryItems} 
+value={form.category|| null}
+onValueChange={handleSelectChange("category")}
+>
+  <SelectTrigger id="category" className="w-[180px]"> 
     <SelectValue/>
   </SelectTrigger>
   <SelectContent>
     <SelectGroup>
       <SelectLabel> Categories </SelectLabel>
-      {items.map((item) => (
+      {categoryItemstems.map((item) => (
         <SelectItem key={item.value} value={item.value}>
           {item.label}
         </SelectItem>
@@ -117,8 +130,21 @@ return(
   </SelectContent>
 </Select> 
     
-  <div className="grid gap-2">
-    <Label 
+  <Field >
+    <FieldLabel htmlFor="expectedIncome">
+      Required Field <span className="text-destructive" > </span>
+    </FieldLabel>
+    <Input 
+    id="expectedIncome"
+    name= "expectedIncome"
+    type="number"
+    value= {form.expectedIncome}
+    onChange={handleChange}
+    placeholder="Set expected income"
+    required
+  />
+  <FieldDescription> 0 -100000</FieldDescription>
+  </Field>
 
 
   </div>

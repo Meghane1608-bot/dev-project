@@ -9,6 +9,14 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+//shadcn Required field component
+import{
+  Field,
+  FieldDescription,
+  FieldLabel,
+} from "@/components/ui/field"
+import {Input} from "@/components/ui/input"
+
 const Header = () => {
     return(
  <header>
@@ -45,8 +53,8 @@ const BudgetSetup = () => { ({categories , onAdd, onReset, onDone})
 
 
   const handleChange = (event) => {
-    const {categoryName, value} = (event.target.value)
-    setForm((prev) => ({...prev, categoryName :value})) 
+    const {name, value} = (event.target.value)
+    setForm((prev) => ({...prev, name :value})) 
     //copy everything from prev
   }
 
@@ -109,6 +117,12 @@ return(
   </SelectContent>
 </Select> 
     
+  <div className="grid gap-2">
+    <Label 
+
+
+  </div>
+
 
 
     

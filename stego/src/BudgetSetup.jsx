@@ -146,6 +146,22 @@ onValueChange={handleSelectChange("category")}
   <FieldDescription> 0 -100000</FieldDescription>
   </Field>
 
+  <Field >
+    <FieldLabel htmlFor="limitAmount">
+      Required Field <span className="text-destructive" > </span>
+    </FieldLabel>
+    <Input 
+    id="limitAmount"
+    name= "limitAmount"
+    type="number"
+    value= {form.limitAmount}
+    onChange={handleChange}
+    placeholder="Set limit amount"
+    required
+  />
+  <FieldDescription> 0 -100000</FieldDescription>
+  </Field>
+
 
   </div>
 

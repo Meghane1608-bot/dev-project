@@ -36,7 +36,7 @@ const BudgetSetup = () => { ({categories , onAdd, onReset, onDone})
 
 
   const handleChange = (event) => {
-    const {name, value} = event.target
+    const {name, value} = (event.target.value)
     setForm((prev) => ({...prev, [name] :value})) 
     //copy everything from prev
   }
@@ -53,6 +53,18 @@ form.limitAmount !== "" &&
 Number(form.expectedIncome) > 0 &&
 Number(form.limitAmount) > 0;
 
+//what happens when the add button is clicked
+const handleAdd = () => {
+  onAdd({
+    ...form,
+    //id: String()
+    expectedIncome: Number(form.expectedIncome),
+    limitAmount : Number(form.limitAmount),
+  });
+  setMessage('{form.categoryName} has been added to your budget')
+  setForm(emptyForm) // after adding the cat, the form should clear
+  setTimeout( () => setMessage('') , 3000)
+}
 
 const handleReset = () => setForm(emptyForm) //clears the form
 const handleDone = () => onDone(form) //calls the onDone func and passes it in the current form

@@ -16,6 +16,8 @@ import{
   FieldLabel,
 } from "@/components/ui/field"
 import {Input} from "@/components/ui/input"
+//import {label} from "@/components/ui/input"
+
 
 const Header = () => {
     return(
@@ -46,14 +48,14 @@ const emptyForm ={
     budgetPeriod:''
 }
 
-/* const categoryItems = [
-  { label: "Set Category name", value: null },
+//array of categories 
+ const categoryItems = [
   { label: "Groceries", value: "Groceries" },
   { label: "Transport", value: "Transport" },
-  {label : "Entertainment" value: "Entertainment"}
-  {label: "Bursary stipend" value: "Bursary stipend"}, 
-  {label: "Salary" value: "Salary"},
-] */
+  {label : "Entertainment", value: "Entertainment"},
+  {label: "Bursary stipend", value: "Bursary stipend"}, 
+  {label: "Salary" ,value: "Salary"},
+] 
 
 
 //the screen itself that renders the button component and header component
@@ -116,7 +118,7 @@ value={form.category|| null}
 onValueChange={handleSelectChange("category")}
 >
   <SelectTrigger id="category" className="w-[180px]"> 
-    <SelectValue/>
+    <SelectValue placeholder="Select a category" />
   </SelectTrigger>
   <SelectContent>
     <SelectGroup>

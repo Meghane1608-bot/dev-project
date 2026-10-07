@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
+ import { useState } from 'react'
 
-// Shadcn Select component
+//shadcn SElect component 
 import {
   Select,
   SelectContent,
@@ -8,14 +9,53 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectLabel
 } from "@/components/ui/select"
 
-// Lucide icons
-import { ChevronLeft, Home, User, CreditCard, Receipt } from 'lucide-react'
+//shadcn Required field component
+import {
+  Field,
+  FieldDescription,
+  FieldLabel,
+} from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
 
-// Import external styles
+import { ChevronLeft, Home, User, CreditCard, Receipt } from 'lucide-react'
 import './BudgetSetup.css'
 
+const Header = () => {
+  return (
+    <header className="budget-header">
+      <div className="budget-header-left">
+        <button type="button" className="back-btn">
+          <ChevronLeft className="back-icon" />
+        </button>
+        <h1 className="budget-title">Budget Setup</h1>
+      </div>
+      <img src="" alt="stego logo" className="stego-logo" width="50px" />
+    </header>
+  )
+}
+
+//button comp with two props and the onClicks call the functions 
+const Button = ({ reset, done, add, addDisabled }) => {
+  return (
+    <div className="action-buttons-wrapper">
+      <button type="button" onClick={add} disabled={addDisabled} className="btn-secondary">
+        Add Category
+      </button>
+      <button type="button" onClick={reset} className="btn-secondary">
+        Reset
+      </button>
+    </div>
+  )
+}
+
+const onDone = () => {
+  console.log("Sup Gugu")
+}
+
+//object that will make every filed value blank all at once for reset 
 const emptyForm = {
   categoryName: '',
   categoryType: 'Income',
@@ -24,97 +64,92 @@ const emptyForm = {
   budgetPeriod: ''
 }
 
+//array of categories 
 const categoryItems = [
   { label: "Groceries", value: "Groceries" },
-  { label: "Entertainment", value: "Entertainment" },
   { label: "Transport", value: "Transport" },
+  { label: "Entertainment", value: "Entertainment" },
   { label: "NSFAS", value: "NSFAS" },
   { label: "Bursary stipend", value: "Bursary stipend" }, 
   { label: "Salary", value: "Salary" },
 ]
 
-const onDone = () => {
-    console.log("Hello")
+//the screen itself that renders the button component and header component
+const BudgetSetup = ({ onAdd }) => { 
+  const [form, setForm] = useState(emptyForm) //setForm will change the four fields of the form
+  const [message, setMessage] = useState("") // message pop up once category added 
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setForm((prev) => ({ ...prev, [name]: value })) 
+    //copy everything from prev
   }
 
-const BudgetSetup = ({ onAdd, onDone }) => { 
-  const [form, setForm] = useState(emptyForm)
-  const [message, setMessage] = useState("")
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setForm((prev) => ({ ...prev, [name]: value }))
+  const handleSelectChange = (fieldName, value) => {
+    setForm((prev) => {
+      const updated = { ...prev, [fieldName]: value }
+      // If switching to Expenditure, clear expectedIncome
+      if (fieldName === "categoryType" && value === "Expenditure") {
+        updated.expectedIncome = ""
+      }
+      return updated
+    }) 
+    //copy everything from prev
   }
 
-  const handleValueChange = (fieldName, value) => {
-    setForm((prev) => ({ ...prev, [fieldName]: value }))
-  }
-
+  //object 
+  const isIncome = form.categoryType === "Income"
   const isFormComplete = 
     form.categoryName !== "" &&
-    form.expectedIncome !== "" &&
-    form.limitAmount !== "" &&
+    form.categoryType !== "" &&
     form.budgetPeriod !== "" &&
-    Number(form.expectedIncome) >= 0 &&
-    Number(form.limitAmount) >= 0;
+    form.limitAmount !== "" &&
+    Number(form.limitAmount) > 0 &&
+    (!isIncome || (form.expectedIncome !== "" && Number(form.expectedIncome) > 0));
 
+  //what happens when the add button is clicked
   const handleAdd = () => {
-    if (!isFormComplete) return;
-
     if (typeof onAdd === 'function') {
       onAdd({
         ...form,
-        expectedIncome: Number(form.expectedIncome),
+        //id: String()
+        expectedIncome: form.expectedIncome ? Number(form.expectedIncome) : 0,
         limitAmount: Number(form.limitAmount),
       });
     }
 
     setMessage(`${form.categoryName} has been added to your budget`)
-    setForm(emptyForm)
+    setForm(emptyForm) // after adding the cat, the form should clear
     setTimeout(() => setMessage(''), 3000)
   }
 
-  
-
   const handleReset = () => { 
-    setForm(emptyForm)
-  }
+    //message pop up to tell them their cats will be deleted 
+    setForm(emptyForm) //clears the form
+  } 
+  //const handleDone = () => onDone(form) //calls the onDone func and passes it in the current form
 
   return ( 
     <div className="budget-page-container">
-      {/* Header */}
-      <header className="budget-header">
-        <div className="budget-header-left">
-          <button type="button" className="back-btn">
-            <ChevronLeft className="back-icon" />
-          </button>
-          <h1 className="budget-title">Budget setup</h1>
-        </div>
-        <img 
-          src="https://api.dicebear.com/7.x/bottts/svg?seed=stego" 
-          alt="stego logo" 
-          className="stego-logo" 
-        />
-      </header>
+      <Header />
 
-      {/* Main Card Layout */}
       <main className="budget-main-card">
         {message && <p className="notification-message">{message}</p>}
 
         <div className="budget-form-grid">
-          
-          {/* Category Name */}
+          {/*  select from shadcn ui */}
           <div className="form-field-group">
             <label className="field-label">Set category name*</label>
             <Select 
               value={form.categoryName}
-              onValueChange={(val) => handleValueChange("categoryName", val)}
+              onValueChange={(val) => handleSelectChange("categoryName", val)}
             >
-              <SelectTrigger className="select-trigger-custom"> 
+              <SelectTrigger id="category" className="select-trigger-custom"> 
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
               <SelectContent className="bg-white rounded-xl shadow-lg border-none">
                 <SelectGroup>
+                  <SelectLabel> Categories </SelectLabel>
                   {categoryItems.map((item) => (
                     <SelectItem key={item.value} value={item.value} className="py-2 cursor-pointer">
                       {item.label}
@@ -122,23 +157,22 @@ const BudgetSetup = ({ onAdd, onDone }) => {
                   ))}
                 </SelectGroup>
               </SelectContent>
-            </Select>
+            </Select> 
           </div>
 
-          {/* Category Type Switch */}
           <div className="form-field-group">
             <label className="field-label">Select category type*</label>
             <div className="toggle-wrapper">
               <button
                 type="button"
-                onClick={() => handleValueChange("categoryType", "Income")}
+                onClick={() => handleSelectChange("categoryType", "Income")}
                 className={`toggle-btn ${form.categoryType === "Income" ? "active-income" : ""}`}
               >
                 Income
               </button>
               <button
                 type="button"
-                onClick={() => handleValueChange("categoryType", "Expenditure")}
+                onClick={() => handleSelectChange("categoryType", "Expenditure")}
                 className={`toggle-btn ${form.categoryType === "Expenditure" ? "active-expenditure" : ""}`}
               >
                 Expenditure
@@ -146,23 +180,27 @@ const BudgetSetup = ({ onAdd, onDone }) => {
             </div>
           </div>
 
-          {/* Expected Income Input */}
           <div className="form-field-group">
-            <label htmlFor="expectedIncome" className="field-label">Set expected income*</label>
+            <label htmlFor="expectedIncome" className="field-label">
+              Set expected income*
+            </label>
             <input 
               id="expectedIncome"
               name="expectedIncome"
               type="text"
               value={form.expectedIncome}
               onChange={handleChange}
-              placeholder="R0-100000"
-              className="budget-input"
+              placeholder={form.categoryType === "Expenditure" ? "N/A (Expenditure)" : "R0-100000"}
+              className="budget-input disabled:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60"
+              disabled={form.categoryType === "Expenditure"}
+              required={form.categoryType === "Income"}
             />
           </div>
 
-          {/* Limit Amount Input */}
           <div className="form-field-group">
-            <label htmlFor="limitAmount" className="field-label">Set limit amount*</label>
+            <label htmlFor="limitAmount" className="field-label">
+              Set limit amount*
+            </label>
             <input 
               id="limitAmount"
               name="limitAmount"
@@ -171,12 +209,14 @@ const BudgetSetup = ({ onAdd, onDone }) => {
               onChange={handleChange}
               placeholder="R0-100000"
               className="budget-input"
+              required
             />
           </div>
 
-          {/* Budget Period Input */}
           <div className="form-field-group">
-            <label htmlFor="budgetPeriod" className="field-label">Budget period*</label>
+            <label htmlFor="budgetPeriod" className="field-label">
+              Budget period*
+            </label>
             <input 
               id="budgetPeriod"
               name="budgetPeriod"
@@ -185,38 +225,33 @@ const BudgetSetup = ({ onAdd, onDone }) => {
               onChange={handleChange}
               placeholder="1 - 12 months"
               className="budget-input"
+              required
             />
           </div>
 
-          {/* Action Buttons */}
-          <div className="action-buttons-wrapper">
-            <button
-              type="button"
-              onClick={handleAdd}
-              disabled={!isFormComplete}
-              className="btn-secondary"
-            >
-              ADD CATEGORY
-            </button>
-            <button
-              type="button"
-              onClick={handleReset}
-              className="btn-secondary"
-            >
-              RESET
-            </button>
-          </div>
+          {/*if the form isnt empty*/}
+          {!isFormComplete && (
+            <p className="text-sm text-muted-foreground col-span-2">
+              Fill in all fields marked * to enable Add.
+            </p>
+          )} 
+
+          <p className="col-span-2"> Categories added : {categoryItems.length} </p>
+
+          <Button 
+            add={handleAdd}
+            reset={handleReset}
+            addDisabled={!isFormComplete}
+          />
         </div>
 
-        {/* Done Button */}
         <div className="done-container">
           <button type="button" onClick={onDone} className="btn-done">
-            DONE
+            Done
           </button>
         </div>
       </main>
 
-      {/* Navigation Bar */}
       <nav className="bottom-nav">
         <button type="button" className="nav-icon-btn">
           <Home className="nav-icon" />
@@ -233,6 +268,20 @@ const BudgetSetup = ({ onAdd, onDone }) => {
       </nav>
     </div>
   )
-}
+} 
+
+/*function App() {
+  const [screen,setScreen] = useState(1) //setScreen will change the screen after clicking done
+  const [form, setForm] = useState(emptyForm) //starts empty and setForm will change it 
+  const handleChange = (event) => {
+    const {name, value} = event.target.value
+    setForm((prev)) => ({...prev , [n]})
+  }
+  return (
+    <>
+      <Header/>
+    </>
+  )
+}*/
 
 export default BudgetSetup

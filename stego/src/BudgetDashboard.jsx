@@ -1,7 +1,7 @@
 import React from 'react'
  import { useState } from 'react'
- import { ChevronLeft, Home, User, CreditCard, Receipt } from 'lucide-react'
-
+ import { ChevronLeft, Home, User, CreditCard,  Calculator } from 'lucide-react'
+ import {useLocation} from 'react-router-dom'
 
  const Header = () => {
    return (
@@ -17,3 +17,19 @@ import React from 'react'
      </header>
    )
  }
+
+ const BudgetDashboard =() => {
+   const location = useLocation()
+   const setupData = location.state?.form
+
+    return(
+        <div> 
+ <h2 className= "page-subtitle" > September 2026 Budget Overview </h2>
+ {/*label expenditure items that were added as expenditure from budget setup*/}
+
+</div>
+    )
+ }
+
+ export default BudgetDashboard
+

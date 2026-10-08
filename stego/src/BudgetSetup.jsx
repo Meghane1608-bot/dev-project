@@ -1,6 +1,9 @@
 import React from 'react'
  import { useState } from 'react'
 
+ //this will allow me routing for react, so that users can get to different pages
+import {useNavigate} from 'react-router-dom'
+
 //shadcn SElect component 
 import {
   Select,
@@ -20,7 +23,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 
-import { ChevronLeft, Home, User, CreditCard, Receipt } from 'lucide-react'
+import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
 import './BudgetSetup.css'
 
 const Header = () => {
@@ -78,6 +81,7 @@ const categoryItems = [
 const BudgetSetup = ({ onAdd }) => { 
   const [form, setForm] = useState(emptyForm) //setForm will change the four fields of the form
   const [message, setMessage] = useState("") // message pop up once category added 
+ const navigate =useNavigate() // initialising the navigate funcion
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -108,7 +112,7 @@ const BudgetSetup = ({ onAdd }) => {
     (!isIncome || (form.expectedIncome !== "" && Number(form.expectedIncome) > 0));
 
   //what happens when the add button is clicked
-  const handleAdd = () => {
+  {const handleAdd = () => {
     if (typeof onAdd === 'function') {
       onAdd({
         ...form,
@@ -117,7 +121,6 @@ const BudgetSetup = ({ onAdd }) => {
         limitAmount: Number(form.limitAmount),
       });
     }
-
     setMessage(`${form.categoryName} has been added to your budget`)
     setForm(emptyForm) // after adding the cat, the form should clear
     setTimeout(() => setMessage(''), 3000)
@@ -127,11 +130,21 @@ const BudgetSetup = ({ onAdd }) => {
     //message pop up to tell them their cats will be deleted 
     setForm(emptyForm) //clears the form
   } 
-  //const handleDone = () => onDone(form) //calls the onDone func and passes it in the current form
+
+  //navigate to budget dashboard 
+  const handleDone = () => {
+    navigate('BudgetDashboard', {state:{form} })
+  } 
 
   return ( 
     <div className="budget-page-container">
       <Header />
+
+      <div className="done-container">
+            <button type="button" onClick={handleDone} className="done-btn" >
+              Done
+            </button>
+          </div>
 
       <main className="budget-main-card">
         {message && <p className="notification-message">{message}</p>}
@@ -229,6 +242,8 @@ const BudgetSetup = ({ onAdd }) => {
             />
           </div>
 
+          
+
           {/*if the form isnt empty*/}
           {!isFormComplete && (
             <p className="text-sm text-muted-foreground col-span-2">
@@ -245,11 +260,7 @@ const BudgetSetup = ({ onAdd }) => {
           />
         </div>
 
-        <div className="done-container">
-          <button type="button" onClick={onDone} className="btn-done">
-            Done
-          </button>
-        </div>
+        
       </main>
 
       {/*bottom navigation bar*/}
@@ -264,7 +275,7 @@ const BudgetSetup = ({ onAdd }) => {
           <CreditCard className="nav-icon" />
         </button>
         <button type="button" className="nav-icon-btn">
-          <Receipt className="nav-icon" />
+          <Calculator className="nav-icon" />
         </button>
       </nav>
     </div>
@@ -284,5 +295,5 @@ const BudgetSetup = ({ onAdd }) => {
     </>
   )
 }*/
-
+}
 export default BudgetSetup

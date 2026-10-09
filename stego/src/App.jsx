@@ -22,7 +22,7 @@ function App() {
     
     {/* budget dashboard route*/}
 <Route 
-   path="/budget-dashboard"
+   path="/BudgetDashboard"
    element={<BudgetDashboard/> }
 /> 
 </Routes>

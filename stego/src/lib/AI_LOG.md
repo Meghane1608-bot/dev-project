@@ -1,1 +1,2 @@
 05 October 2026: Claude - how to import the shadcn library : provided the steps to run in the terminal and the jsx folders that needed components imported. 
+07 October : Gemini - provided it with the code that I already had for BudgetSetup.jsx and asked it to help fix my mistakes that were causing the page to not run as intended : fixed my event handlers that were incorrect and reminded me to render on App.jsx

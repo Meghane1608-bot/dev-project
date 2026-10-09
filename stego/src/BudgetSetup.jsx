@@ -96,6 +96,10 @@ const BudgetSetup = ({ onAdd }) => {
       if (fieldName === "categoryType" && value === "Expenditure") {
         updated.expectedIncome = ""
       }
+      // If switching to Income, clear limitAmount
+    if (fieldName === "categoryType" && value === "Income") {
+      updated.limitAmount = ""
+    }
       return updated
     }) 
     //copy everything from prev
@@ -103,13 +107,18 @@ const BudgetSetup = ({ onAdd }) => {
 
   //object 
   const isIncome = form.categoryType === "Income"
-  const isFormComplete = 
-    form.categoryName !== "" &&
-    form.categoryType !== "" &&
-    form.budgetPeriod !== "" &&
-    form.limitAmount !== "" &&
-    Number(form.limitAmount) > 0 &&
-    (!isIncome || (form.expectedIncome !== "" && Number(form.expectedIncome) > 0));
+  const isExpenditure = form.categoryType === "Expenditure"
+
+  
+    const isFormComplete = 
+  form.categoryName !== "" &&
+  form.categoryType !== "" &&
+  form.budgetPeriod !== "" &&
+  (isIncome 
+    ? form.expectedIncome !== "" && Number(form.expectedIncome) > 0 
+    : form.limitAmount !== "" && Number(form.limitAmount) > 0);
+
+
 
   //what happens when the add button is clicked
   {const handleAdd = () => {
@@ -140,11 +149,6 @@ const BudgetSetup = ({ onAdd }) => {
     <div className="budget-page-container">
       <Header />
 
-      <div className="done-container">
-            <button type="button" onClick={handleDone} className="done-btn" >
-              Done
-            </button>
-          </div>
 
       <main className="budget-main-card">
         {message && <p className="notification-message">{message}</p>}
@@ -193,38 +197,44 @@ const BudgetSetup = ({ onAdd }) => {
             </div>
           </div>
 
-          <div className="form-field-group">
-            <label htmlFor="expectedIncome" className="field-label">
-              Set expected income*
-            </label>
-            <input 
-              id="expectedIncome"
-              name="expectedIncome"
-              type="text"
-              value={form.expectedIncome}
-              onChange={handleChange}
-              placeholder={form.categoryType === "Expenditure" ? "N/A (Expenditure)" : "R0-100000"}
-              className="budget-input disabled:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60"
-              disabled={form.categoryType === "Expenditure"}
-              required={form.categoryType === "Income"}
-            />
-          </div>
+         
 
-          <div className="form-field-group">
-            <label htmlFor="limitAmount" className="field-label">
-              Set limit amount*
-            </label>
-            <input 
-              id="limitAmount"
-              name="limitAmount"
-              type="text"
-              value={form.limitAmount}
-              onChange={handleChange}
-              placeholder="R0-100000"
-              className="budget-input"
-              required
-            />
-          </div>
+    {/* Expected Income Field */}
+<div className="form-field-group">
+  <label htmlFor="expectedIncome" className="field-label">
+    Set expected income*
+  </label>
+  <input 
+    id="expectedIncome"
+    name="expectedIncome"
+    type="text"
+    value={form.expectedIncome}
+    onChange={handleChange}
+    placeholder={isExpenditure ? "N/A (only applicable for income)" : "R0-100000"}
+    className="budget-input disabled:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60"
+    disabled={isExpenditure}
+    required={isIncome}
+  />
+</div>
+
+      
+    {/* Limit Amount Field */}
+<div className="form-field-group">
+  <label htmlFor="limitAmount" className="field-label">
+    Set limit amount*
+  </label>
+  <input 
+    id="limitAmount"
+    name="limitAmount"
+    type="text"
+    value={form.limitAmount}
+    onChange={handleChange}
+    placeholder={isIncome ? "N/A (only applicable for expenditure)" : "R0-100000"}
+    className="budget-input disabled:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60"
+    disabled={isIncome}
+    required={isExpenditure}
+  />
+</div>
 
           <div className="form-field-group">
             <label htmlFor="budgetPeriod" className="field-label">
@@ -258,6 +268,13 @@ const BudgetSetup = ({ onAdd }) => {
             reset={handleReset}
             addDisabled={!isFormComplete}
           />
+
+      <div className="done-container">
+        <button type="button" onClick={handleDone} className="btn-done">
+          Done
+        </button>
+      </div>
+
         </div>
 
         

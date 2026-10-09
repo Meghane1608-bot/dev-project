@@ -82,6 +82,8 @@ const BudgetSetup = ({ onAdd }) => {
   const [form, setForm] = useState(emptyForm) //setForm will change the four fields of the form
   const [message, setMessage] = useState("") // message pop up once category added 
  const navigate =useNavigate() // initialising the navigate funcion
+const [addedCategories, setAddedCategories] = useState([])
+
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -121,7 +123,7 @@ const BudgetSetup = ({ onAdd }) => {
 
 
   //what happens when the add button is clicked
-  {const handleAdd = () => {
+   {/*const handleAdd = () => {
     if (typeof onAdd === 'function') {
       onAdd({
         ...form,
@@ -133,17 +135,41 @@ const BudgetSetup = ({ onAdd }) => {
     setMessage(`${form.categoryName} has been added to your budget`)
     setForm(emptyForm) // after adding the cat, the form should clear
     setTimeout(() => setMessage(''), 3000)
+  }*/
+
+    //what happens when the add button is clicked
+  const handleAdd = () => {
+    if (!isFormComplete) return;
+
+    const newItem = {
+      ...form,
+      //id: String()
+      expectedIncome: form.expectedIncome ? Number(form.expectedIncome) : 0,
+      limitAmount: form.limitAmount ? Number(form.limitAmount) : 0,
+    };
+
+    if (typeof onAdd === 'function') {
+      onAdd(newItem);
+    }
+
+    setAddedCategories((prev) => [...prev, newItem]);
+    setForm(emptyForm); // after adding the cat, the form should clear
+    
   }
 
   const handleReset = () => { 
     //message pop up to tell them their cats will be deleted 
     setForm(emptyForm) //clears the form
+    setAddedCategories([])
   } 
 
   //navigate to budget dashboard 
   const handleDone = () => {
     navigate('BudgetDashboard', {state:{form} })
   } 
+
+  // 4. Check if user has added more than 2 categories
+  const isDoneDisabled = addedCategories.length <= 2
 
   return ( 
     <div className="budget-page-container">
@@ -257,7 +283,11 @@ const BudgetSetup = ({ onAdd }) => {
           {/*if the form isnt empty*/}
           {!isFormComplete && (
             <p className="text-sm text-muted-foreground col-span-2">
-              Fill in all fields marked * to enable Add.
+              <ul>     
+                <li> Fill in all fields marked * to enable Add.</li>
+              <li> Min two categories added to enable Done </li> 
+              </ul>
+          
             </p>
           )} 
 
@@ -269,8 +299,21 @@ const BudgetSetup = ({ onAdd }) => {
             addDisabled={!isFormComplete}
           />
 
-      <div className="done-container">
+      {/*<div className="done-container">
         <button type="button" onClick={handleDone} className="btn-done">
+          Done
+        </button>
+      </div>*/}
+
+
+      {/* Done Button with disabled state */}
+      <div className="done-container">
+        <button 
+          type="button" 
+          onClick={handleDone} 
+          disabled={isDoneDisabled}
+          className={`btn-done ${isDoneDisabled ? 'opacity-50 cursor-not-allowed bg-gray-400 border-gray-400' : ''}`}
+        >
           Done
         </button>
       </div>
@@ -297,7 +340,7 @@ const BudgetSetup = ({ onAdd }) => {
       </nav>
     </div>
   )
-} 
+
 
 /*function App() {
   const [screen,setScreen] = useState(1) //setScreen will change the screen after clicking done
@@ -312,5 +355,6 @@ const BudgetSetup = ({ onAdd }) => {
     </>
   )
 }*/
+   }
 }
 export default BudgetSetup

@@ -1,6 +1,7 @@
 import React from 'react'
-import { ChevronLeft, Home, User, CreditCard, Calculator } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { ChevronLeft, Home, User, CreditCard, Receipt } from 'lucide-react'
+import './BudgetDashboard.css'
 
 const Header = () => {
   const navigate = useNavigate()
@@ -10,7 +11,7 @@ const Header = () => {
       <div className="budget-header-left">
         <button 
           type="button" 
-          className="back-btn"
+          className="back-btn" 
           onClick={() => navigate(-1)}
         >
           <ChevronLeft className="back-icon" />
@@ -24,46 +25,67 @@ const Header = () => {
 
 const BudgetDashboard = () => {
   const location = useLocation()
-  
-  // Safely extract items or single form data passed via router state
-  const items = location.state?.items || (location.state?.form ? [location.state.form] : [])
 
-  // Filter items where categoryType is Expenditure
-  const expenditureItems = items.filter(
-    (item) => item.categoryType === "Expenditure"
-  )
+  // Retrieve categories passed via router state
+  const items = location.state?.items || []
+
+  // Group by category type
+  const incomeItems = items.filter((item) => item.categoryType === 'Income')
+  const expenditureItems = items.filter((item) => item.categoryType === 'Expenditure')
+
+  // Totals
+  const totalIncome = incomeItems.reduce((acc, curr) => acc + Number(curr.expectedIncome || 0), 0)
+  const totalExpenditure = expenditureItems.reduce((acc, curr) => acc + Number(curr.limitAmount || 0), 0)
 
   return (
     <div className="budget-page-container">
       <Header />
 
       <main className="budget-main-card">
-        <h2 className="page-subtitle text-xl font-semibold mb-4">
-          September 2026 Budget Overview
-        </h2>
+        <h2 className="page-subtitle">Budget Overview</h2>
 
-        {/* Render Expenditure Items */}
-        <section className="expenditure-section mt-4">
-          <h3 className="text-lg font-medium text-[#1C5B65] mb-2">
-            Expenditure Items
-          </h3>
+        {/* Income Section */}
+        <section className="dashboard-section">
+          <div className="section-header">
+            <h3 className="section-title income">Income</h3>
+            <span className="section-total income">Total: R{totalIncome}</span>
+          </div>
+
+          {incomeItems.length === 0 ? (
+            <p className="empty-msg">No income categories added.</p>
+          ) : (
+            <ul className="category-list">
+              {incomeItems.map((item, index) => (
+                <li key={index} className="category-card income">
+                  <div className="category-info">
+                    <span className="category-name">{item.categoryName}</span>
+                    <span className="category-period">Period: {item.budgetPeriod}</span>
+                  </div>
+                  <span className="category-amount income">R{item.expectedIncome}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        {/* Expenditure Section */}
+        <section className="dashboard-section">
+          <div className="section-header">
+            <h3 className="section-title expenditure">Expenditure</h3>
+            <span className="section-total expenditure">Total: R{totalExpenditure}</span>
+          </div>
 
           {expenditureItems.length === 0 ? (
-            <p className="text-sm text-gray-500">No expenditure items added yet.</p>
+            <p className="empty-msg">No expenditure categories added.</p>
           ) : (
-            <ul className="space-y-2">
+            <ul className="category-list">
               {expenditureItems.map((item, index) => (
-                <li 
-                  key={index} 
-                  className="flex justify-between items-center p-3 bg-white rounded-xl shadow-sm border"
-                >
-                  <div>
-                    <p className="font-semibold text-gray-800">{item.categoryName}</p>
-                    <p className="text-xs text-gray-500">Period: {item.budgetPeriod}</p>
+                <li key={index} className="category-card expenditure">
+                  <div className="category-info">
+                    <span className="category-name">{item.categoryName}</span>
+                    <span className="category-period">Period: {item.budgetPeriod}</span>
                   </div>
-                  <span className="font-bold text-red-600">
-                    R{item.limitAmount}
-                  </span>
+                  <span className="category-amount expenditure">R{item.limitAmount}</span>
                 </li>
               ))}
             </ul>
@@ -82,7 +104,7 @@ const BudgetDashboard = () => {
           <CreditCard className="nav-icon" />
         </button>
         <button type="button" className="nav-icon-btn">
-          <Calculator className="nav-icon" />
+          <Receipt className="nav-icon" />
         </button>
       </nav>
     </div>
@@ -90,4 +112,3 @@ const BudgetDashboard = () => {
 }
 
 export default BudgetDashboard
-

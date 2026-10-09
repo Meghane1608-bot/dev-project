@@ -1,0 +1,1 @@
+05 October 2026: Claude - how to import the shadcn library : provided the steps to run in the terminal and the jsx folders that needed components imported. 

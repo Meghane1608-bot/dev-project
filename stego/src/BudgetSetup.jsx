@@ -165,7 +165,7 @@ const [addedCategories, setAddedCategories] = useState([])
 
   //navigate to budget dashboard 
   const handleDone = () => {
-    navigate('BudgetDashboard', {state:{form} })
+    navigate('BudgetDashboard', {state:{items: addedCategories} })
   } 
 
   // 4. Check if user has added more than 2 categories

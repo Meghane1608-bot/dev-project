@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { ChevronLeft, Home, User, CreditCard, Receipt } from 'lucide-react'
+import { ChevronLeft, Home, User, CreditCard, Calculator } from 'lucide-react'
 import './BudgetDashboard.css'
 
 const Header = () => {
@@ -104,7 +104,7 @@ const BudgetDashboard = () => {
           <CreditCard className="nav-icon" />
         </button>
         <button type="button" className="nav-icon-btn">
-          <Receipt className="nav-icon" />
+          <Calculator className="nav-icon" />
         </button>
       </nav>
     </div>

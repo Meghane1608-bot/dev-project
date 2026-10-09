@@ -5,7 +5,7 @@ const db = new Database('stego.sqlite');
 
 // Enable Write-Ahead Logging (WAL) and foreign keys
 db.pragma('journal_mode = WAL');
-db.pragma('foreign_keys = ON')
+db.pragma('foreign_keys = ON');
 
 // Initialize database schema based on the stego ERD
 db.exec(`
@@ -26,26 +26,28 @@ db.exec(`
     withdrawl_limit REAL DEFAULT 0.00,
     goal_amount REAL DEFAULT 0.00,
     withdrawls_this_period INTEGER DEFAULT 0
-    );
+  );
 
-CREATE TABLE IF NOT EXISTS categories (
+  CREATE TABLE IF NOT EXISTS categories (
     category_id INTEGER PRIMARY KEY AUTOINCREMENT,
     category_type TEXT CHECK(category_type IN ('income', 'expense')) NOT NULL,
     category_name TEXT NOT NULL
-);
+  );
 
-CREATE TABLE IF NOT EXISTS transactions (
+  CREATE TABLE IF NOT EXISTS transactions (
     transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    account_id INTEGER NOT NULL REFERNCES accounts(account_id) ON DELETE CASCADE,
+    account_id INTEGER NOT NULL REFERENCES accounts(account_id) ON DELETE CASCADE,
     category_id INTEGER REFERENCES categories(category_id),
     limit_amount REAL NOT NULL,
     period TEXT DEFAULT 'monthly'
-)
+  );
 
-CREATE TABLE IF NOT EXISTS savings_goals (
+  CREATE TABLE IF NOT EXISTS savings_goals (
     goal_id INTEGER PRIMARY KEY AUTOINCREMENT,
     account_id INTEGER REFERENCES accounts(account_id),
     goal_name TEXT NOT NULL,
     target_amount REAL NOT NULL
-);
-');
+  );
+`);
+
+export default db;

@@ -44,29 +44,6 @@ const BudgetDashboard = () => {
       <main className="budget-main-card">
         <h2 className="page-subtitle">Budget Overview</h2>
 
-        {/* Income Section */}
-        <section className="dashboard-section">
-          <div className="section-header">
-            <h3 className="section-title income">Income</h3>
-            <span className="section-total income">Total: R{totalIncome}</span>
-          </div>
-
-          {incomeItems.length === 0 ? (
-            <p className="empty-msg">No income categories added.</p>
-          ) : (
-            <ul className="category-list">
-              {incomeItems.map((item, index) => (
-                <li key={index} className="category-card income">
-                  <div className="category-info">
-                    <span className="category-name">{item.categoryName}</span>
-                    <span className="category-period">Period: {item.budgetPeriod}</span>
-                  </div>
-                  <span className="category-amount income">R{item.expectedIncome}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
 
         {/* Expenditure Section */}
         <section className="dashboard-section">
@@ -91,6 +68,31 @@ const BudgetDashboard = () => {
             </ul>
           )}
         </section>
+
+        {/* Income Section */}
+        <section className="dashboard-section">
+          <div className="section-header">
+            <h3 className="section-title income">Income</h3>
+            <span className="section-total income">Total: R{totalIncome}</span>
+          </div>
+
+          {incomeItems.length === 0 ? (
+            <p className="empty-msg">No income categories added.</p>
+          ) : (
+            <ul className="category-list">
+              {incomeItems.map((item, index) => (
+                <li key={index} className="category-card income">
+                  <div className="category-info">
+                    <span className="category-name">{item.categoryName}</span>
+                    <span className="category-period">Period: {item.budgetPeriod} months </span>
+                  </div>
+                  <span className="category-amount income">R{item.expectedIncome}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+        
       </main>
 
       <nav className="bottom-nav">

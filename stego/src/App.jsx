@@ -4,13 +4,15 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 import Category from './Category.jsx'  
+import Overview from './Overview.jsx'
 
 function App() {
   const [count, setCount] = useState(0) 
 
   return ( 
     <>    
-      <Category />
+      <Category /> 
+
     </> 
   )
 }

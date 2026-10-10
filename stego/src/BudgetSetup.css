@@ -1,26 +1,30 @@
 /* Container & Base Typography */
 .budget-page-container {
   min-height: 100vh;
-  background-color: #FFF9E2;
-  padding: 1.5rem;
+  width: 100%;
+  background-color: #FFF9E6 !important;
+  padding: 2em 4rem;
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /*max-width: 64rem;*/
-  margin-left: auto;
-  margin-right: auto;
+  box-sizing: border-box;
   color: #1C5B65;
 }
 
+
 /* Header */
 .budget-header {
+  width: 100%;
+  margin: 0 0 1.5rem 0;
   display: flex;
-  /*align-items: center;*/
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
-  width:100%;
-  max-width :80rem;
+  background-color: #ffffff;
+  padding: 1rem 2rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-sizing:border-box;
 }
 
 .budget-header-left {
@@ -112,7 +116,7 @@
 /* Inputs & Custom Trigger */
 .budget-input {
   width: 100%;
-  max-width: 20rem;
+  /*max-width: 20rem;*/
   padding: 0.5rem 1rem;
   background-color: #ffffff;
   border: 1px solid #fca5a5;
@@ -132,7 +136,7 @@
 
 .select-trigger-custom {
   width: 100% !important;
-  max-width: 20rem !important;
+ /* max-width: 20rem !important;*/
   background-color: #ffffff !important;
   border: none !important;
   border-radius: 1rem !important;
@@ -248,6 +252,7 @@
 
 /* Navigation Bar */
 .bottom-nav {
+  width: 100%;
   background-color: #1C5B65;
   border-radius: 1rem;
   padding: 1rem 3rem;
@@ -255,6 +260,7 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 1.5rem;
+  box-sizing: border-box;
 }
 
 .nav-icon-btn {

@@ -34,7 +34,7 @@ const BudgetDashboard = () => {
   const expenditureItems = items.filter((item) => item.categoryType === 'Expenditure')
 
   // Totals
-  const totalIncome = incomeItems.reduce((acc, curr) => acc + Number(curr.expectedIncome || 0), 0)
+  const totalExpectedIncome = incomeItems.reduce((acc, curr) => acc + Number(curr.expectedIncome || 0), 0)
   const totalExpenditure = expenditureItems.reduce((acc, curr) => acc + Number(curr.limitAmount || 0), 0)
   //const leftToSpend= this should be total expenditure(actual) - total limits set
   // const received = total income actually received 
@@ -46,7 +46,7 @@ let expenditureList
     <ul className="category-list" >
       {expenditureItems.map ((item,index) => (
     <li key={index} className="category-row" > 
-       <span className="category-name" > {item.name || item.category} </span>
+       <span className="category-name" > {item.categoryName || item.category} </span>
        <span className="category-amount" > 
         R{Number(item.limitAmount || item.amount || 0).toLocaleString()}
        </span>
@@ -125,6 +125,31 @@ let expenditureList
        
        </div>{/*outermost div*/}  
       </main>
+
+
+      {/*Right status panel cards*/}
+      <div className="dashboard-side-panel">
+        <div className="side-card">
+          <div className="side-card-title"> Budget Status:</div>
+        </div>
+      </div>
+
+   <div className="side-card"> 
+     <div className="side-card-title"> Left to spend:</div>
+    <div className="stat-amount-large">
+      R is this supposed to be inc-exp or exp spent-exp limits
+    </div>
+   </div> {/*outermost div*/}
+
+   <div className="side-card">
+    <div className="side-card-title" > Income received</div>
+      <div className="stat-amount-large">
+        R of {totalExpectedIncome.toLocaleString()}
+        </div>
+
+
+    </div>
+
 
       <nav className="bottom-nav">
         <button type="button" className="nav-icon-btn">

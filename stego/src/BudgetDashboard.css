@@ -86,7 +86,7 @@
   padding: 2rem 2.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
-  width:100%;
+  width:70%;
 }
 
 .dashboard-card-title {
@@ -134,6 +134,7 @@
   font-size: 0.875rem;
   color: #F39C12; /* Orange label */
   font-weight: 500;
+  
 }
 
 .label-expected {
@@ -152,6 +153,7 @@
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
+ 
 }
 
 /*.btn-add-income {
@@ -208,10 +210,13 @@
 
 /* Right Side Panel */
 .dashboard-side-panel {
-  display: flex;
+  float:right;
   flex-direction: column;
   gap: 1rem;
-  width: 100%;
+  width: 30%;
+  margin-left: 73%;
+  
+  
 }
 
 .side-card {

@@ -93,7 +93,7 @@ let expenditureList
       <Header />
 
       <main className="budget-main-card">
-        <h2 className="page-subtitle"> September Budget Overview</h2>
+        <h2 className="page-subtitle">  Budget Overview</h2>
 
 
         {/* Expenditure Section */}
@@ -103,11 +103,7 @@ let expenditureList
                   Expenditure </span>
              <div className="section-header-right" >
               <span className="label-spending-limits"> spending limits</span>
-              <button 
-               className="btn-add-budget"
-               onClick={() => navigate('/BudgetSetup')}>
-                +Add item
-               </button>
+              
              </div>
 
              </div>{/*section header div*/}
@@ -123,13 +119,19 @@ let expenditureList
              <span className="section-title income-title">
               Income 
              </span>
-             <span className="Label-expected"> received vs expected</span>
+             <span className="Label-expected"> income expected to receive </span>
 
           </div>{/*section header div*/}
        
        {incomeList}
        
        </div>{/*outermost div*/}  
+
+       <button 
+               className="btn-add-budget"
+               onClick={() => navigate('/BudgetSetup')}>
+                Create new budget
+               </button>
       
      </main>
 
@@ -139,12 +141,12 @@ let expenditureList
         <div className="side-card">
           <div className="side-card-title"> Budget Status:</div>
         </div>
-      </div>
+      
 
    <div className="side-card"> 
      <div className="side-card-title"> Left to spend:</div>
     <div className="stat-amount-large">
-      R is this supposed to be inc-exp or exp spent-exp limits
+      R waiting4db
     </div>
    </div> {/*outermost div*/}
 
@@ -153,8 +155,8 @@ let expenditureList
       <div className="stat-amount-large">
         R of {totalExpectedIncome.toLocaleString()}
         </div>
-
-
+    </div>
+    
     </div>
 
 

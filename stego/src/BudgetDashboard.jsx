@@ -96,7 +96,7 @@ let expenditureList
                 <span className="section-title expenditure-title">
                   Expenditure </span>
              <div className="section-header-right" >
-              <span className="labek-spending-limits"> spending limits</span>
+              <span className="label-spending-limits"> spending limits</span>
               <button 
                className="btn-add-budget"
                onClick={() => navigate('/BudgetSetup')}>
@@ -124,7 +124,8 @@ let expenditureList
        {incomeList}
        
        </div>{/*outermost div*/}  
-      </main>
+      
+     </main>
 
 
       {/*Right status panel cards*/}

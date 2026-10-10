@@ -1,13 +1,13 @@
 /* Container & Base Typography */
 .budget-page-container {
   min-height: 100vh;
-  background-color: #e9dd8d;
+  background-color: #ede9cf;
   padding: 1.5rem;
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 64rem;
+  /*max-width: 64rem;*/
   margin-left: auto;
   margin-right: auto;
   color: #1C5B65;
@@ -16,9 +16,11 @@
 /* Header */
 .budget-header {
   display: flex;
-  align-items: center;
+  /*align-items: center;*/
   justify-content: space-between;
   margin-bottom: 1rem;
+  width:100%;
+  max-width :80rem;
 }
 
 .budget-header-left {

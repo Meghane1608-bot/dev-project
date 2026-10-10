@@ -36,63 +36,94 @@ const BudgetDashboard = () => {
   // Totals
   const totalIncome = incomeItems.reduce((acc, curr) => acc + Number(curr.expectedIncome || 0), 0)
   const totalExpenditure = expenditureItems.reduce((acc, curr) => acc + Number(curr.limitAmount || 0), 0)
+  //const leftToSpend= this should be total expenditure(actual) - total limits set
+  // const received = total income actually received 
+
+//expenditure list 
+let expenditureList 
+ if (expenditureItems.length >0 ) {
+  expenditureList = (
+    <ul className="category-list" >
+      {expenditureItems.map ((item,index) => (
+    <li key={index} className="category-row" > 
+       <span className="category-name" > {item.name || item.category} </span>
+       <span className="category-amount" > 
+        R{Number(item.limitAmount || item.amount || 0).toLocaleString()}
+       </span>
+    </li>
+    ) ) } 
+    </ul>
+  )
+ } else{
+  expenditureList=<p className="empty-msg"> No expenditures added yet.</p>
+ }
+
+ //Income list 
+ let incomeList
+ if (incomeItems.length>0 ) {
+  incomeList = (
+    <ul className="category-list"> 
+    {incomeItems.map((item,index) => (
+      <li key={index} className="category-row" > 
+      <span className="category-name"> {item.categoryName || item.category}</span>
+      <span className="category-amount" >
+        R{Number(item.expectedIncome || item.amount || 0).toLocaleString()}
+      </span>
+      </li>
+    )
+    )}
+    </ul>
+  ) 
+} else {
+    incomeList =<p className="empty-msg">
+       No income added yet.
+    </p>
+  }
+ 
+
 
   return (
     <div className="budget-page-container">
       <Header />
 
       <main className="budget-main-card">
-        <h2 className="page-subtitle">Budget Overview</h2>
+        <h2 className="page-subtitle"> September Budget Overview</h2>
 
 
         {/* Expenditure Section */}
-        <section className="dashboard-section">
-          <div className="section-header">
-            <h3 className="section-title expenditure">Expenditure</h3>
-            <span className="section-total expenditure">Total: R{totalExpenditure}</span>
-          </div>
+        <div className="dashboard-section">
+             <div className="section-header">
+                <span className="section-title expenditure-title">
+                  Expenditure </span>
+             <div className="section-header-right" >
+              <span className="labek-spending-limits"> spending limits</span>
+              <button 
+               className="btn-add-budget"
+               onClick={() => navigate('/BudgetSetup')}>
+                +Add item
+               </button>
+             </div>
 
-          {expenditureItems.length === 0 ? (
-            <p className="empty-msg">No expenditure categories added.</p>
-          ) : (
-            <ul className="category-list">
-              {expenditureItems.map((item, index) => (
-                <li key={index} className="category-card expenditure">
-                  <div className="category-info">
-                    <span className="category-name">{item.categoryName}</span>
-                    <span className="category-period">Period: {item.budgetPeriod}</span>
-                  </div>
-                  <span className="category-amount expenditure">R{item.limitAmount}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
+             </div>{/*section header div*/}
+       {expenditureList}
+
+        </div> {/*outermost div tag*/}
+
+   <hr className="section-divider"/> 
 
         {/* Income Section */}
-        <section className="dashboard-section">
-          <div className="section-header">
-            <h3 className="section-title income">Income</h3>
-            <span className="section-total income">Total: R{totalIncome}</span>
-          </div>
+       < div className="dashboard-section">
+          <div className="section-header" >
+             <span className="section-title income-title">
+              Income 
+             </span>
+             <span className="Label-expected"> received vs expected</span>
 
-          {incomeItems.length === 0 ? (
-            <p className="empty-msg">No income categories added.</p>
-          ) : (
-            <ul className="category-list">
-              {incomeItems.map((item, index) => (
-                <li key={index} className="category-card income">
-                  <div className="category-info">
-                    <span className="category-name">{item.categoryName}</span>
-                    <span className="category-period">Period: {item.budgetPeriod} months </span>
-                  </div>
-                  <span className="category-amount income">R{item.expectedIncome}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-        
+          </div>{/*section header div*/}
+       
+       {incomeList}
+       
+       </div>{/*outermost div*/}  
       </main>
 
       <nav className="bottom-nav">

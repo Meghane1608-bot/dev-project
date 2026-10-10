@@ -45,6 +45,8 @@ const BudgetDashboard = () => {
   //const leftToSpend= this should be total expenditure(actual) - total limits set
   // const received = total income actually received 
 
+  const budgetMonth = location.state?.budgetPeriod || ''
+ 
 //expenditure list 
 let expenditureList 
  if (expenditureItems.length >0 ) {
@@ -93,7 +95,7 @@ let expenditureList
       <Header />
 
       <main className="budget-main-card">
-        <h2 className="page-subtitle">  Budget Overview</h2>
+        <h2 className="page-subtitle">  {budgetMonth} Budget Overview</h2>
 
 
         {/* Expenditure Section */}

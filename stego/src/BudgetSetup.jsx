@@ -165,7 +165,12 @@ const [addedCategories, setAddedCategories] = useState([])
 
   //navigate to budget dashboard 
   const handleDone = () => {
-    navigate('BudgetDashboard', {state:{items: addedCategories} })
+    navigate('BudgetDashboard', 
+      {state:
+        {items: addedCategories,
+           budgetPeriod:budgetPeriod
+          } ,
+        })
   } 
 
   // 4. Check if user has added more than 2 categories
@@ -272,7 +277,7 @@ const [addedCategories, setAddedCategories] = useState([])
               type="text"
               value={form.budgetPeriod}
               onChange={handleChange}
-              placeholder="1 - 12 months"
+              placeholder="Month"
               className="budget-input"
               required
             />

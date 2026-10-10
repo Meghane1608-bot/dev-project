@@ -1,22 +1,20 @@
 .budget-page-container {
   min-height: 100vh;
-  background-color: #e9dd8d;
-  padding: 1.5rem;
+  width: 100%;
+  background-color: #FFF9E6 !important;
+  padding: 2em 4rem;
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 64rem;
-  margin-left: auto;
-  margin-right: auto;
+  box-sizing: border-box;
   color: #1C5B65;
 }
 
 /* Header Container */
 .budget-header {
   width: 100%;
-  max-width: 58rem;
-  margin: 0 auto 1.5rem auto;
+  margin: 0 0 1.5rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,6 +22,7 @@
   padding: 1rem 2rem;
   border-radius: 1.25rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-sizing:border-box;
 }
 
 .budget-header-left {
@@ -64,22 +63,21 @@
 /* Dashboard Layout Grid */
 .dashboard-grid-container {
   display: grid;
-  grid-template-columns: 1fr 18rem;
+  grid-template-columns: 1fr 20rem;
   gap: 1.5rem;
   align-items:start;
   width: 100%;
-  max-width: 58rem;
-  margin: 0 auto 1.5rem auto;
+  margin: 0 0 1.5rem 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   box-sizing: border-box;
 }
 
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
   .dashboard-grid-container {
     grid-template-columns: 1fr 16rem;
     align-items: start;
   }
-}
+}*/
 
 /* Main Dashboard Card */
 .budget-main-card {
@@ -88,6 +86,7 @@
   padding: 2rem 2.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
+  width:100%;
 }
 
 .dashboard-card-title {
@@ -217,6 +216,7 @@
 
 .side-card {
   display: flex;
+  flex-direction: column;
   background-color: #F4F5F7 !important;
   border-radius: 1.25rem;
   padding: 1.25rem;
@@ -240,32 +240,24 @@
 
 .stat-amount-large {
   font-size: 1.75rem;
-  line-weight: 2.25rem;
+  line-height: 2.25rem;
   font-weight: 800;
   color: #1f2937;
 }
 
 /* Bottom Navigation Bar */
-/*.bottom-nav {
+.bottom-nav {
   width: 100%;
-  max-width: 58rem;
-  margin: 0 auto;
+  margin-top: 1.5rem;
   background-color: #1B7F96;
   border-radius: 1rem;
   padding: 1rem 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}*/
-.bottom-nav {
-  background-color: #1C5B65;
-  border-radius: 1rem;
-  padding: 1rem 3rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1.5rem;
+  box-sizing: border-box;
 }
+
 
 .nav-icon-btn {
   background: transparent;

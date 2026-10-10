@@ -285,7 +285,7 @@ const [addedCategories, setAddedCategories] = useState([])
             <p className="text-sm text-muted-foreground col-span-2">
               <ul>     
                 <li> Fill in all fields marked * to enable Add.</li>
-              <li> Min two categories added to enable Done </li> 
+              <li> Minimum of two expenditure categories and one income needs to be added to enable Done. </li> 
               </ul>
           
             </p>

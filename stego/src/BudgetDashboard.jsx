@@ -23,6 +23,12 @@ const Header = () => {
   )
 }
 
+const Savings= () =>{
+  /* in this part initially it will display the amnt from account dashboard showing how much is in savings 
+  and then they can add a savings goal by clicking on the button that will allow them to input an amount and the name
+  of the savings goal eg. Travel R15000 and that should save to the RAM and display */
+} 
+
 const BudgetDashboard = () => {
   const location = useLocation()
 

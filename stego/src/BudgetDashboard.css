@@ -214,10 +214,12 @@
 }
 
 .side-card {
+  display: flex;
   background-color: #F4F5F7 !important;
   border-radius: 1.25rem;
   padding: 1.25rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  justify-content: flex-end;
 }
 
 .side-card-title {

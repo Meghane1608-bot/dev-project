@@ -4,7 +4,7 @@ import { ChevronLeft, Home, User, CreditCard, Calculator } from 'lucide-react'
 import './BudgetDashboard.css'
 
 const Header = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate() //initialise navigate 
 
   return (
     <header className="budget-header">
@@ -23,21 +23,24 @@ const Header = () => {
   )
 }
 
-const Savings= () =>{
+const handleSavings= () =>{
   /* in this part initially it will display the amnt from account dashboard showing how much is in savings 
   and then they can add a savings goal by clicking on the button that will allow them to input an amount and the name
   of the savings goal eg. Travel R15000 and that should save to the RAM and display */
+  console.log("target")
 } 
 
 const BudgetDashboard = () => {
   const location = useLocation()
 
-  // Retrieve categories passed via router state
+  // Retrieve categories and budgetPeriod passed via router state
   const items = location.state?.items || []
+const budgetMonth = location.state?.budgetPeriod || 'January'
 
   // Group by category type
   const incomeItems = items.filter((item) => item.categoryType === 'Income')
   const expenditureItems = items.filter((item) => item.categoryType === 'Expenditure')
+  
 
   // Totals
   const totalExpectedIncome = incomeItems.reduce((acc, curr) => acc + Number(curr.expectedIncome || 0), 0)
@@ -45,7 +48,7 @@ const BudgetDashboard = () => {
   //const leftToSpend= this should be total expenditure(actual) - total limits set
   // const received = total income actually received 
 
-  const budgetMonth = location.state?.budgetPeriod || ''
+  
  
 //expenditure list 
 let expenditureList 
@@ -129,13 +132,15 @@ let expenditureList
        
        </div>{/*outermost div*/}  
 
-       <button 
-               className="btn-add-budget"
-               onClick={() => navigate('/BudgetSetup')}>
-                Create new budget
-               </button>
       
      </main>
+
+{/*create new budget button*/} 
+ <button 
+       className="btn-add-budget" 
+          onClick={() => navigate('/BudgetSetup')} >
+            Create new budget
+      </button>
 
 
       {/*Right status panel cards*/}
@@ -160,6 +165,19 @@ let expenditureList
     </div>
     
     </div>
+
+    {/*Savings mini dashboard*
+    <div className="savings-title">
+      <h4> SAVINGS </h4> 
+       <p> Current amount: </p>
+   <div className="savings-btn"> 
+       <button> 
+        onClick= {() =>{handleSavings}} 
+       </button>
+
+      </div>
+
+    </div> */}
 
 
       <nav className="bottom-nav">

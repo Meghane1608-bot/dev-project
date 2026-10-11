@@ -153,6 +153,8 @@
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
+  width:30%;
+  height: 45%;
  
 }
 
@@ -208,15 +210,14 @@
   font-style: italic;
 }
 
+
 /* Right Side Panel */
 .dashboard-side-panel {
   float:right;
   flex-direction: column;
   gap: 1rem;
   width: 30%;
-  margin-left: 73%;
-  
-  
+ 
 }
 
 .side-card {

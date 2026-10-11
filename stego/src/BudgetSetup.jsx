@@ -164,11 +164,13 @@ const [addedCategories, setAddedCategories] = useState([])
   } 
 
   //navigate to budget dashboard 
+  const [budgetPeriod,setBudgetPeriod] =useState("January")
+  
   const handleDone = () => {
     navigate('BudgetDashboard', 
       {state:
         {items: addedCategories,
-           budgetPeriod:budgetPeriod
+          budgetPeriod:budgetPeriod
           } ,
         })
   } 
@@ -287,13 +289,13 @@ const [addedCategories, setAddedCategories] = useState([])
 
           {/*if the form isnt empty*/}
           {!isFormComplete && (
-            <p className="text-sm text-muted-foreground col-span-2">
+            <div className="text-sm text-muted-foreground col-span-2">
               <ul>     
                 <li> Fill in all fields marked * to enable Add.</li>
               <li> Minimum of two expenditure categories and one income needs to be added to enable Done. </li> 
               </ul>
           
-            </p>
+            </div>
           )} 
 
           <p className="col-span-2"> Categories added : {categoryItems.length} </p>

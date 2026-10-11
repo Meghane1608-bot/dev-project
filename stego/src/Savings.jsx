@@ -1,7 +1,6 @@
 import React from 'react'
-import useState from {useState}
- import BudgetDashboard from '/BudgetDashboard'
-
+import useState from 'react' 
+ 
 
 
 const Savings =() => {
@@ -17,11 +16,10 @@ const Savings =() => {
 
 const handleSavingsGoal = (event) => {
     event.preventDefault()
-    if (!targetName.trim() || Number(targetAmt) <=0){
+    if (!targetName.trim() || Number(targetAmnt) <=0) {
         alert("Please enter a valid target name and an amount greater than 0 ")
         return
     }
-}
 
 const newGoal ={
     id:Date.now(),
@@ -36,7 +34,7 @@ setTargetName('')
 setTargetAmnt('')
 setDate('')
 setIsOpen(false)
-
+}
 
     return (
         <>
@@ -54,7 +52,7 @@ setIsOpen(false)
            />
            <input 
            placeholder="Target amount"
-            type="Number" 
+           type="number" 
            value={targetAmnt}
             onChange={(event) => setTargetAmnt(event.target.value)}
             />
@@ -74,9 +72,9 @@ setIsOpen(false)
      )}
 
      <div className="goals-list"> 
-        {goals.map((goals)=> (
-            <div key={goals.id} className="goal-card">
-                <h5> {goals.targetName} </h4>
+        {goals.map((goal)=> (
+            <div key={goal.id} className="goal-card">
+                <h5> {goal.targetName} </h5>
                 <p> Target: R{goal.targetAmnt.toLocaleString() } </p>
                 <small> Target Date: {goal.date} </small> 
         </div> 

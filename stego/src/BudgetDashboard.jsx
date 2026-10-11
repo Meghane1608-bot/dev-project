@@ -2,6 +2,7 @@ import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ChevronLeft, Home, User, CreditCard, Calculator } from 'lucide-react'
 import './BudgetDashboard.css'
+import Savings from './Savings'
 
 const Header = () => {
   const navigate = useNavigate() //initialise navigate 
@@ -166,6 +167,7 @@ let expenditureList
     
     </div>
 
+   <Savings/> 
     {/*Savings mini dashboard*
     <div className="savings-title">
       <h4> SAVINGS </h4> 

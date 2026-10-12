@@ -40,7 +40,7 @@ export default function TransactionForm({ onTransactionCreated, onCancel }) {
 };
 
 return (
-    <div style={{ background: '#ffffff', padding: '25px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', maxWidth: '600px', margin: '0 auto 30px' }}>
+      <div style={{ background: '#ffffff', padding: '25px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', maxWidth: '600px', margin: '0 auto 30px' }}>
       <h3 style={{ marginTop: 0, color: '#004d40' }}>Add Transaction</h3>
       
       <form onSubmit={handleSubmit}>

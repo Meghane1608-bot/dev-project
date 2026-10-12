@@ -86,7 +86,7 @@
   padding: 2rem 2.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
-  width:70%;
+ 
 }
 
 .dashboard-card-title {
@@ -213,11 +213,9 @@
 
 /* Right Side Panel */
 .dashboard-side-panel {
-  float:right;
-  flex-direction: column;
+  display:flex;
+  flex-direction:column;
   gap: 1rem;
-  width: 30%;
- 
 }
 
 .side-card {

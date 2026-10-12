@@ -97,7 +97,7 @@ let expenditureList
   return (
     <div className="budget-page-container">
       <Header />
-
+<div className="dashboard-grid-container" > 
       <main className="budget-main-card">
         <h2 className="page-subtitle">  {budgetMonth} Budget Overview</h2>
 
@@ -136,12 +136,6 @@ let expenditureList
       
      </main>
 
-{/*create new budget button*/} 
- <button 
-       className="btn-add-budget" 
-          onClick={() => navigate('/BudgetSetup')} >
-            Create new budget
-      </button>
 
 
       {/*Right status panel cards*/}
@@ -166,8 +160,16 @@ let expenditureList
     </div>
     
     </div>
+</div> {/*close grid parent*/}
 
-   <Savings/> 
+{/*create new budget button*/} 
+ <button 
+       className="btn-add-budget" 
+          onClick={() => navigate('/BudgetSetup')} >
+            Create new budget
+      </button>
+
+    <Savings/> 
     {/*Savings mini dashboard*
     <div className="savings-title">
       <h4> SAVINGS </h4> 

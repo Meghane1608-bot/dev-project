@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import Navbar from './components/Navbar';
+import BudgetDashboard from './components/Budgetdashboard';
+import TransactionDashboard from './components/Transactiondashboard';
+import CategoriesOverview from './components/CategoriesOverview';
 
 const API_BASE = 'http://localhost:5000/api';
 

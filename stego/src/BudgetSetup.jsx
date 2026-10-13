@@ -15,13 +15,13 @@ import {
   SelectLabel
 } from "@/components/ui/select"
 
-//shadcn Required field component
+/*shadcn Required field component
 import {
   Field,
   FieldDescription,
   FieldLabel,
 } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input"*/
 
 import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
 import './BudgetSetup.css'
@@ -41,7 +41,7 @@ const Header = () => {
 }
 
 //button comp with two props and the onClicks call the functions 
-const Button = ({ reset, done, add, addDisabled }) => {
+const Button = ({ reset, add, addDisabled }) => {
   return (
     <div className="action-buttons-wrapper">
       <button type="button" onClick={add} disabled={addDisabled} className="btn-secondary">
@@ -54,9 +54,9 @@ const Button = ({ reset, done, add, addDisabled }) => {
   )
 }
 
-const onDone = () => {
+{/*const onDone = () => {
   console.log("Sup Gugu")
-}
+*/}
 
 //object that will make every filed value blank all at once for reset 
 const emptyForm = {

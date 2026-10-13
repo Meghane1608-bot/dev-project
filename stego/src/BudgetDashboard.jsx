@@ -92,8 +92,7 @@ let expenditureList
     </p>
   }
  
-
-
+  
   return (
     <div className="budget-page-container">
       <Header />
@@ -169,6 +168,7 @@ let expenditureList
             Create new budget
       </button>
 
+  <h6> Savings </h6> 
     <Savings/> 
     {/*Savings mini dashboard*
     <div className="savings-title">

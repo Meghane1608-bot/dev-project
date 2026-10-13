@@ -1,6 +1,6 @@
 import React from 'react'
 import {useState} from 'react' 
- 
+import './Savings.css'
 
 
 const Savings =() => {
@@ -38,7 +38,7 @@ setIsOpen(false)
 
     return (
         <>
-     <button className= "add-savings" 
+     <button className= "btn-add-savings" 
      onClick={handleSavings} > Add goal 
      </button>
 

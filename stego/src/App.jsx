@@ -1,8 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from './components/Navbar';
-import BudgetDashboard from './components/Budgetdashboard';
-import TransactionDashboard from './components/Transactiondashboard';
-import CategoriesOverview from './components/CategoriesOverview';
+import { useState, useEffect } from 'react';
 
 const API_BASE = 'http://localhost:5000/api';
 
@@ -33,7 +29,7 @@ export default function App() {
       const query = selectedCategory ? `?category=${encodeURIComponent(selectedCategory)}` : '';
       const res = await fetch(`${API_BASE}/transactions${query}`);
       if (!res.ok) throw new Error('Failed to fetch transactions');
-      
+
       const data = await res.json();
       setSummary(data.summary);
       setTransactions(data.transactions);
@@ -46,7 +42,36 @@ export default function App() {
   };
 
   useEffect(() => {
-    loadData();
+    let isMounted = true;
+
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const query = selectedCategory ? `?category=${encodeURIComponent(selectedCategory)}` : '';
+        const res = await fetch(`${API_BASE}/transactions${query}`);
+        if (!res.ok) throw new Error('Failed to fetch transactions');
+
+        const data = await res.json();
+
+        if (!isMounted) return;
+        setSummary(data.summary);
+        setTransactions(data.transactions);
+        setError(null);
+      } catch (err) {
+        if (!isMounted) return;
+        setError(err.message);
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, [selectedCategory]);
 
   const handleInputChange = (e) => {

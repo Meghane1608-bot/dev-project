@@ -1,9 +1,15 @@
 import  Database  from 'better-sqlite3';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Creates or opens 'stego.sqlite' in your backend directory
-const db = new Database('stego.sqlite');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Enable Write-Ahead Logging (WAL) and foreign keys
+// Create a new SQLite database or open an existing one
+const dbPath = path.join(__dirname, 'stego.sqlite');
+
+const db = new Database(dbPath, { verbose: console.log });
+
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');
 

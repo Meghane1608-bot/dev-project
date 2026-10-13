@@ -40,7 +40,7 @@ const Header = () => {
   )
 }
 
-//button comp with two props and the onClicks call the functions 
+//button comp with props and the onClicks call the functions 
 const Button = ({ reset, add, addDisabled }) => {
   return (
     <div className="action-buttons-wrapper">
@@ -58,7 +58,7 @@ const Button = ({ reset, add, addDisabled }) => {
   console.log("Sup Gugu")
 */}
 
-//object that will make every filed value blank all at once for reset 
+//object that will make every filled value blank for reset 
 const emptyForm = {
   categoryName: '',
   categoryType: 'Income',
@@ -102,7 +102,7 @@ const [addedCategories, setAddedCategories] = useState([])
     if (fieldName === "categoryType" && value === "Income") {
       updated.limitAmount = ""
     }
-      return updated
+      return updated //
     }) 
     //copy everything from prev
   }
@@ -139,8 +139,7 @@ const [addedCategories, setAddedCategories] = useState([])
 
     //what happens when the add button is clicked
   const handleAdd = () => {
-    if (!isFormComplete) return;
-
+    if (!isFormComplete) return; //
     const newItem = {
       ...form,
       //id: String()
@@ -150,7 +149,7 @@ const [addedCategories, setAddedCategories] = useState([])
 
     if (typeof onAdd === 'function') {
       onAdd(newItem);
-    }
+    } //
 
     setAddedCategories((prev) => [...prev, newItem]);
     setForm(emptyForm); // after adding the cat, the form should clear

@@ -35,8 +35,8 @@ const BudgetDashboard = () => {
   const location = useLocation()
 
   // Retrieve categories and budgetPeriod passed via router state
-  const items = location.state?.items || []
-const budgetMonth = location.state?.budgetPeriod || 'January'
+  const items = location.state?.items || [] //
+const budgetMonth = location.state?.budgetPeriod || 'January' //doesnt display yet. I need it to display on the dashboard depending on what the user entered
 
   // Group by category type
   const incomeItems = items.filter((item) => item.categoryType === 'Income')

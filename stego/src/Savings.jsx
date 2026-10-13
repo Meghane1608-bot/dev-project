@@ -37,7 +37,9 @@ setIsOpen(false)
 }
 
     return (
+       
         <>
+         <main className='savingscard'>
      <button className= "btn-add-savings" 
      onClick={handleSavings} > Add goal 
      </button>
@@ -81,6 +83,7 @@ setIsOpen(false)
         ))}
   
         </div> 
+        </main>
     </> 
     )
 } 

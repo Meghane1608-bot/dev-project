@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
-const API_BASE = 'http://localhost:5000/api';
+
+const API_BASE = 'https://localhost:5000/api';
 
 export default function App() {
   const [summary, setSummary] = useState({ income: 0, expenses: 0, net_balance: 0 });

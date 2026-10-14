@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://expert-acorn-69pj69r74wv62rgjj-5000.app.github.dev/api';
 
 export async function fetchTransactions(filters = {}) {
     const params = new URLSearchParams(filters).toString();

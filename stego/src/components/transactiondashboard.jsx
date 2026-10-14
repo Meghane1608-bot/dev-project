@@ -1,7 +1,10 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import {createTransaction} from "../api/transaction";
 
-export default function TransactionForm({ onTransactionCreated, onCancel }) {
+export default function TransactionForm({
+    onTransactionCreated = () => {},
+    onCancel = () => {},
+}) {
     const [formData, setFormData] = useState({
         type: 'expense',
         account_id: 1, // 1 = Current, 2 = Savings
@@ -9,7 +12,7 @@ export default function TransactionForm({ onTransactionCreated, onCancel }) {
         amount: '',
         transaction_date: new Date().toISOString().split('T')[0], // Default to today's date
         description: '',
-    }); 
+    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,28 +21,42 @@ export default function TransactionForm({ onTransactionCreated, onCancel }) {
             [name]: value,
         }));
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const rawAmount = Number.parseFloat(formData.amount);
+
+        if (!formData.transaction_date || Number.isNaN(rawAmount) || rawAmount <= 0) {
+            alert('Please enter a valid transaction amount and date.');
+            return;
+        }
+
         try {
-            const rawAmount = parseFloat(formData.amount);
-            const finalAmount = formData.type === 'expense' ? -Math.abs(rawAmount) : Math.abs(rawAmount);
+            const finalAmount = formData.type === 'expense'
+                ? -Math.abs(rawAmount)
+                : Math.abs(rawAmount);
 
-        await createTransaction({
-            account_id: Number(formData.account_id),
-            category_id: Number(formData.category_id),
-            amount: finalAmount,
-            transaction_date: formData.transaction_date,
-            description: formData.description,
-        });
+            await createTransaction({
+                account_id: Number(formData.account_id),
+                category_id: Number(formData.category_id),
+                amount: finalAmount,
+                transaction_date: formData.transaction_date,
+                description: formData.description,
+            });
 
-        onTransactionAdded(); // Notify parent component to refresh the transaction list
-    } catch (error) {
-        alert('Failed to create transaction: ' + error.message);
-    }
-};
+            onTransactionCreated(); // Notify parent component to refresh the transaction list
+            setFormData((prevData) => ({
+                ...prevData,
+                amount: '',
+                description: '',
+            }));
+        } catch (error) {
+            alert('Failed to create transaction: ' + (error?.message || 'Unknown error'));
+        }
+    };
 
-return (
+    return (
       <div style={{ background: '#ffffff', padding: '25px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', maxWidth: '600px', margin: '0 auto 30px' }}>
       <h3 style={{ marginTop: 0, color: '#004d40' }}>Add Transaction</h3>
       

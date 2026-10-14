@@ -15,13 +15,6 @@ import {
   SelectLabel
 } from "@/components/ui/select"
 
-/*shadcn Required field component
-import {
-  Field,
-  FieldDescription,
-  FieldLabel,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"*/
 
 import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
 import './BudgetSetup.css'
@@ -139,11 +132,11 @@ const [addedCategories, setAddedCategories] = useState([])
 
     //what happens when the add button is clicked
   const handleAdd = () => {
-    if (!isFormComplete) return; //
-    const newItem = {
-      ...form,
+    if (!isFormComplete) return; // validation first( the return is there so nothing runs below it.)
+    const newItem = { //building the new item 
+      ...form, //spread operator to copy every propoerty from form
       //id: String()
-      expectedIncome: form.expectedIncome ? Number(form.expectedIncome) : 0,
+      expectedIncome: form.expectedIncome ? Number(form.expectedIncome) : 0, //if theres a value convert it and if not "" = 0
       limitAmount: form.limitAmount ? Number(form.limitAmount) : 0,
     };
 
@@ -151,15 +144,16 @@ const [addedCategories, setAddedCategories] = useState([])
       onAdd(newItem);
     } //
 
-    setAddedCategories((prev) => [...prev, newItem]);
+    setAddedCategories((prev) => [...prev, newItem]); /* builds a new array containing old+ the new item
+    Prev guarantees it will give the latest state and we can compute the next one from it */
     setForm(emptyForm); // after adding the cat, the form should clear
     
   }
 
   const handleReset = () => { 
     //message pop up to tell them their cats will be deleted 
-    setForm(emptyForm) //clears the form
-    setAddedCategories([])
+    setForm(emptyForm) //clears the inputs
+    setAddedCategories([]) // empty array
   } 
 
   //navigate to budget dashboard 
@@ -174,7 +168,7 @@ const [addedCategories, setAddedCategories] = useState([])
         })
   } 
 
-  // 4. Check if user has added more than 2 categories
+  // Check if user has added more than 2 categories
   const isDoneDisabled = addedCategories.length <= 2
 
   return ( 
@@ -297,7 +291,7 @@ const [addedCategories, setAddedCategories] = useState([])
             </div>
           )} 
 
-          <p className="col-span-2"> Categories added : {categoryItems.length} </p>
+          <p className="col-span-2"> Categories available : {categoryItems.length} </p>
 
           <Button 
             add={handleAdd}
@@ -305,11 +299,6 @@ const [addedCategories, setAddedCategories] = useState([])
             addDisabled={!isFormComplete}
           />
 
-      {/*<div className="done-container">
-        <button type="button" onClick={handleDone} className="btn-done">
-          Done
-        </button>
-      </div>*/}
 
 
       {/* Done Button with disabled state */}
@@ -348,19 +337,6 @@ const [addedCategories, setAddedCategories] = useState([])
   )
 
 
-/*function App() {
-  const [screen,setScreen] = useState(1) //setScreen will change the screen after clicking done
-  const [form, setForm] = useState(emptyForm) //starts empty and setForm will change it 
-  const handleChange = (event) => {
-    const {name, value} = event.target.value
-    setForm((prev)) => ({...prev , [n]})
-  }
-  return (
-    <>
-      <Header/>
-    </>
-  )
-}*/
    }
 }
 export default BudgetSetup

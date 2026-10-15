@@ -1,5 +1,8 @@
 import { useState } from 'react'
-import './style.css'
+import heroImg from './assets/hero.png'
+import reactLogo from './assets/react.svg'
+import viteLogo from './assets/vite.svg'
+import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,7 +13,6 @@ function App() {
       <p>Added a paragraph</p>
       <p>Added another paragraph</p>
       <p>Hi This is Meghane. I've made a change</p>
-      <p> This is Gugu</p>
     </>
   )
 }

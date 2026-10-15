@@ -1,0 +1,5 @@
+node_modules/
+stego.sqlite
+stego.sqlite-wal
+stego.sqlite-shm
+.env

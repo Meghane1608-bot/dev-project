@@ -1,9 +1,34 @@
-import TransactionDashboard from './components/transactiondashboard';
+import './style.css'
+import {BrowserRouter,Routes,Route} from 'react-router-dom'
+//import './BudgetSetup.jsx'
+import BudgetSetup from './BudgetSetup'
+import BudgetDashboard from './BudgetDashboard'
 
-export default function App() {
+
+
+
+function App() {
+ 
+
   return (
-    <div className="w-full min-h-screen bg-[#FEFBF0] text-stone-800 font-sans">
-      <TransactionDashboard />
-    </div>
-  );
+    <>
+    <BrowserRouter>
+    <Routes> 
+   <Route 
+    path = "/" 
+    element={<BudgetSetup />}
+    />
+    
+    {/* budget dashboard route*/}
+<Route 
+   path="/BudgetDashboard"
+   element={<BudgetDashboard/> }
+/> 
+</Routes>
+</BrowserRouter>
+      {/*<BudgetSetup onDone={()=>{console.log("Hey")}} />*/}
+    </>
+  )
 }
+
+export default App

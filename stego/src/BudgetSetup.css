@@ -1,0 +1,281 @@
+/* Container & Base Typography */
+.budget-page-container {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #FFF9E6 !important;
+  padding: 2em 4rem;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  color: #1C5B65;
+}
+
+
+/* Header */
+.budget-header {
+  width: 100%;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  padding: 1rem 2rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-sizing:border-box;
+}
+
+.budget-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.budget-title {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: #1C5B65;
+}
+
+.back-btn {
+  padding: 0.25rem;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.back-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.back-icon {
+  width: 2rem;
+  height: 2rem;
+  color: #1C5B65;
+}
+
+.stego-logo {
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: contain;
+}
+
+/* Main Card */
+.budget-main-card {
+  background-color: #F4F5F7;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.notification-message {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #047857;
+  margin-bottom: 1rem;
+}
+
+/* Form Grid */
+.budget-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: 3rem;
+  row-gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .budget-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.form-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field-label {
+  display: block;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 500;
+  color: #1C5B65;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+/* Inputs & Custom Trigger */
+.budget-input {
+  width: 100%;
+  /*max-width: 20rem;*/
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  border: 1px solid #fca5a5;
+  border-radius: 0.75rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.budget-input::placeholder {
+  color: #9ca3af;
+}
+
+.budget-input:focus {
+  border-color: #f87171;
+}
+
+.select-trigger-custom {
+  width: 100% !important;
+ /* max-width: 20rem !important;*/
+  background-color: #ffffff !important;
+  border: none !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+  height: 9rem !important;
+  align-items: flex-start !important;
+  padding: 1rem !important;
+  text-align: left !important;
+  color: #374151 !important;
+}
+
+/* Category Type Toggle Switch */
+.toggle-wrapper {
+  background-color: #ffffff;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  display: inline-flex;
+  gap: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.toggle-btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #9ca3af;
+  background: transparent;
+}
+
+.toggle-btn:hover {
+  color: #4b5563;
+}
+
+.toggle-btn.active-income {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.toggle-btn.active-expenditure {
+  background-color: #e5e7eb;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+/* Action Buttons */
+.action-buttons-wrapper {
+  display: flex;
+  items-align: flex-end;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .action-buttons-wrapper {
+    justify-content: flex-end;
+    margin-top: 0;
+  }
+}
+
+.btn-secondary {
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border: 1px solid #9ca3af;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  background-color: #FFFDF0;
+  color: #1C5B65;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #fef08a;
+}
+
+.btn-secondary:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Done Button */
+.done-container {
+  margin-top: 2rem;
+}
+
+.btn-done {
+  width: 100%;
+  padding: 0.75rem 0;
+  background-color: #F39C12;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 1rem;
+  border: 1px solid #d97706;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn-done:hover {
+  background-color: #E08E0B;
+}
+
+/* Navigation Bar */
+.bottom-nav {
+  width: 100%;
+  background-color: #1C5B65;
+  border-radius: 1rem;
+  padding: 1rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  box-sizing: border-box;
+}
+
+.nav-icon-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.nav-icon-btn:hover {
+  opacity: 0.8;
+}
+
+.nav-icon {
+  width: 2rem;
+  height: 2rem;
+}

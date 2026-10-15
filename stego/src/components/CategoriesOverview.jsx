@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { fetchCategories } from "../api/category";
+import { useState, useEffect } from "react";
+import { fetchCategories } from "../api";
 
 export default function CategoriesOverview() {
   const [categories, setCategories] = useState([]);

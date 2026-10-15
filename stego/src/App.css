@@ -182,3 +182,32 @@
     border-right-color: var(--border);
   }
 }
+
+/* Navigation Bar - True Full Screen Edge-to-Edge */
+.bottom-nav {
+  background-color: #1C5B65;
+  border-radius: 0;
+  padding: 1.25rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+}
+
+.nav-icon-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.nav-icon-btn:hover {
+  opacity: 0.8;
+}
+
+.nav-icon {
+  width: 2rem;
+  height: 2rem;
+}

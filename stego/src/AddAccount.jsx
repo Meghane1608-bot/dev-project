@@ -13,7 +13,7 @@ const Header = () => {
     )
 }
 
-//either current or savings account
+//list for the dropdown-either current or savings account
 const typeItems =[
     {label: "Current account" , value: "current"},
     {label:" Savings account" , value: "savings"},
@@ -26,10 +26,31 @@ const emptyForm = {
     overdraftLimit: ''
 }
 
-const AddAccount = () => {
+//onAdd is a func from App that this screen calls when an acc is ready to sav
+const AddAccount = ({onAdd}) => {
+    const [form,setForm] =useState(emptyForm) //form holds what the user has inputted so far
+    const [message , setMessage] = useState('') //account added notifier
+    const [saving, setSaving] =useState(false) 
+    const [error, setError] = useState('')//'' means no error, if there is an error it will be a string with the error message
+
+    // for input fields which send an event.
+    //reads which field changed and the new text then copies the old form and overwrites just that field 
+    const handleChange = (e) => {
+        const {name, value} = e.target
+        setForm((prevForm) => ({
+            ...prevForm,
+            [name]: value
+        }))
+    }
+     
+
+
+
+
     return(
         <div> 
-<Header/> 
+{/*<Header/> */}
+
 
 
         </div>

@@ -169,7 +169,7 @@ let expenditureList
  <button 
        className="btn-add-budget" 
           onClick={() => navigate('/BudgetSetup')} >
-            Create new budget
+            Create new budget?
       </button>
     
 

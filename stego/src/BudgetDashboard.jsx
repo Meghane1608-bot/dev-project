@@ -161,27 +161,17 @@ let expenditureList
     </div>
 </div> {/*close grid parent*/}
 
-{/*create new budget button*/} 
+
+  <h6> Savings  </h6> 
+    <Savings/> 
+
+    {/*create new budget button*/} 
  <button 
        className="btn-add-budget" 
           onClick={() => navigate('/BudgetSetup')} >
             Create new budget
       </button>
-
-  <h6> Savings </h6> 
-    <Savings/> 
-    {/*Savings mini dashboard*
-    <div className="savings-title">
-      <h4> SAVINGS </h4> 
-       <p> Current amount: </p>
-   <div className="savings-btn"> 
-       <button> 
-        onClick= {() =>{handleSavings}} 
-       </button>
-
-      </div>
-
-    </div> */}
+    
 
 
       <nav className="bottom-nav">

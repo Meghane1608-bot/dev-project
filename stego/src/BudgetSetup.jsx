@@ -4,7 +4,7 @@ import React from 'react'
  //this will allow me routing for react, so that users can get to different pages
 import {useNavigate} from 'react-router-dom'
 
-//shadcn SElect component 
+//shadcn Select component 
 import {
   Select,
   SelectContent,
@@ -166,6 +166,7 @@ const [addedCategories, setAddedCategories] = useState([])
           budgetPeriod:budgetPeriod
           } ,
         })
+        //setBudgetPeriod={budgetMonth} 
   } 
 
   // Check if user has added more than 2 categories

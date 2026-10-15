@@ -42,7 +42,22 @@ const AddAccount = ({onAdd}) => {
             [name]: value
         }))
     }
+
+    const handleSelectChange=(name) => (value) =>{
+        setForm((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
      
+    //the check that enables the create account button to be clicked only when all fields are filled in correctly
+    const isFormComplete =
+    form.accountName.trim() !== '' && //trim removes spaces so that just typing spaces doesnt count as filling in the field
+    !!form.accountType && // the double !! converts the value to a boolean, so that if it is empty it will be false and if it has a value it will be true
+    form.startingBalance !== '' &&
+    Number(form.startingBalance) >= 0 && //positive value entered
+    (form.overdraftLimit === '' || Number(form.overdraftLimit) >= 0); //blank or positive value entered
+
 
 
 

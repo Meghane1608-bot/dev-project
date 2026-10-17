@@ -58,6 +58,7 @@ const AddAccount = ({onAdd}) => {
     Number(form.startingBalance) >= 0 && //positive value entered
     (form.overdraftLimit === '' || Number(form.overdraftLimit) >= 0); //blank or positive value entered
 
+    
    const handleCreate = async () => {
     setSaving(true) //turn on saving 
     setError('')
@@ -82,13 +83,17 @@ const AddAccount = ({onAdd}) => {
     }
         
 
-    
-
 
 
     return(
         <div> 
-{/*<Header/> */}
+    <Header/> 
+
+    {message && (
+        <p role="status" className="success-msg">
+            {message}
+        </p>
+    )}
 
 
 

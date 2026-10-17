@@ -1,0 +1,101 @@
+/*Main overview page */
+.overview-page {
+    min-height :100vh;
+    background-color:#fffbeb ;
+    padding:24px ;
+   
+}
+/*Categories Overview heading */
+.overview-title {
+    font-size :30px ;
+    font-weight :bold ;
+    color :#0f766e ;
+    margin-bottom:32px;
+} 
+/*income and expenses*/
+.category-section {
+    margin-bottom :32px ;
+}
+/*income and expense heading */
+.section-heading {
+    background-color :white ;
+    color:#0f766e ;
+    font-size :20px ;
+    font-weight :bold ;
+    padding :16px ;
+    border-radius :12px ;
+    margin-bottom :12px ;
+}
+/*individual catgeory rows */
+.category-row{
+    display :grid ;
+    grid-template-columns :48px 2fr 1fr 1fr 80px;
+    align-items :center ;
+    gap :12px ;
+    background-color :white ;
+    padding :16px ; 
+    border-bottom :1px solid #e5e7eb ; 
+}
+/* category names */
+.category-name {
+    color :#0f766e ;
+    font-weight :600 ;
+}
+/*income amounts */
+.income-amount {
+    color:#16a34a ;
+    font-weight :600 ;
+} 
+/*expense amounts */
+.expense-amount {
+    color:#dc2626 ;
+    font-weight :600;
+} 
+
+/*Transaction dates */ 
+.category-date{
+color :#4b5563 ;
+font-size :14px ;
+}
+
+/*view buttons */ 
+.view-button { 
+    background-color :#fb923c ;
+    color :white ;
+    font-weight :600 ;
+    border :none ;
+    border-radius :8px ;
+    width :70px ;
+    height:32 ;
+    padding : 0;
+    font-size :14px ;
+    cursor :pointer ; 
+    justify-self:start ;
+} 
+/*Navigation Bar*/
+.bottom-nav {
+  background-color: #1C5B65;
+  border-radius: 1rem;
+  padding: 1rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.nav-icon-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.nav-icon-btn:hover {
+  opacity: 0.8;
+}
+
+.nav-icon {
+  width: 2rem;
+  height: 2rem;
+} 

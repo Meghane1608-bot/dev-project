@@ -58,8 +58,8 @@ const AddAccount = ({onAdd}) => {
     Number(form.startingBalance) >= 0 && //positive value entered
     (form.overdraftLimit === '' || Number(form.overdraftLimit) >= 0); //blank or positive value entered
 
-   /*const handleCreate = async () => {
-    setSaving(true)
+   const handleCreate = async () => {
+    setSaving(true) //turn on saving 
     setError('')
     try {
         await onAdd({
@@ -67,12 +67,20 @@ const AddAccount = ({onAdd}) => {
             name: form.accountName,
             type: form.accountType,
             balance: Number(form.startingBalance),
-            overdraftLimit: form.overdraftLimit === '' ? 0 : Number(form.overdraftLimit)
-        })
+            overdraftLimit: form.overdraftLimit === 'current' ?  Number(form.overdraftLimit || 0):0
+        }) //build the acc obj and send it to App with onAdd. 
+        //await tells it to wait until App has finished saving before continuing
         setMessage('Account added successfully!')
         setForm(emptyForm)
+        setTimeout(() => 
+            setMessage(''), 3000) //hide the message after 3 secs
+        } catch (err) { //if anything failed , catch will show an error but leaves form as is so user doesnt lose their input 
+            setError('Failed to add account. Please try again.') 
+        } finally {
+            setSaving(false)
+        }
     }
-        }*/
+        
 
     
 

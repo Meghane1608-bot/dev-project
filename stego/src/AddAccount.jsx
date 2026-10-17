@@ -130,7 +130,7 @@ const AddAccount = ({onAdd}) => {
     </SelectContent>
     </Select>
   </div>
-  
+
     <div className="form-field-group" >
         <label htmlFor="accountName" className="field-label">
             Account name*
@@ -179,6 +179,15 @@ const AddAccount = ({onAdd}) => {
         />
     </div>
   
+  //while the form is incomplete show this message
+  {!isFormComplete && (
+    <p className="text-sm text-muted-foreground">
+        Fill in all required fields to enable Create Account button.
+    </p>
+)}
+
+
+
   
 
 

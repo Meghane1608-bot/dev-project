@@ -10,6 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {Button} from "@/components/ui/button"
+
+
 
 const Header = () => {
   const navigate = useNavigate() //initialise navigate 
@@ -24,7 +27,7 @@ const Header = () => {
         >
           <ChevronLeft className="back-icon" />
         </button>
-        <h1 className="budget-title">Add Account</h1>
+        <h1 className="account-title">Add Account</h1>
       </div>
       <img src="" alt="stego logo" className="stego-logo" width="50px" />
     </header>
@@ -61,10 +64,10 @@ const AddAccount = ({onAdd}) => {
         }))
     }
 
-    const handleSelectChange=(name) => (value) =>{
+    const handleSelectChange= (value) =>{
         setForm((prev) => ({
             ...prev,
-            [name]: value
+            accountType: value
         }))
     }
      
@@ -78,7 +81,7 @@ const AddAccount = ({onAdd}) => {
 
     // these will be used to determine whether the overdraft limit field is required or not depending on the account type selected
     const isSavings = form.accountType === 'savings' 
-    const isCurrent = form.accountType === 'current' 
+    //const isCurrent = form.accountType === 'current' 
 
 
    const handleCreate = async () => {
@@ -90,9 +93,10 @@ const AddAccount = ({onAdd}) => {
             name: form.accountName,
             type: form.accountType,
             balance: Number(form.startingBalance),
-            overdraftLimit: form.overdraftLimit === 'current' ?  Number(form.overdraftLimit || 0):0
+            overdraftLimit: form.accountType === 'current' ?  Number(form.overdraftLimit || 0):0
         }) //build the acc obj and send it to App with onAdd. 
         //await tells it to wait until App has finished saving before continuing
+        
         setMessage('Account added successfully!')
         setForm(emptyForm)
         setTimeout(() => 
@@ -123,8 +127,8 @@ const AddAccount = ({onAdd}) => {
     </label>
     <Select 
     items={typeItems}
-    value={form.accountType || null}
-    onChange={handleSelectChange('accountType')}> 
+    value={form.accountType || undefined}
+    onChange={handleSelectChange}> 
     <SelectTrigger id="accountType" className="field-input">
         <SelectValue placeholder="Select account type" />
     </SelectTrigger>
@@ -189,7 +193,7 @@ const AddAccount = ({onAdd}) => {
         />
     </div>
   
-  //while the form is incomplete show this message
+  {/*while the form is incomplete show this message */}
   {!isFormComplete && (
     <p className="text-sm text-muted-foreground">
         Fill in all required fields to enable Create Account button.

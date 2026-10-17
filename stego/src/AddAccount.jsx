@@ -107,6 +107,30 @@ const AddAccount = ({onAdd}) => {
         </p>
     )}
 
+<div className="form-field-group" >
+    <label htmlFor="accountType" className="field-label">
+        Account type*
+    </label>
+    <Select 
+    items={typeItems}
+    value={form.accountType || null}
+    onChange={handleSelectChange('accountType')}> 
+    <SelectTrigger id="accountType" className="field-input">
+        <SelectValue placeholder="Select account type" />
+    </SelectTrigger>
+    <SelectContent>
+        <SelectGroup>
+            <SelectLabel>Account type</SelectLabel>
+            {typeItems.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                </SelectItem>
+            ))}
+        </SelectGroup>
+    </SelectContent>
+    </Select>
+  </div>
+  
     <div className="form-field-group" >
         <label htmlFor="accountName" className="field-label">
             Account name*
@@ -154,7 +178,8 @@ const AddAccount = ({onAdd}) => {
         disabled={isSavings} //disable the field if savings is selected
         />
     </div>
-
+  
+  
 
 
 

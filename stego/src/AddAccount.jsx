@@ -11,14 +11,24 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-
 const Header = () => {
-    return(
-        <div> 
-            <h1 className="accounts-header"> Create Account </h1>
-            <img src="" alt="stego logo" className="stego-logo" width="50px" />
-        </div>
-    )
+  const navigate = useNavigate() //initialise navigate 
+
+  return (
+    <header className="account-header">
+      <div className="account-header-left">
+        <button 
+          type="button" 
+          className="back-btn" 
+          onClick={() => navigate(-1)}
+        >
+          <ChevronLeft className="back-icon" />
+        </button>
+        <h1 className="budget-title">Add Account</h1>
+      </div>
+      <img src="" alt="stego logo" className="stego-logo" width="50px" />
+    </header>
+  )
 }
 
 //list for the dropdown-either current or savings account

@@ -186,6 +186,12 @@ const AddAccount = ({onAdd}) => {
     </p>
 )}
 
+{error && (
+    <p role="alert" className="error-msg">
+        {error}
+    </p>
+)}
+
 <Button 
 type="button"
 onClick={handleCreate}
@@ -197,8 +203,6 @@ disabled={!isFormComplete || saving}>
 
 
   
-
-
 
         </div>
     )

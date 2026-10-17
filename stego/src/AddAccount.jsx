@@ -62,7 +62,7 @@ const AddAccount = ({onAdd}) => {
     const isSavings = form.accountType === 'savings' 
     const isCurrent = form.accountType === 'current' 
 
-    
+
    const handleCreate = async () => {
     setSaving(true) //turn on saving 
     setError('')
@@ -98,6 +98,55 @@ const AddAccount = ({onAdd}) => {
             {message}
         </p>
     )}
+
+    <div className="form-field-group" >
+        <label htmlFor="accountName" className="field-label">
+            Account name*
+        </label>
+        <input 
+        id="accountName"
+        name="accountName"
+        type="text"
+        value={form.accountName}
+        onChange={handleChange}
+        placeholder="eg. Everyday spending"
+        className="field-input"
+        required
+        />
+    </div>
+
+   <div className="form-field-group" >
+        <label htmlFor="startingBalance" className="field-label">
+            Initial balance*
+        </label>
+        <input 
+        id="startingBalance"
+        name="startingBalance"
+        type="number"
+        value={form.startingBalance}
+        onChange={handleChange}
+        placeholder="R0.00"
+        className="field-input"
+        required
+        />
+    </div>
+
+       <div className="form-field-group" >
+        <label htmlFor="overdraftLimit" className="field-label">
+            Overdraft limit(optional)
+        </label>
+        <input 
+        id="overdraftLimit"
+        name="overdraftLimit"
+        type="number"
+        value={form.overdraftLimit}
+        onChange={handleChange}
+        placeholder={isSavings ? "Not applicable for savings account" : "R0.00"}
+        className="field-input disabled:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60" //style changes when disabled
+        disabled={isSavings} //disable the field if savings is selected
+        />
+    </div>
+
 
 
 

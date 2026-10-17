@@ -201,7 +201,21 @@ disabled={!isFormComplete || saving}>
 //the button is disabled if form incomplete or if saving is in progress
 //the label changes to "Creating..." while saving is in progress
 
-
+//navigation bar 
+<nav className="bottom-nav">
+        <button type="button" className="nav-icon-btn">
+          <Home className="nav-icon" />
+        </button>
+        <button type="button" className="nav-icon-btn">
+          <User className="nav-icon" />
+        </button>
+        <button type="button" className="nav-icon-btn">
+          <CreditCard className="nav-icon" />
+        </button>
+        <button type="button" className="nav-icon-btn">
+          <Calculator className="nav-icon" />
+        </button>
+      </nav>
   
 
         </div>

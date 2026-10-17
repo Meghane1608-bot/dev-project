@@ -58,7 +58,23 @@ const AddAccount = ({onAdd}) => {
     Number(form.startingBalance) >= 0 && //positive value entered
     (form.overdraftLimit === '' || Number(form.overdraftLimit) >= 0); //blank or positive value entered
 
+   /*const handleCreate = async () => {
+    setSaving(true)
+    setError('')
+    try {
+        await onAdd({
+            id : Date.now() ,
+            name: form.accountName,
+            type: form.accountType,
+            balance: Number(form.startingBalance),
+            overdraftLimit: form.overdraftLimit === '' ? 0 : Number(form.overdraftLimit)
+        })
+        setMessage('Account added successfully!')
+        setForm(emptyForm)
+    }
+        }*/
 
+    
 
 
 

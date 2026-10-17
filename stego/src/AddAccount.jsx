@@ -58,6 +58,10 @@ const AddAccount = ({onAdd}) => {
     Number(form.startingBalance) >= 0 && //positive value entered
     (form.overdraftLimit === '' || Number(form.overdraftLimit) >= 0); //blank or positive value entered
 
+    // these will be used to determine whether the overdraft limit field is required or not depending on the account type selected
+    const isSavings = form.accountType === 'savings' 
+    const isCurrent = form.accountType === 'current' 
+
     
    const handleCreate = async () => {
     setSaving(true) //turn on saving 

@@ -24,9 +24,14 @@ const Header = () => {
 }
 
 const AccountDashboard = () => {
-
-
-
+     //amnts must come from the database. 
+/* to do:
+  a card for total net worth = amnt in all accounts + savings acc
+  a card that shows amount in current acc
+    a card that shows amount in savings acc
+    button to add a new account that navigates to the add account screen
+    a button to go to savings(navigates to budget dashboard bc ive created a savings component there)
+*/
     return(
 <div>
 

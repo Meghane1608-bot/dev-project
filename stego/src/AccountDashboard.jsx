@@ -1,6 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
 import {useState} from 'react'
+import { Button } from '@/components/ui/button'
+import {Card , CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 
 
 const Header = () => {
@@ -24,11 +26,12 @@ const Header = () => {
 }
 
 const AccountDashboard = () => {
-     //amnts must come from the database. 
+     //addAccount writes & collects and sends them to be saved
+     //accDashboard reads them from the database  
 /* to do:
-  a card for total net worth = amnt in all accounts + savings acc
-  a card that shows amount in current acc
-    a card that shows amount in savings acc
+  a card for total net worth = current total  + savings acc total
+  a card that shows amount in current acc(sum of balances where type is current)
+    a card that shows amount in savings acc(sum of bals where type is savings)
     button to add a new account that navigates to the add account screen
     a button to go to savings(navigates to budget dashboard bc ive created a savings component there)
     a button to delete an account? 

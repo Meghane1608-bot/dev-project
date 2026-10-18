@@ -31,6 +31,7 @@ const AccountDashboard = () => {
     a card that shows amount in savings acc
     button to add a new account that navigates to the add account screen
     a button to go to savings(navigates to budget dashboard bc ive created a savings component there)
+    a button to delete an account? 
 */
     return(
 <div>

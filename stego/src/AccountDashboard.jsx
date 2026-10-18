@@ -25,6 +25,10 @@ const Header = () => {
   )
 }
 
+const formatMoney=(n) => 'R${n.toFixed(2)}' //to format the number to currency
+const sum =(list) => list.reduce((total,acc) => total + acc.balance,0) 
+
+
 const AccountDashboard = () => {
      //addAccount writes & collects and sends them to be saved
      //accDashboard reads them from the database  

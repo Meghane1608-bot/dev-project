@@ -1,4 +1,4 @@
-import React from 'react'
+import 'react'
  import { useState } from 'react'
 
  //this will allow me routing for react, so that users can get to different pages
@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
   SelectLabel
-} from "@/components/ui/select"
+} from "./components/ui/select"
 
 
 import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
@@ -116,21 +116,6 @@ const [addedCategories, setAddedCategories] = useState([])
 
 
   //what happens when the add button is clicked
-   {/*const handleAdd = () => {
-    if (typeof onAdd === 'function') {
-      onAdd({
-        ...form,
-        //id: String()
-        expectedIncome: form.expectedIncome ? Number(form.expectedIncome) : 0,
-        limitAmount: Number(form.limitAmount),
-      });
-    }
-    setMessage(`${form.categoryName} has been added to your budget`)
-    setForm(emptyForm) // after adding the cat, the form should clear
-    setTimeout(() => setMessage(''), 3000)
-  }*/
-
-    //what happens when the add button is clicked
   const handleAdd = () => {
     if (!isFormComplete) return; // validation first( the return is there so nothing runs below it.)
     const newItem = { //building the new item 
@@ -147,26 +132,26 @@ const [addedCategories, setAddedCategories] = useState([])
     setAddedCategories((prev) => [...prev, newItem]); /* builds a new array containing old+ the new item
     Prev guarantees it will give the latest state and we can compute the next one from it */
     setForm(emptyForm); // after adding the cat, the form should clear
-    
+    setMessage(`${form.categoryName} has been added to your budget`)
+    setTimeout(() => setMessage(''), 3000)
   }
 
   const handleReset = () => { 
     //message pop up to tell them their cats will be deleted 
     setForm(emptyForm) //clears the inputs
     setAddedCategories([]) // empty array
+    setMessage('Budget categories have been reset')
+    setTimeout(() => setMessage(''), 3000)
   } 
 
   //navigate to budget dashboard 
-  const [budgetPeriod,setBudgetPeriod] =useState("January")
-  
   const handleDone = () => {
     navigate('BudgetDashboard', 
       {state:
         {items: addedCategories,
-          budgetPeriod:budgetPeriod
+          budgetPeriod: form.budgetPeriod || 'January'
           } ,
         })
-        //setBudgetPeriod={budgetMonth} 
   } 
 
   // Check if user has added more than 2 categories
@@ -336,8 +321,6 @@ const [addedCategories, setAddedCategories] = useState([])
       </nav>
     </div>
   )
-
-
-   }
 }
+
 export default BudgetSetup

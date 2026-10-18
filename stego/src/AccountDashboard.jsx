@@ -32,6 +32,8 @@ const sum =(list) => list.reduce((total,acc) => total + acc.balance,0)
 const AccountDashboard = () => {
      //addAccount writes & collects and sends them to be saved
      //accDashboard reads them from the database  
+     const [accounts, setAccounts] = useState([]) //holds the list of accounts
+     
 /* to do:
   a card for total net worth = current total  + savings acc total
   a card that shows amount in current acc(sum of balances where type is current)
@@ -40,6 +42,8 @@ const AccountDashboard = () => {
     a button to go to savings(navigates to budget dashboard bc ive created a savings component there)
     a button to delete an account? 
 */
+
+
     return(
 <div>
 

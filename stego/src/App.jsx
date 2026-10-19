@@ -20,7 +20,7 @@ function App() {
     <BrowserRouter>
     <Routes> 
    <Route 
-    path = "/" 
+    path = "/budgetSetup" 
     element={<BudgetSetup />}
     />
     

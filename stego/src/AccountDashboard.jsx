@@ -3,10 +3,10 @@ import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
 import {useState} from 'react'
 import { Button } from '@/components/ui/button'
 import {Card , CardContent, CardHeader, CardTitle} from '@/components/ui/card'
-
+import axios from 'axios'
 
 const Header = () => {
-  const navigate = useNavigate() //initialise navigate 
+  //const navigate = useNavigate() initialise navigate 
 
   return (
     <header className="account-header">
@@ -33,7 +33,9 @@ const AccountDashboard = () => {
      //addAccount writes & collects and sends them to be saved
      //accDashboard reads them from the database  
      const [accounts, setAccounts] = useState([]) //holds the list of accounts
-   
+    const [loading,setLoading]= useState(true) 
+    const [error, setError]= useState('')
+    const navigate = useNavigate() //initialise navigate
 /* to do:
   a card for total net worth = current total  + savings acc total
   a card that shows amount in current acc(sum of balances where type is current)
@@ -42,6 +44,21 @@ const AccountDashboard = () => {
     a button to go to savings(navigates to budget dashboard bc ive created a savings component there)
     a button to delete an account? 
 */
+useEffect(() => {
+    axios 
+    .get('') //fetch the list of accounts from the backend
+    .then((response) => {
+        setAccounts(response.data) //set the accounts state to the data received
+        
+    })
+    .catch(() => {
+        setError('Couldnt load accounts. ') //set error message if fetch fails
+    })
+    .finally(() => {
+        setLoading(false) //set loading to false regardless of success or failure
+    })
+}, []) 
+
 
 
     return(

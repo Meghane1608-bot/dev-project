@@ -98,7 +98,7 @@ let expenditureList
       <Header />
 <div className="dashboard-grid-container" > 
       <main className="budget-main-card">
-        <h2 className="page-subtitle">  {budgetMonth} Budget Overview</h2>
+        <h2 className="page-subtitle">  {budgetMonth} Budget Overview:</h2>
 
 
         {/* Expenditure Section */}
@@ -164,12 +164,12 @@ let expenditureList
 
   <h6> Savings  </h6> 
     <Savings/> 
-
+   
     {/*create new budget button*/} 
  <button 
        className="btn-add-budget" 
           onClick={() => navigate('/BudgetSetup')} >
-            Create new budget
+            Create new budget?
       </button>
     
 

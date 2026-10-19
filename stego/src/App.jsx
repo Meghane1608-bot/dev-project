@@ -4,10 +4,10 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'*/}
 import './App.css'
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
-//import './BudgetSetup.jsx'
 import BudgetSetup from './BudgetSetup'
 import BudgetDashboard from './BudgetDashboard'
-
+import AddAccount from './AddAccount'
+import AccountDashboard from './AccountDashboard'
 
 
 
@@ -17,8 +17,17 @@ function App() {
     <>
     <BrowserRouter>
     <Routes> 
+
+      <Route 
+    path = "/CreateAccount" 
+    element={<AddAccount />}
+    />
+    <Route 
+    path = "/Home" 
+    element={<AccountDashboard />}
+    />
    <Route 
-    path = "/" 
+    path = "/BudgetSetup" 
     element={<BudgetSetup />}
     />
     

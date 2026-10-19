@@ -49,7 +49,7 @@ const AccountDashboard = () => {
 
     <Header/>
 
-        //navigation bar 
+        {/*navigation bar */}
 <nav className="bottom-nav">
         <button type="button" className="nav-icon-btn">
           <Home className="nav-icon" />

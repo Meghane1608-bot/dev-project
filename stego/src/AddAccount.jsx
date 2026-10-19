@@ -212,10 +212,10 @@ onClick={handleCreate}
 disabled={!isFormComplete || saving}>
   {saving ? "Creating..." : "Create Account"}
 </Button>
-//the button is disabled if form incomplete or if saving is in progress
-//the label changes to "Creating..." while saving is in progress
+{/*the button is disabled if form incomplete or if saving is in progress
+the label changes to "Creating..." while saving is in progress*/}
 
-//navigation bar 
+
 <nav className="bottom-nav">
         <button type="button" className="nav-icon-btn">
           <Home className="nav-icon" />

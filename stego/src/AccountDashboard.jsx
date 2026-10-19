@@ -33,7 +33,7 @@ const AccountDashboard = () => {
      //addAccount writes & collects and sends them to be saved
      //accDashboard reads them from the database  
      const [accounts, setAccounts] = useState([]) //holds the list of accounts
-     
+   
 /* to do:
   a card for total net worth = current total  + savings acc total
   a card that shows amount in current acc(sum of balances where type is current)

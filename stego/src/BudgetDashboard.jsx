@@ -161,7 +161,7 @@ let expenditureList
 </div> {/*close grid parent*/}
 
 
-  <h6> Savings  </h6> 
+  <h6 className= "savings-title">  Savings   </h6> 
     <Savings/> 
    
     {/*create new budget button*/} 

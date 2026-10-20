@@ -3,10 +3,10 @@ export default function ForgotPassword() {
 
 return( 
     <div className ="forgot-page">
-        <div className ="Forgot-container">
+        <div className ="forgot-container">
             <h1> Forgot Password ?</h1>
             <p> Update password for enhanced account security</p>
-        </div>
+        
 
         <form>
             <div className ="forgot-field">
@@ -23,6 +23,7 @@ return(
             <button type ="button"> Apply</button>
             </div>
         </form> 
+        </div> 
         </div>  
     
 )

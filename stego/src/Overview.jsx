@@ -75,7 +75,7 @@
             </div>
             </section>  
 
-           <Navbar/>
+           <Navbar/> 
             </div>  
         
     ) 

@@ -1,59 +1,107 @@
-import  Database  from 'better-sqlite3';
+import sqlite3 from 'sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// Get current directory path for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Create a new SQLite database or open an existing one
-const dbPath = path.join(__dirname, 'stego.sqlite');
+// Connect to SQLite database (creates stego.sqlite automatically if it doesn't exist)
+const dbPath = path.resolve(__dirname, 'stego.sqlite');
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) {
+    console.error('Error opening database:', err.message);
+  } else {
+    console.log('Connected to the SQLite database.');
+  }
+});
 
-const db = new Database(dbPath, { verbose: console.log });
+// Create tables safely using serialization
+db.serialize(() => {
+  // Enable foreign key constraints in SQLite
+  db.run('PRAGMA foreign_keys = ON');
 
-db.pragma('journal_mode = WAL');
-db.pragma('foreign_keys = ON');
-
-// Initialize database schema based on the stego ERD
-db.exec(`
-  CREATE TABLE IF NOT EXISTS users (
+  // 0. Users Table
+  db.run(`CREATE TABLE IF NOT EXISTS users (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE NOT NULL,
+    username TEXT NOT NULL UNIQUE,
+    email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL
-  );
+  )`, (err) => {
+    if (err) {
+      console.error('Error creating users table:', err.message);
+    } else {
+      console.log('Users table created or already exists.');
+    }
+  });
 
-  CREATE TABLE IF NOT EXISTS accounts (
+  // 1. Accounts Table
+  db.run(`CREATE TABLE IF NOT EXISTS accounts (
     account_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER REFERENCES users(user_id),
-    account_number TEXT NOT NULL,
-    account_type TEXT CHECK(account_type IN ('current', 'savings')) NOT NULL,
-    balance REAL DEFAULT 0.00,
-    data_created DATETIME DEFAULT CURRENT_TIMESTAMP,
-    overdraft_limit REAL DEFAULT 0.00,
-    withdrawl_limit REAL DEFAULT 0.00,
-    goal_amount REAL DEFAULT 0.00,
-    withdrawls_this_period INTEGER DEFAULT 0
-  );
+    user_id INTEGER NOT NULL,
+    account_name TEXT NOT NULL,
+    account_type TEXT NOT NULL,
+    balance REAL NOT NULL DEFAULT 0.0,
+    overdraft_limits REAL NOT NULL DEFAULT 0.0,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+  )`, (err) => {
+    if (err) {
+      console.error('Error creating accounts table:', err.message);
+    } else {
+      console.log('Accounts table created or already exists.');
+    }
+  });
 
-  CREATE TABLE IF NOT EXISTS categories (
+  // 2. Categories Table
+  db.run(`CREATE TABLE IF NOT EXISTS categories (
     category_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    category_type TEXT CHECK(category_type IN ('income', 'expense')) NOT NULL,
+    category_type TEXT NOT NULL CHECK(category_type IN ('income', 'expense')),
     category_name TEXT NOT NULL
-  );
+  )`, (err) => {
+    if (err) {
+      console.error('Error creating categories table:', err.message);
+    } else {
+      console.log('Categories table created or already exists.');
+    }
+  });
+});
 
-  CREATE TABLE IF NOT EXISTS transactions (
-    transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    account_id INTEGER NOT NULL REFERENCES accounts(account_id) ON DELETE CASCADE,
-    category_id INTEGER REFERENCES categories(category_id),
-    limit_amount REAL NOT NULL,
-    period TEXT DEFAULT 'monthly'
-  );
+// 3. Budgets Table
+db.run(`CREATE TABLE IF NOT EXISTS budgets (
+  budget_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  category_id INTEGER NOT NULL,
+  budget_amount REAL NOT NULL,
+  start_date TEXT NOT NULL,
+  end_date TEXT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+  FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
+)`, (err) => {
+  if (err) {
+    console.error('Error creating budgets table:', err.message);
+  } else {
+    console.log('Budgets table created or already exists.');
+  }
+});
 
-  CREATE TABLE IF NOT EXISTS savings_goals (
-    goal_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    account_id INTEGER REFERENCES accounts(account_id),
-    goal_name TEXT NOT NULL,
-    target_amount REAL NOT NULL
-  );
-`);
+// 4. Transactions Table
+db.run(`CREATE TABLE IF NOT EXISTS transactions (
+  transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  account_id INTEGER NOT NULL,
+  category_id INTEGER NOT NULL,
+  amount REAL NOT NULL,
+  transaction_date TEXT NOT NULL,
+  description TEXT,
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+  FOREIGN KEY (account_id) REFERENCES accounts(account_id) ON DELETE CASCADE,
+  FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
+)`, (err) => {
+  if (err) {
+    console.error('Error creating transactions table:', err.message);
+  } else {
+    console.log('Transactions table created or already exists.');
+  }
+});
 
 export default db;

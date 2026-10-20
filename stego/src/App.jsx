@@ -10,7 +10,7 @@ import BudgetDashboard from './BudgetDashboard'
 import Category from './Category.jsx' 
 import Overview from './Overview.jsx' 
 import Login from './Login.jsx' 
-
+import ForgotPassword from './ForgotPassword'
 
 
 
@@ -25,7 +25,8 @@ function App() {
    <Route 
     path = "/budgetSetup" 
     element={<BudgetSetup />}
-    />
+    /> 
+    <Route path="/forgot-password" element ={<ForgotPassword/>} /> 
     
     {/* budget dashboard route*/}
 <Route 

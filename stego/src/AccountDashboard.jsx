@@ -34,7 +34,7 @@ const AccountDashboard = () => {
      const [accounts, setAccounts] = useState([]) //holds the list of accounts
     const [loading,setLoading]= useState(true) 
     const [error, setError]= useState('')
-    const navigate = useNavigate() //initialise navigate
+    
 
 useEffect(() => {
     axios 
@@ -58,7 +58,7 @@ const netWorth = currentTotal + savingsTotal //total net worth = current total  
  
    if (loading) return <p > Loading...</p>
    if (error) return <p role= "alert" > {error} </p>
-   
+
     return(
 <div>
     <Header/>

@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import TransactionDashboard from './components/transactiondashboard';
 import BudgetDashboard from './components/Budgetdashboard';
 import CategoriesOverview from './components/CategoriesOverview';
-import './App.css';
+import './App.css'; // Import your CSS file for styling
 
 export default function App() {
   return (

@@ -1,3 +1,4 @@
+import'./ForgotPassword.css' 
 export default function ForgotPassword() { 
 
 return( 
@@ -21,8 +22,8 @@ return(
             <button type ="reset"> Discard</button> 
             <button type ="button"> Apply</button>
             </div>
-        </form>
-        </div> 
+        </form> 
+        </div>  
     
 )
 }

@@ -1,13 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { Button } from '@/components/ui/button'
 import {Card , CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 import axios from 'axios'
 
 const Header = () => {
-  //const navigate = useNavigate() initialise navigate 
-
+  const navigate = useNavigate() //initialise navigate 
   return (
     <header className="account-header">
       <div className="account-header-left">
@@ -25,7 +24,7 @@ const Header = () => {
   )
 }
 
-const formatMoney=(n) => 'R${n.toFixed(2)}' //to format the number to currency
+const formatMoney=(n) => `R${n.toFixed(2)}` //to format the number to currency
 const sum =(list) => list.reduce((total,acc) => total + acc.balance,0) 
 
 
@@ -36,14 +35,7 @@ const AccountDashboard = () => {
     const [loading,setLoading]= useState(true) 
     const [error, setError]= useState('')
     const navigate = useNavigate() //initialise navigate
-/* to do:
-  a card for total net worth = current total  + savings acc total
-  a card that shows amount in current acc(sum of balances where type is current)
-    a card that shows amount in savings acc(sum of bals where type is savings)
-    button to add a new account that navigates to the add account screen
-    a button to go to savings(navigates to budget dashboard bc ive created a savings component there)
-    a button to delete an account? 
-*/
+
 useEffect(() => {
     axios 
     .get('') //fetch the list of accounts from the backend
@@ -57,14 +49,62 @@ useEffect(() => {
     .finally(() => {
         setLoading(false) //set loading to false regardless of success or failure
     })
-}, []) 
+}, [])
 
-
-
+//filter only the current accounts and use reduce to add up the balances 
+const currentTotal = sum(accounts.filter(acc => acc.type === 'current')) //sum of balances where type is current
+const savingsTotal = sum(accounts.filter(acc => acc.type === 'savings')) //sum of balances where type is savings
+const netWorth = currentTotal + savingsTotal //total net worth = current total  + savings acc total 
+ 
+   if (loading) return <p > Loading...</p>
+   if (error) return <p role= "alert" > {error} </p>
+   
     return(
 <div>
-
     <Header/>
+
+    <Card className="account-card">
+        <CardHeader>
+        <CardTitle> Total net worth </CardTitle>
+        </CardHeader>
+        <CardContent className="account-card-content">
+            {formatMoney(netWorth)}
+        </CardContent>
+    </Card>
+
+    <Card className="account-card">
+        <CardHeader>
+            <CardTitle> Current Account </CardTitle>
+        </CardHeader>
+        <CardContent className="account-card-content">
+            {formatMoney(currentTotal)}
+        </CardContent>
+    </Card>
+
+    <Card className="account-card">
+        <CardHeader>
+            <CardTitle> Savings Account </CardTitle>
+        </CardHeader>
+        <CardContent className="account-card-content">
+            {formatMoney(savingsTotal)}
+        </CardContent>
+    </Card>
+
+    <Button 
+    type="button" 
+    onClick ={onAddAccount} >
+   Add account 
+    </Button>
+
+    <Button  
+    type="button"
+    onClick={onViewSavings}>
+        View Savings 
+     </Button>
+ 
+
+  {/*onViewSavings should navigate to budget dashboard page bc thats where savings are stored
+  onAddAccount should navigate back to create account*/}
 
         {/*navigation bar */}
 <nav className="bottom-nav">

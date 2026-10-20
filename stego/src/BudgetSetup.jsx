@@ -1,9 +1,6 @@
-import React from 'react'
- import { useState } from 'react'
-
- //this will allow me routing for react, so that users can get to different pages
+import { useState } from 'react'
+//this will allow me routing for react, so that users can get to different pages
 import {useNavigate} from 'react-router-dom'
-
 //shadcn Select component 
 import {
   Select,
@@ -14,8 +11,6 @@ import {
   SelectValue,
   SelectLabel
 } from "@/components/ui/select"
-
-
 import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
 import './BudgetSetup.css'
 

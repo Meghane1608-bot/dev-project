@@ -71,6 +71,7 @@ Gugu : 12 October 2026: Claude Sonnet 5.5 : my css was wrong and i couldnt get m
 Gugu: 15 October 2026 : Claude Sonnet 5.5 : needed help with merging and an explanation on what conflicts are caused by : provided me with a brief explanation on what conflicts are and steps on merging branches 
 Gugu : 17 October 2026 : Claude Sonnet 5.5: asked for an explanation on how the account dashboard would work if grabbing data(amounts) from the database : provided an eplanation and boilerplate code with toDos that i had to fill in myself 
 Gugu: 17 October 2026: Claude Sonnet 5.5 : debugging my account dashboard file : provided explanations on what was wrong with my thinking and how to fix it 
+Gugu : 20 October 2025: Claude Sonnet 5.5 : gave claude my css for budget dashboard and my classNames that i had created in savings.jsx and asked it to give me the css to match the rest of the page : game me the css and i adjusted it according to my needs 
 
 
 

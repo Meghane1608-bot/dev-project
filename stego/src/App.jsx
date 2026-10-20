@@ -9,6 +9,8 @@ import BudgetSetup from './BudgetSetup'
 import BudgetDashboard from './BudgetDashboard'
 import Category from './Category.jsx' 
 import Overview from './Overview.jsx' 
+import Login from './Login.jsx' 
+
 
 
 
@@ -19,6 +21,7 @@ function App() {
     <>
     <BrowserRouter>
     <Routes> 
+    <Route path = "/" element = {<Login/>} /> 
    <Route 
     path = "/budgetSetup" 
     element={<BudgetSetup />}
@@ -37,6 +40,6 @@ function App() {
       {/*<BudgetSetup onDone={()=>{console.log("Hey")}} />*/}
     </>
   )
-}
+} 
 
 export default App 

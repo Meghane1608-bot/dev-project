@@ -20,18 +20,23 @@
 .login-field label {
     color:#075d69 ;
     font-size:23px ; 
+    display:block;
 }
 .login-field input{
     width:100; 
     padding :15px ;
     border : 1px solid white ; 
+    border-radius :5px ;
+    box-sizing :border-box ; 
 } 
 
 .forgotten-button{
     display:block ;
     text-align:right;
-    color:black;
+    margin-top:10px ; 
+    color : black;
     font-size:13px;
+
 } 
 .login-button {
     background-color:orange ;

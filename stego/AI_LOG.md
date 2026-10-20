@@ -72,6 +72,7 @@ Gugu: 15 October 2026 : Claude Sonnet 5.5 : needed help with merging and an expl
 Gugu : 17 October 2026 : Claude Sonnet 5.5: asked for an explanation on how the account dashboard would work if grabbing data(amounts) from the database : provided an eplanation and boilerplate code with toDos that i had to fill in myself 
 Gugu: 17 October 2026: Claude Sonnet 5.5 : debugging my account dashboard file : provided explanations on what was wrong with my thinking and how to fix it 
 Gugu : 20 October 2025: Claude Sonnet 5.5 : gave claude my css for budget dashboard and my classNames that i had created in savings.jsx and asked it to give me the css to match the rest of the page : game me the css and i adjusted it according to my needs 
+Gugu : 20 October : Claude Sonnet 5.5 : needed help with understanding api.js alongside fullstackopen and asked it whether the names in the API are meant to match the files in src. : explained the concept of APIs and how it works with the useEffect hook and what was missing from our api.js file and why it would cause the app to crash. It also gave code that was cleaner than what we initially had in api.js to reduce repetition. 
 
 
 

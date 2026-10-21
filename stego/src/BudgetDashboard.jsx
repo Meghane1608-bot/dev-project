@@ -3,7 +3,7 @@ import { ChevronLeft, Home, User, CreditCard, Calculator } from 'lucide-react'
 import './BudgetDashboard.css'
 import Savings from './Savings'
 import {useState, useEffect} from 'react'
-import { fetchBudgets } from './api'
+import { fetchBudgets, fetchTransactions } from './api'
 
 
 const Header = () => {
@@ -28,10 +28,10 @@ const Header = () => {
 
 
 const BudgetDashboard = () => {
-  {/*const location = useLocation()
+  const location = useLocation()
  const navigate = useNavigate()
  
-  // Retrieve categories and budgetPeriod passed via router state
+  {/* Retrieve categories and budgetPeriod passed via router state
   const items = location.state?.items || [] //
 const budgetMonth = location.state?.budgetPeriod || 'January' //doesnt display yet. I need it to display on the dashboard depending on what the user entered*/}
 
@@ -39,6 +39,45 @@ const [items,setItems] = useState([])
 const [budgetMonth, setBudgetMonth] = useState('')
 const [loading, setLoading] =useState(true)
 const [error, setError] = useState(null) 
+
+useEffect( () => {
+  const load = async() => {
+    setLoading(true) 
+    setError(null)
+    try{
+      //if budget setup handed us the newly created budget use it
+      if (location.state?.budget) {
+        const b= location.state.budget
+        setItems (b.tems || [])
+        setBudgetMonth(b.period||'')
+      }else {
+    //else get the most recently saved budget from the database
+    const budgets= await fetchBudgets()
+      if (Array.isArray(budgets) && budgets.length >0){
+        const latest = budgets[budgets.length-1]
+        setItems(latest.items || [])
+        setBudgetMonth(latest.period || '')
+      }
+      }
+
+      //get the actual amts from transactions table 
+    const allTransactions = await fetchTransactions()
+     setTransactions(allTransactions|| [])
+    } catch(err) {
+      console.error('load failed', err)
+      setError(
+        err?.response?.data?.message ||
+        err.message ||
+        'failed to load budget'
+      )
+        
+    } finally {
+      setLoading(false)
+    }
+  }
+  load() 
+}, [location.state])
+
 
   // Group by category type
   const incomeItems = items.filter((item) => item.categoryType === 'Income')

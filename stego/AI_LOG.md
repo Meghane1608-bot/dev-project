@@ -1,6 +1,6 @@
  AI Use Log – stégo Group Project
 
-8 October 2026 heelol
+8 October 2026 
 
 Group member: Meghane Jansen
 AI tool:ChatGPT (GPT-6)

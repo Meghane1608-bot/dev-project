@@ -10,7 +10,10 @@ import BudgetDashboard from './BudgetDashboard'
 import Category from './Category.jsx' 
 import Overview from './Overview.jsx' 
 import Login from './Login.jsx' 
-import ForgotPassword from './ForgotPassword'
+import ForgotPassword from './ForgotPassword.jsx'
+import AccountDashboard from './AccountDashboard.jsx'
+import AddAccount from './AddAccount.jsx'
+
 
 
 
@@ -36,6 +39,9 @@ function App() {
 {/*Category and overview route*/} 
   <Route path ="/category" element = {<Category/>}/>
   <Route path ="/overview" element = {<Overview/>}/> 
+
+  <Route path = "/accountdashboard" element = {<AccountDashboard/>} />
+   <Route path = "/addaccount" element = {<AddAccount/>} />
 </Routes>
 </BrowserRouter>
       {/*<BudgetSetup onDone={()=>{console.log("Hey")}} />*/}

@@ -28,35 +28,28 @@ const Header = () => {
 
 
 const BudgetDashboard = () => {
-  const location = useLocation()
+  {/*const location = useLocation()
  const navigate = useNavigate()
  
   // Retrieve categories and budgetPeriod passed via router state
   const items = location.state?.items || [] //
-const budgetMonth = location.state?.budgetPeriod || 'January' //doesnt display yet. I need it to display on the dashboard depending on what the user entered
+const budgetMonth = location.state?.budgetPeriod || 'January' //doesnt display yet. I need it to display on the dashboard depending on what the user entered*/}
 
-//testing api 
-useEffect (() => {
-  fetchBudgets()
-  .then((data) => console.log('budgets', data))
-  .catch((err) => console.log('error:' , err.message))
-}, [])
-
-
+const [items,setItems] = useState([])
+const [budgetMonth, setBudgetMonth] = useState('')
+const [loading, setLoading] =useState(true)
+const [error, setError] = useState(null) 
 
   // Group by category type
   const incomeItems = items.filter((item) => item.categoryType === 'Income')
   const expenditureItems = items.filter((item) => item.categoryType === 'Expenditure')
   
-
   // Totals
   const totalExpectedIncome = incomeItems.reduce((acc, curr) => acc + Number(curr.expectedIncome || 0), 0)
   const totalExpenditure = expenditureItems.reduce((acc, curr) => acc + Number(curr.limitAmount || 0), 0)
   //const leftToSpend= totalExpenditure- totalSpent 
   // const received = total income actually received 
 
-  
- 
 //expenditure list 
 let expenditureList 
  if (expenditureItems.length >0 ) {

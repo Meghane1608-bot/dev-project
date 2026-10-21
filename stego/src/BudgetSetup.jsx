@@ -111,8 +111,6 @@ const [addedCategories, setAddedCategories] = useState([])
     : form.limitAmount !== "" && Number(form.limitAmount) > 0);
 
 
-
-
     //what happens when the add button is clicked
   const handleAdd = () => {
     if (!isFormComplete) return; // validation first( the return is there so nothing runs below it.)
@@ -120,7 +118,7 @@ const [addedCategories, setAddedCategories] = useState([])
 
     const newItem = { //building the new item 
       ...form, //spread operator to copy every propoerty from form
-      id: String(categoryItems.length+1),
+      //id: String(categoryName.length+1),
       expectedIncome: form.expectedIncome ? Number(form.expectedIncome) : 0, //if theres a value convert it and if not "" = 0
       limitAmount: form.limitAmount ? Number(form.limitAmount) : 0,
     };
@@ -146,7 +144,7 @@ const [addedCategories, setAddedCategories] = useState([])
   } 
 
   //navigate to budget dashboard 
-  //const [budgetPeriod,setBudgetPeriod] =useState("January")
+  const [budgetPeriod,setBudgetPeriod] =useState("January")
   
   //in order to save the budget values 
   const handleDone = async() => {
@@ -176,8 +174,8 @@ const [addedCategories, setAddedCategories] = useState([])
   } 
 }
 
-  // Check if user has added more than 2 categories
-  const isDoneDisabled = addedCategories.length < 2
+  // Check if user has added a min of 2 categories
+  const isDoneDisabled = addedCategories.length <= 2
 
   return ( 
     <div className="budget-page-container">
@@ -327,7 +325,7 @@ const [addedCategories, setAddedCategories] = useState([])
             : ''
           }`}
         >
-         {saving ? 'Saving...' :Done} 
+         {saving ? 'Saving...':'Done'} 
         </button>
       </div>
 

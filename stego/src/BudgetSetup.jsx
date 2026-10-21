@@ -15,11 +15,11 @@ import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
 import './BudgetSetup.css'
 import { createBudget } from './api'
 
-const Header = () => {
+const Header = (onBack) => {
   return (
     <header className="budget-header">
       <div className="budget-header-left">
-        <button type="button" className="back-btn">
+        <button type="button" className="back-btn" onClick={onBack}>
           <ChevronLeft className="back-icon" />
         </button>
         <h1 className="budget-title">Budget Setup</h1>
@@ -64,6 +64,12 @@ const categoryItems = [
   { label: "NSFAS", value: "NSFAS" },
   { label: "Bursary stipend", value: "Bursary stipend" }, 
   { label: "Salary", value: "Salary" },
+]
+
+//setting an array for budget period so the user doesnt have to type and no validations are needed 
+const months= [
+  'January','February', 'March', 'April', 'May', 'June','July',
+  'August', 'September', 'October', 'November', 'December',
 ]
 
 //the screen itself that renders the button component and header component
@@ -156,11 +162,11 @@ const [addedCategories, setAddedCategories] = useState([])
       //grab the period that the user typed 
       const period = addedCategories[0]?.budgetPeriod || form.budgetPeriod || 'January'
       const created = await createBudget({
-        period: budgetPeriod,
+        period ,
         items: addedCategories,
       })
       setMessage('Budget saved! Taking you to dashboard...')
-     //using state here so that it renders immediately
+     //using state here so that dashboard renders immediately
       navigate('/BudgetDashboard', {state: {budget:created}})
     } catch (err) {
       console.error('createBugdet failed:', err)
@@ -179,8 +185,7 @@ const [addedCategories, setAddedCategories] = useState([])
 
   return ( 
     <div className="budget-page-container">
-      <Header />
-
+      <Header  onBack={() => navigate(-1)} />
 
       <main className="budget-main-card">
         {message && <p className="notification-message">{message}</p>}
@@ -211,6 +216,7 @@ const [addedCategories, setAddedCategories] = useState([])
             </Select> 
           </div>
 
+{/*Category type*/}
           <div className="form-field-group">
             <label className="field-label">Select category type*</label>
             <div className="toggle-wrapper">
@@ -244,6 +250,7 @@ const [addedCategories, setAddedCategories] = useState([])
     id="expectedIncome"
     name="expectedIncome"
     type="text"
+    inputMode="decimal"
     value={form.expectedIncome}
     onChange={handleChange}
     placeholder={isExpenditure ? "N/A (only applicable for income)" : "R0-100000"}
@@ -263,6 +270,7 @@ const [addedCategories, setAddedCategories] = useState([])
     id="limitAmount"
     name="limitAmount"
     type="text"
+    inputMode="decimal"
     value={form.limitAmount}
     onChange={handleChange}
     placeholder={isIncome ? "N/A (only applicable for expenditure)" : "R0-100000"}
@@ -271,39 +279,48 @@ const [addedCategories, setAddedCategories] = useState([])
     required={isExpenditure}
   />
 </div>
-
+        {/*budget period*/}
           <div className="form-field-group">
             <label htmlFor="budgetPeriod" className="field-label">
               Budget period*
             </label>
-            <input 
-              id="budgetPeriod"
-              name="budgetPeriod"
-              type="text"
+            <Select
               value={form.budgetPeriod}
-              onChange={handleChange}
-              placeholder="Month"
-              className="budget-input"
-              required
-            />
+              onValueChange={(val) => handleSelectChange('budgetPeriod', val)}
+              disabled={periodLocked}
+            >
+              <SelectTrigger id="budgetPeriod" className="select-trigger-custom">
+                <SelectValue placeholder="Select a month" />
+              </SelectTrigger>
+              <SelectContent className="bg-white rounded-xl shadow-lg border-none">
+                <SelectGroup>
+                  <SelectLabel>Months</SelectLabel>
+                  {months.map((month) => (
+                    <SelectItem key={month} value={month} className="py-2 cursor-pointer">
+                      {month}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
 
           
 
           {/*if the form isnt Complete*/}
-          {!isFormComplete && (
+          {!isFormComplete || isDoneDisabled && (
             <div className="text-sm text-muted-foreground col-span-2">
               <ul>     
-                <li> Fill in all fields marked * to enable Add.</li>
-              <li> Minimum two categories added to enable Done. {''} </li> 
+                {!isFormComplete && <li> Fill in all fields marked * to enable Add.</li>}
+              {isDoneDisabled && <li> Add at least two categories added to enable Done. {''} </li> }
               </ul>
           
             </div>
           )} 
 
           <p className="col-span-2"> 
-            {''}
-            Categories available : {categoryItems.length}{''} 
+            
+            Categories available : {categoryItems.length}
             </p>
 
           <Button 

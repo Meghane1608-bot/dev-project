@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
 import {useState, useEffect} from 'react'
 import { Button } from '@/components/ui/button'
@@ -121,10 +122,10 @@ const netWorth = currentTotal + savingsTotal //total net worth = current total  
           <Calculator className="nav-icon" />
         </button>
       </nav>
-
+      <Navbar/>
       </div> //outermost div for account dashboard component 
   
-    )
+    ) 
 }
 
 

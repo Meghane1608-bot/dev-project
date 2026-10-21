@@ -3,6 +3,7 @@ import { ChevronLeft, Home, User, CreditCard, Calculator } from 'lucide-react'
 import './BudgetDashboard.css'
 import Savings from './Savings'
 import {useState, useEffect} from 'react'
+import { fetchBudgets } from './api'
 
 
 const Header = () => {
@@ -33,6 +34,15 @@ const BudgetDashboard = () => {
   // Retrieve categories and budgetPeriod passed via router state
   const items = location.state?.items || [] //
 const budgetMonth = location.state?.budgetPeriod || 'January' //doesnt display yet. I need it to display on the dashboard depending on what the user entered
+
+//testing api 
+useEffect (() => {
+  fetchBudgets()
+  .then((data) => console.log('budgets', data))
+  .catch((err) => console.log('error:' , err.message))
+}, [])
+
+
 
   // Group by category type
   const incomeItems = items.filter((item) => item.categoryType === 'Income')

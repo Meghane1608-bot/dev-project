@@ -15,7 +15,7 @@ import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
 import './BudgetSetup.css'
 import { createBudget } from './api'
 
-const Header = (onBack) => {
+const Header = ({onBack}) => {
   return (
     <header className="budget-header">
       <div className="budget-header-left">
@@ -43,9 +43,7 @@ const Button = ({ reset, add, addDisabled }) => {
   )
 }
 
-{/*const onDone = () => {
-  console.log("Sup Gugu")
-*/}
+
 
 //object that will make every filled value blank for reset 
 const emptyForm = {
@@ -80,11 +78,13 @@ const BudgetSetup = ({ onAdd }) => {
 const [addedCategories, setAddedCategories] = useState([])
  const [saving , setSaving] = useState(false)
 
+ //lock the month after the first category is added so that it is one budgetperiod for that specific budget
+  const periodLocked= addedCategories.length > 0 
+
 
   const handleChange = (event) => {
     const { name, value } = event.target
     setForm((prev) => ({ ...prev, [name]: value })) 
-    //copy everything from prev
   }
 
   const handleSelectChange = (fieldName, value) => {
@@ -100,7 +100,7 @@ const [addedCategories, setAddedCategories] = useState([])
     }
       return updated 
     }) 
-    //copy everything from prev
+    
   }
 
   //object 
@@ -181,7 +181,7 @@ const [addedCategories, setAddedCategories] = useState([])
 }
 
   // Check if user has added a min of 2 categories
-  const isDoneDisabled = addedCategories.length <= 2
+  const isDoneDisabled = addedCategories.length < 2
 
   return ( 
     <div className="budget-page-container">
@@ -311,8 +311,8 @@ const [addedCategories, setAddedCategories] = useState([])
           {!isFormComplete || isDoneDisabled && (
             <div className="text-sm text-muted-foreground col-span-2">
               <ul>     
-                {!isFormComplete && <li> Fill in all fields marked * to enable Add.</li>}
-              {isDoneDisabled && <li> Add at least two categories added to enable Done. {''} </li> }
+                {!isFormComplete && (<li> Fill in all fields marked * to enable Add.</li>)}
+              {isDoneDisabled && (<li> Add at least two categories added to enable Done. {''} </li> )}
               </ul>
           
             </div>

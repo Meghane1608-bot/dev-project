@@ -37,6 +37,7 @@ const budgetMonth = location.state?.budgetPeriod || 'January' //doesnt display y
 
 const [items,setItems] = useState([])
 const [budgetMonth, setBudgetMonth] = useState('')
+const [transactions, setTransactions] = useSate([])
 const [loading, setLoading] =useState(true)
 const [error, setError] = useState(null) 
 
@@ -48,7 +49,7 @@ useEffect( () => {
       //if budget setup handed us the newly created budget use it
       if (location.state?.budget) {
         const b= location.state.budget
-        setItems (b.tems || [])
+        setItems (b.items|| [])
         setBudgetMonth(b.period||'')
       }else {
     //else get the most recently saved budget from the database
@@ -86,8 +87,24 @@ useEffect( () => {
   // Totals
   const totalExpectedIncome = incomeItems.reduce((acc, curr) => acc + Number(curr.expectedIncome || 0), 0)
   const totalExpenditure = expenditureItems.reduce((acc, curr) => acc + Number(curr.limitAmount || 0), 0)
-  //const leftToSpend= totalExpenditure- totalSpent 
-  // const received = total income actually received 
+  //actual totals from transactions filtered by budgetMonth
+  const thisMonthsTransactions = transactions.filter((t) => {
+    if (!t.date) return false 
+  const tMonth = new Date(t.date) .toLocaleString('', 
+      {month: 'long'}
+    ) 
+    return tMonth.toLowerCase()=== budgetMonth.toLowerCase()}
+  )
+
+  const received= thisMonthsTransactions
+  .filter(() => t.type ==='Income' || t.amount>0)
+  .reduce((acc,curr) => acc+ Maths.abs(Number(curr.amount||0)), 0)
+
+  const totalSpent = thisMonthsTransactions
+  .filter(() => t.type === 'Expense'|| t.amount<0)
+  .reduce((acc,curr) => acc + Maths.abs(Number(curr.amount || 0)) ,0)
+
+  const leftToSpend=totalExpenditure-totalSpent
 
 //expenditure list 
 let expenditureList 
@@ -179,20 +196,24 @@ let expenditureList
       <div className="dashboard-side-panel">
         <div className="side-card">
           <div className="side-card-title"> Budget Status:</div>
-        </div>
-      
+        
+     <div className="stat-amount-large">
+              {totalSpent > totalExpenditure ? 'Overspending' : 'On track'}
+            </div>
+          </div>
+    
 
    <div className="side-card"> 
      <div className="side-card-title"> Left to spend:</div>
     <div className="stat-amount-large">
-      R waiting4db
+      R {leftToSpend.toLocaleString()}
     </div>
    </div> {/*outermost div*/}
 
    <div className="side-card">
     <div className="side-card-title" > Income received</div>
       <div className="stat-amount-large">
-        R of {totalExpectedIncome.toLocaleString()}
+        R {received.toLocaleString()} of R{''}{totalExpectedIncome.toLocaleString()}
         </div>
     </div>
     

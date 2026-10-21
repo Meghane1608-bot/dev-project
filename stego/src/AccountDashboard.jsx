@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
 import {useState, useEffect} from 'react'
 import { Button } from '@/components/ui/button'
@@ -29,6 +29,9 @@ const sum =(list) => list.reduce((total,acc) => total + acc.balance,0)
 
 
 const AccountDashboard = () => {
+  const navigate = useNavigate()
+  const onAddAccount = () => navigate(-1)
+  const onViewSavings = () => navigate('/budget-dashboard')
      //addAccount writes & collects and sends them to be saved
      //accDashboard reads them from the database  
      const [accounts, setAccounts] = useState([]) //holds the list of accounts

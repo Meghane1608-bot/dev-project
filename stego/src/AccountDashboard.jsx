@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react'
 import { Button } from '@/components/ui/button'
 import {Card , CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 import { fetchAccounts } from './api';
-//import {fetchAccounts} from './services/api'
+
 
 const Header = () => {
   const navigate = useNavigate() //initialise navigate 
@@ -40,7 +40,7 @@ const AccountDashboard = () => {
 useEffect(() => {
     fetchAccounts() //fetch the list of accounts from the backend
     .then((response) => {
-        setAccounts(response.data) //set the accounts state to the data received
+        setAccounts(response|| []) //set the accounts state to the data received
         
     })
     .catch((err) => {
@@ -92,19 +92,17 @@ const netWorth = currentTotal + savingsTotal //total net worth = current total  
 
     <Button 
     type="button" 
-    onClick ={onAddAccount} >
+    onClick={() => navigate('/AddAccount')}>
    Add account 
     </Button>
 
     <Button  
     type="button"
-    onClick={onViewSavings}>
+    onClick={() => navigate('/BudgetDashboard')}>
         View Savings 
      </Button>
  
 
-  {/*onViewSavings should navigate to budget dashboard page bc thats where savings are stored
-  onAddAccount should navigate back to create account*/}
 
         {/*navigation bar */}
 <nav className="bottom-nav">

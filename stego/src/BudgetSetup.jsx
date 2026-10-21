@@ -1,6 +1,7 @@
 import { useState } from 'react'
 //this will allow me routing for react, so that users can get to different pages
 import {useNavigate} from 'react-router-dom'
+import Navbar from './Navbar'
 //shadcn Select component 
 import {
   Select,
@@ -329,10 +330,12 @@ const [addedCategories, setAddedCategories] = useState([])
           <Calculator className="nav-icon" />
         </button>
       </nav>
+      {/*The navbar component that is functional*/}
+      <Navbar/>
     </div>
   )
 
 
-   }
+   } 
 }
 export default BudgetSetup

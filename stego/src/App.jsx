@@ -13,6 +13,7 @@ import Login from './Login.jsx'
 import ForgotPassword from './ForgotPassword.jsx'
 import AccountDashboard from './AccountDashboard.jsx'
 import AddAccount from './AddAccount.jsx'
+import Savings from './Savings.jsx'
 
 
 
@@ -41,7 +42,8 @@ function App() {
   <Route path ="/overview" element = {<Overview/>}/> 
 
   <Route path = "/accountdashboard" element = {<AccountDashboard/>} />
-   <Route path = "/addaccount" element = {<AddAccount/>} />
+   <Route path = "/addaccount" element = {<AddAccount/>} /> 
+   <Route path ="/savings" element ={<Savings/>}/>  
 </Routes>
 </BrowserRouter>
       {/*<BudgetSetup onDone={()=>{console.log("Hey")}} />*/}

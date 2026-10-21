@@ -1,8 +1,9 @@
-import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ChevronLeft, Home, User, CreditCard, Calculator } from 'lucide-react'
 import './BudgetDashboard.css'
 import Savings from './Savings'
+import {useState, useEffect} from 'react'
+
 
 const Header = () => {
   const navigate = useNavigate() //initialise navigate 
@@ -24,16 +25,11 @@ const Header = () => {
   )
 }
 
-const handleSavings= () =>{
-  /* in this part initially it will display the amnt from account dashboard showing how much is in savings 
-  and then they can add a savings goal by clicking on the button that will allow them to input an amount and the name
-  of the savings goal eg. Travel R15000 and that should save to the RAM and display */
-  console.log("target")
-} 
 
 const BudgetDashboard = () => {
   const location = useLocation()
-
+ const navigate = useNavigate()
+ 
   // Retrieve categories and budgetPeriod passed via router state
   const items = location.state?.items || [] //
 const budgetMonth = location.state?.budgetPeriod || 'January' //doesnt display yet. I need it to display on the dashboard depending on what the user entered
@@ -46,7 +42,7 @@ const budgetMonth = location.state?.budgetPeriod || 'January' //doesnt display y
   // Totals
   const totalExpectedIncome = incomeItems.reduce((acc, curr) => acc + Number(curr.expectedIncome || 0), 0)
   const totalExpenditure = expenditureItems.reduce((acc, curr) => acc + Number(curr.limitAmount || 0), 0)
-  //const leftToSpend= this should be total expenditure(actual) - total limits set
+  //const leftToSpend= totalExpenditure- totalSpent 
   // const received = total income actually received 
 
   
@@ -124,7 +120,7 @@ let expenditureList
              <span className="section-title income-title">
               Income 
              </span>
-             <span className="Label-expected"> income expected to receive </span>
+             <span className="label-expected"> income expected to receive </span>
 
           </div>{/*section header div*/}
        
@@ -162,7 +158,7 @@ let expenditureList
 </div> {/*close grid parent*/}
 
 
-  <h6> Savings  </h6> 
+  <h6 className= "savings-title">  Savings   </h6> 
     <Savings/> 
    
     {/*create new budget button*/} 

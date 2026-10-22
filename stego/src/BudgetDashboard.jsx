@@ -98,12 +98,12 @@ useEffect( () => {
   )
 
   const received= thisMonthsTransactions
-  .filter(() => t.type ==='Income' || t.amount>0)
-  .reduce((acc,curr) => acc+ Maths.abs(Number(curr.amount||0)), 0)
+  .filter((t) => t.type ==='Income' || t.amount>0)
+  .reduce((acc,curr) => acc+ Math.abs(Number(curr.amount||0)), 0)
 
   const totalSpent = thisMonthsTransactions
-  .filter(() => t.type === 'Expense'|| t.amount<0)
-  .reduce((acc,curr) => acc + Maths.abs(Number(curr.amount || 0)) ,0)
+  .filter((t) => t.type === 'Expense'|| t.amount<0)
+  .reduce((acc,curr) => acc + Math.abs(Number(curr.amount || 0)) ,0)
 
   const leftToSpend=totalExpenditure-totalSpent
 

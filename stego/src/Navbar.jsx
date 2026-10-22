@@ -3,9 +3,10 @@ import{useNavigate} from "react-router-dom"
 import "./Category.css"; 
 
 export default function Navbar() {
+const navigate =useNavigate () ; 
   return (
     <nav className="bottom-nav">
-      {/* Home icon that navigates to Account Dashboard screen */}
+      {/* Home icon that navigates to Account Dashboard screen */} 
       <button 
         type="button" 
         className="nav-icon-btn" 

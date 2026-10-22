@@ -87,7 +87,7 @@ app.get('/accounts', async (req, res, next) => {
   }
 });
 
-app.post('/accounts', (req, res, next) => {
+app.post('/accounts', async (req, res, next) => {
   const { user_id, account_name, account_type, balance, overdraft_limits } = req.body;
 
   if(!account_name|| !account_type) {

@@ -9,6 +9,44 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+//small wrappers so sqlite can used with async/await
+const dbRun= (sql,params =[]) =>
+  new Promise((resolve,reject)=> {
+    db.run(sql,params, function(err) {
+      if (err) reject(err);
+      else resolve({lastID: this.lastID, changes: this.changes});
+    });
+  });
+
+  const dbGet = (sql,params =[]) =>
+    new Promise((resolve,reject) => {
+      db.get(sql,params,(err,row) => (err ? reject(err) : resolve(row)));
+    });
+
+  const dbAll =(sql,params =[]) =>
+    new Promise((resolve,reject) => {
+      db.all(sql,params, (err,rows) => (err ? reject(err) : resolve(rows)));
+    });
+
+    //find the category , and if it doesnt exist yet create it
+    const findOrCreateCategory = async(name,type) => {
+      const existing = await dbGet(
+        'SELECT category_id FROM categories WHERE category_name =? AND category_type=?',
+        [name,type]
+      );
+      if (existing) return existing.category_id;
+      const created = await dbRun(
+        'INSERT INTO categories (category_type, category_name) VALUES (?,?)',
+        [type,name]
+      );
+      return created.lastID;
+    };
+
+    const months= [
+      'January','February','March','April','May', 'June',
+      'July', 'August','September', 'October','November','December'
+    ];
+
 // Root Endpoint GET / - Test SQLite Connection
 app.get('/', (req, res) => {
   db.get("SELECT 'SQLite connection successful!' AS db_status, datetime('now') AS server_time", (err, row) => {
@@ -136,6 +174,20 @@ app.delete('/transactions/:id', (req, res) => {
     res.json({ status: 'success', message: 'Transaction deleted' });
   });
 });
+
+//middleware for requests to routes that dont exist
+const unknownEndpoint = (req,res) => {
+  res.status(404).json({error: 'unknown endpoint'});
+};
+app.use(unknownEndpoint);
+
+//error handler, any route that calls next(error) ends up here
+const errorHandler =(error,req, res, next) => {
+  console.error(error.message);
+  res.status(500).json({error: error.message});
+};
+app.use(errorHandler);
+
 
 // Start the server
 app.listen(PORT, '0.0.0.0', () => {

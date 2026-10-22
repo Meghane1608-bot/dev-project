@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
-import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
+import { ChevronLeft} from 'lucide-react'
 import {useState} from 'react' 
 import {
   Select,
@@ -54,7 +54,7 @@ const AddAccount = ({onAdd}) => {
     const [message , setMessage] = useState('') //account added notifier
     const [saving, setSaving] =useState(false) 
     const [error, setError] = useState('')//'' means no error, if there is an error it will be a string with the error message
-
+ const navigate = useNavigate() 
     // for input fields which send an event.
     //reads which field changed and the new text then copies the old form and overwrites just that field 
     const handleChange = (e) => {
@@ -91,10 +91,10 @@ const AddAccount = ({onAdd}) => {
     try {
         await createAccount({
             id : Date.now() ,
-            name: form.accountName,
-            type: form.accountType,
+            account_name: form.accountName,
+            account_type: form.accountType,
             balance: Number(form.startingBalance),
-            overdraftLimit: form.accountType === 'current' ?  Number(form.overdraftLimit || 0):0
+            overdraft_Limits: form.accountType === 'current' ?  Number(form.overdraftLimit || 0):0
         }) //build the acc obj and send it to App with onAdd. 
         //await tells it to wait until App has finished saving before continuing
         
@@ -131,7 +131,7 @@ const AddAccount = ({onAdd}) => {
     <Select 
     items={typeItems}
     value={form.accountType || undefined}
-    onChange={handleSelectChange}> 
+    onValueChange={handleSelectChange}> 
     <SelectTrigger id="accountType" className="field-input">
         <SelectValue placeholder="Select account type" />
     </SelectTrigger>

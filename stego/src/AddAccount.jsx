@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
-import {useState} from 'react'
+import {useState} from 'react' 
 import {
   Select,
   SelectContent,
@@ -232,9 +233,9 @@ the label changes to "Creating..." while saving is in progress*/}
           <Calculator className="nav-icon" />
         </button>
       </nav>
-  
-
-        </div>
+       {/* the actual functional Navbar component that allows navigation*/}
+       <Navbar/>
+        </div> 
     )
 }
 

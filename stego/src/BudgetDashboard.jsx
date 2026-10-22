@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
+import Navbar from './Navbar' 
 import { ChevronLeft, Home, User, CreditCard, Calculator } from 'lucide-react'
 import './BudgetDashboard.css'
 import Savings from './Savings'
@@ -247,6 +248,8 @@ let expenditureList
           <Calculator className="nav-icon" />
         </button>
       </nav>
+       {/* The navbar componet that now makes the navbar functional and can navigate*/} 
+      <Navbar/> 
     </div>
   )
 }

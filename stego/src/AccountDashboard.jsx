@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
 import {useState, useEffect} from 'react'
 import { Button } from '@/components/ui/button'
@@ -49,11 +50,11 @@ useEffect(() => {
     .finally(() => {
         setLoading(false) //set loading to false regardless of success or failure
     })
-}, [])
+}, []) 
 
 //filter only the current accounts and use reduce to add up the balances 
-const currentTotal = sum(accounts.filter(acc => acc.type === 'current')) //sum of balances where type is current
-const savingsTotal = sum(accounts.filter(acc => acc.type === 'savings')) //sum of balances where type is savings
+const currentTotal = sum((accounts || []).filter(acc => acc.type === 'current')); //sum of balances where type is current meghane changed this line of code because caused crash
+const savingsTotal = sum((accounts || []).filter(acc => acc.type === 'savings')); //sum of balances where type is savings meghane changed this line of code because caused crash 
 const netWorth = currentTotal + savingsTotal //total net worth = current total  + savings acc total 
  
    if (loading) return <p > Loading...</p>
@@ -119,10 +120,10 @@ const netWorth = currentTotal + savingsTotal //total net worth = current total  
           <Calculator className="nav-icon" />
         </button>
       </nav>
-
+      <Navbar/>
       </div> //outermost div for account dashboard component 
   
-    )
+    ) 
 }
 
 

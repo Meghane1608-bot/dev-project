@@ -1,5 +1,7 @@
+            import Navbar from "./Navbar";
             import "./Overview.css"
             import { Home, User, CreditCard,Receipt,ShoppingCart, Clapperboard ,TramFront,GraduationCap, Folder,HandCoins,BookOpen} from "lucide-react";
+           
             export default function Overview() { 
             return ( 
             <div className = "overview-page"> 
@@ -72,20 +74,8 @@
              <button type = "button" className = "view-button">View</button>
             </div>
             </section>  
-            <nav className="bottom-nav">
-        <button type="button" className="nav-icon-btn">
-          <Home className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <User className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <CreditCard className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <Receipt className="nav-icon" />
-        </button>
-      </nav>
+
+           <Navbar/> 
             </div>  
         
     ) 

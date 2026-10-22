@@ -1,0 +1,106 @@
+/* main category page */
+
+.category-page {
+    min-height :100vh ;
+    background-color:#fffbeb;
+    padding:24px ;
+}
+
+/*Category-heading*/
+.category-title{
+    font-size :30px;
+    font-weight :bold ;
+    color:#0f766e ;
+    margin-bottom :24px ;
+
+} 
+/*Category form container */
+.category-container {
+    background-color :#f3f4f6 ;
+    border-radius :16px ;
+    padding :24px ;
+} 
+/*form section heading */
+.category-container h2 {
+    font-size :20px ;
+    font-weight:bold ;
+    margin-top:20px ;
+    margin-bottom:16px ;
+} 
+
+/*Income and expenditure button layout */
+.category-type {
+    display:flex ;
+    gap:16px ;
+} 
+
+/*Income and expenditure buttons */
+.category-option {
+    background-color :white ;
+    border :1px solid #d1d5db ;
+    border-radius :8px;
+    padding :12px 24px ;
+    cursor :pointer ;
+} 
+
+/*category dropdown */ 
+.category-select {
+    background-color :white ;
+    border :1px solid #d1d5db ;
+    padding :12px ;
+    width :100%;
+    box-sizing :border-box ;
+} 
+/*Reset button position */
+.category-reset {
+    display :flex ;
+    justify-content :flex-end;
+    margin-top:20px ;
+    margin-bottom :16px ;
+} 
+/*reset-button */
+.reset-button {
+    background-color :white ;
+    border :1px solid #d1d5db ;
+    border-radius :8px ;
+    padding :8px 16px ;
+    cursor :pointer ;
+
+} 
+/*Done button*/ 
+.done-button {
+    background-color :#f97316; 
+    color:white;
+    border:none;
+    border-radius :8px;
+    padding:12px ;
+    width :100%;
+    cursor :pointer ;
+} 
+/*Navigation Bar*/
+bottom-nav {
+  background-color: #1C5B65;
+  border-radius: 1rem;
+  padding: 1rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.nav-icon-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.nav-icon-btn:hover {
+  opacity: 0.8;
+}
+
+.nav-icon {
+  width: 2rem;
+  height: 2rem;
+} 

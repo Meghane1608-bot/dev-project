@@ -76,3 +76,9 @@ Gugu : 20 October : Claude Sonnet 5.5 : needed help with understanding api.js al
 
 
 
+22 October 2026 
+Group Member : Meghane Jansen 
+AI Tool : Claude Code (VS Code extension), model Claude Opus 5.5 
+Purpose : Used Claude Code to investigate the repository and help merge the Daanyaal branch into main. It inspected the branches, remotes and AI logs and reported the problems it found. These were already committed on Daanyaal from earlier merges: duplicate imports in main.jsx, two nested App components in App.jsx, a broken comment block in index.css, and backend routes (no /api prefix) not matching api.js. With my approval it stashed my uncommitted navbartesting2 work (stash plus backup tag backup/navbartesting2-wip-2026-10-22), fast-forwarded my local main and Daanyaal branches, ran git merge --no-ff --no-commit origin/Daanyaal on main, and removed the duplicate App and style.css imports from main.jsx (mechanical fix only). 
+Outcome : Merged origin/Daanyaal into main and pushed to origin/main with my approval. AI only fixed the duplicate imports in main.jsx. I fixed App.jsx myself (single router, kept my navbartesting2 Navbar instead of the global nav, combined routes) and also index.css (repaired the comment block). Claude then verified the result: vite build passes and eslint on App.jsx and main.jsx shows no errors. Backend startup was not tested because backend dependencies are not installed. Known open issue for the group: backend routes have no /api prefix but api.js calls /api/... . AI did not write or choose any application logic. Stego/AI_LOG.md agreed as the single canonical AI log. 
+

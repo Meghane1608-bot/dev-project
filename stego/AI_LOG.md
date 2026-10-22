@@ -1,6 +1,6 @@
  AI Use Log – stégo Group Project
 
-8 October 2026
+8 October 2026 
 
 Group member: Meghane Jansen
 AI tool:ChatGPT (GPT-6)
@@ -75,4 +75,16 @@ Gugu : 20 October 2025: Claude Sonnet 5.5 : gave claude my css for budget dashbo
 Gugu : 20 October : Claude Sonnet 5.5 : needed help with understanding api.js alongside fullstackopen and asked it whether the names in the API are meant to match the files in src. : explained the concept of APIs and how it works with the useEffect hook and what was missing from our api.js file and why it would cause the app to crash. It also gave code that was cleaner than what we initially had in api.js to reduce repetition. 
 
 
+
+22 October 2026 
+Group Member : Meghane Jansen 
+AI Tool : Claude Code (VS Code extension), model Claude Opus 5.5 
+Purpose : Used Claude Code to investigate the repository and help merge the Daanyaal branch into main. It inspected the branches, remotes and AI logs and reported the problems it found. These were already committed on Daanyaal from earlier merges: duplicate imports in main.jsx, two nested App components in App.jsx, a broken comment block in index.css, and backend routes (no /api prefix) not matching api.js. With my approval it stashed my uncommitted navbartesting2 work (stash plus backup tag backup/navbartesting2-wip-2026-10-22), fast-forwarded my local main and Daanyaal branches, ran git merge --no-ff --no-commit origin/Daanyaal on main, and removed the duplicate App and style.css imports from main.jsx (mechanical fix only). 
+Outcome : Merged origin/Daanyaal into main and pushed to origin/main with my approval. AI only fixed the duplicate imports in main.jsx. I fixed App.jsx myself (single router, kept my navbartesting2 Navbar instead of the global nav, combined routes) and also index.css (repaired the comment block). Claude then verified the result: vite build passes and eslint on App.jsx and main.jsx shows no errors. Backend startup was not tested because backend dependencies are not installed. Known open issue for the group: backend routes have no /api prefix but api.js calls /api/... . AI did not write or choose any application logic. Stego/AI_LOG.md agreed as the single canonical AI log. 
+
+22 October 2026 (continued) 
+Group Member : Meghane Jansen 
+AI Tool : Claude Code (VS Code extension), model Claude Opus 5.5 
+Purpose : Used Claude Code to bring the updated main (with Daanyaal's merge) into my navbartesting2 branch. It ran git merge --no-ff --no-commit origin/main on navbartesting2, which conflicted in App.jsx and BudgetSetup.jsx. BudgetSetup.jsx was only an extra closing brace: Claude tested both options and kept main's single brace because mine caused a parsing error (my Navbar and Gugu's createBudget code both kept). For App.jsx I made the routing decisions: / opens Login, keep Daanyaal's /transactions, /budgets and /categories routes, keep the /Home and /CreateAccount aliases, keep the pb-20 wrapper, and do not remove any navbar code. Claude then combined the existing route lines from both branches into one App.jsx following my decisions. No new routes or logic were written. 
+Outcome : All merge conflicts resolved. eslint on App.jsx shows no errors and vite build passes. With my approval the merge was committed on navbartesting2 and pushed to origin/navbartesting2, then my stashed local changes were restored with git stash pop. Noted that BudgetSetup.jsx still has an old inline nav as well as my Navbar component (left unchanged as I asked). 
 

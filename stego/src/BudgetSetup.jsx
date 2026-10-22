@@ -14,12 +14,13 @@ import {
 } from "@/components/ui/select"
 import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
 import './BudgetSetup.css'
+import { createBudget } from './api'
 
-const Header = () => {
+const Header = ({onBack}) => {
   return (
     <header className="budget-header">
       <div className="budget-header-left">
-        <button type="button" className="back-btn">
+        <button type="button" className="back-btn" onClick={onBack}>
           <ChevronLeft className="back-icon" />
         </button>
         <h1 className="budget-title">Budget Setup</h1>
@@ -43,9 +44,7 @@ const Button = ({ reset, add, addDisabled }) => {
   )
 }
 
-{/*const onDone = () => {
-  console.log("Sup Gugu")
-*/}
+
 
 //object that will make every filled value blank for reset 
 const emptyForm = {
@@ -66,18 +65,27 @@ const categoryItems = [
   { label: "Salary", value: "Salary" },
 ]
 
+//setting an array for budget period so the user doesnt have to type and no validations are needed 
+const months= [
+  'January','February', 'March', 'April', 'May', 'June','July',
+  'August', 'September', 'October', 'November', 'December',
+]
+
 //the screen itself that renders the button component and header component
 const BudgetSetup = ({ onAdd }) => { 
   const [form, setForm] = useState(emptyForm) //setForm will change the four fields of the form
   const [message, setMessage] = useState("") // message pop up once category added 
- const navigate =useNavigate() // initialising the navigate funcion
+ const navigate = useNavigate() // initialising the navigate funcion
 const [addedCategories, setAddedCategories] = useState([])
+ const [saving , setSaving] = useState(false)
+
+ //lock the month after the first category is added so that it is one budgetperiod for that specific budget
+  const periodLocked= addedCategories.length > 0 
 
 
   const handleChange = (event) => {
     const { name, value } = event.target
     setForm((prev) => ({ ...prev, [name]: value })) 
-    //copy everything from prev
   }
 
   const handleSelectChange = (fieldName, value) => {
@@ -91,9 +99,9 @@ const [addedCategories, setAddedCategories] = useState([])
     if (fieldName === "categoryType" && value === "Income") {
       updated.limitAmount = ""
     }
-      return updated //
+      return updated 
     }) 
-    //copy everything from prev
+    
   }
 
   //object 
@@ -110,28 +118,14 @@ const [addedCategories, setAddedCategories] = useState([])
     : form.limitAmount !== "" && Number(form.limitAmount) > 0);
 
 
-
-  //what happens when the add button is clicked
-   {/*const handleAdd = () => {
-    if (typeof onAdd === 'function') {
-      onAdd({
-        ...form,
-        //id: String()
-        expectedIncome: form.expectedIncome ? Number(form.expectedIncome) : 0,
-        limitAmount: Number(form.limitAmount),
-      });
-    }
-    setMessage(`${form.categoryName} has been added to your budget`)
-    setForm(emptyForm) // after adding the cat, the form should clear
-    setTimeout(() => setMessage(''), 3000)
-  }*/
-
     //what happens when the add button is clicked
   const handleAdd = () => {
     if (!isFormComplete) return; // validation first( the return is there so nothing runs below it.)
+
+
     const newItem = { //building the new item 
       ...form, //spread operator to copy every propoerty from form
-      //id: String()
+      //id: String(categoryName.length+1),
       expectedIncome: form.expectedIncome ? Number(form.expectedIncome) : 0, //if theres a value convert it and if not "" = 0
       limitAmount: form.limitAmount ? Number(form.limitAmount) : 0,
     };
@@ -142,36 +136,57 @@ const [addedCategories, setAddedCategories] = useState([])
 
     setAddedCategories((prev) => [...prev, newItem]); /* builds a new array containing old+ the new item
     Prev guarantees it will give the latest state and we can compute the next one from it */
-    setForm(emptyForm); // after adding the cat, the form should clear
+
+    setForm({...emptyForm, categoryType:form.categoryType, budgetPeriod: form.budgetPeriod}); // after adding the cat, the form should clear
     
+    setMessage(`${newItem.categoryName} has been added to your budget!`)
+    setTimeout(() => setMessage('') , 3000)
   }
 
   const handleReset = () => { 
     //message pop up to tell them their cats will be deleted 
     setForm(emptyForm) //clears the inputs
     setAddedCategories([]) // empty array
+    setMessage('')
   } 
 
   //navigate to budget dashboard 
   const [budgetPeriod,setBudgetPeriod] =useState("January")
   
-  const handleDone = () => {
-    navigate('BudgetDashboard', 
-      {state:
-        {items: addedCategories,
-          budgetPeriod:budgetPeriod
-          } ,
-        })
-        //setBudgetPeriod={budgetMonth} 
-  } 
+  //in order to save the budget values 
+  const handleDone = async() => {
+    if (saving) return
+    setSaving(true) 
+    setMessage('')
 
-  // Check if user has added more than 2 categories
-  const isDoneDisabled = addedCategories.length <= 2
+    try{ 
+      //grab the period that the user typed 
+      const period = addedCategories[0]?.budgetPeriod || form.budgetPeriod || 'January'
+      const created = await createBudget({
+        period ,
+        items: addedCategories,
+      })
+      setMessage('Budget saved! Taking you to dashboard...')
+     //using state here so that dashboard renders immediately
+      navigate('/BudgetDashboard', {state: {budget:created}})
+    } catch (err) {
+      console.error('createBugdet failed:', err)
+      setMessage(
+        err?.response?.data?.message ||
+        err.message||
+        'Failed to save budget.Please try again'
+      )
+    }finally{
+      setSaving(false) 
+  } 
+}
+
+  // Check if user has added a min of 2 categories
+  const isDoneDisabled = addedCategories.length < 2
 
   return ( 
     <div className="budget-page-container">
-      <Header />
-
+      <Header  onBack={() => navigate(-1)} />
 
       <main className="budget-main-card">
         {message && <p className="notification-message">{message}</p>}
@@ -191,7 +206,9 @@ const [addedCategories, setAddedCategories] = useState([])
                 <SelectGroup>
                   <SelectLabel> Categories </SelectLabel>
                   {categoryItems.map((item) => (
-                    <SelectItem key={item.value} value={item.value} className="py-2 cursor-pointer">
+                    <SelectItem key={item.value} 
+                    value={item.value} 
+                    className="py-2 cursor-pointer">
                       {item.label}
                     </SelectItem>
                   ))}
@@ -200,9 +217,11 @@ const [addedCategories, setAddedCategories] = useState([])
             </Select> 
           </div>
 
+{/*Category type*/}
           <div className="form-field-group">
             <label className="field-label">Select category type*</label>
             <div className="toggle-wrapper">
+              
               <button
                 type="button"
                 onClick={() => handleSelectChange("categoryType", "Income")}
@@ -210,6 +229,7 @@ const [addedCategories, setAddedCategories] = useState([])
               >
                 Income
               </button>
+
               <button
                 type="button"
                 onClick={() => handleSelectChange("categoryType", "Expenditure")}
@@ -231,6 +251,7 @@ const [addedCategories, setAddedCategories] = useState([])
     id="expectedIncome"
     name="expectedIncome"
     type="text"
+    inputMode="decimal"
     value={form.expectedIncome}
     onChange={handleChange}
     placeholder={isExpenditure ? "N/A (only applicable for income)" : "R0-100000"}
@@ -250,6 +271,7 @@ const [addedCategories, setAddedCategories] = useState([])
     id="limitAmount"
     name="limitAmount"
     type="text"
+    inputMode="decimal"
     value={form.limitAmount}
     onChange={handleChange}
     placeholder={isIncome ? "N/A (only applicable for expenditure)" : "R0-100000"}
@@ -258,37 +280,49 @@ const [addedCategories, setAddedCategories] = useState([])
     required={isExpenditure}
   />
 </div>
-
+        {/*budget period*/}
           <div className="form-field-group">
             <label htmlFor="budgetPeriod" className="field-label">
               Budget period*
             </label>
-            <input 
-              id="budgetPeriod"
-              name="budgetPeriod"
-              type="text"
+            <Select
               value={form.budgetPeriod}
-              onChange={handleChange}
-              placeholder="Month"
-              className="budget-input"
-              required
-            />
+              onValueChange={(val) => handleSelectChange('budgetPeriod', val)}
+              disabled={periodLocked}
+            >
+              <SelectTrigger id="budgetPeriod" className="select-trigger-custom">
+                <SelectValue placeholder="Select a month" />
+              </SelectTrigger>
+              <SelectContent className="bg-white rounded-xl shadow-lg border-none">
+                <SelectGroup>
+                  <SelectLabel>Months</SelectLabel>
+                  {months.map((month) => (
+                    <SelectItem key={month} value={month} className="py-2 cursor-pointer">
+                      {month}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
 
           
 
-          {/*if the form isnt empty*/}
-          {!isFormComplete && (
+          {/*if the form isnt Complete*/}
+          {!isFormComplete || isDoneDisabled && (
             <div className="text-sm text-muted-foreground col-span-2">
               <ul>     
-                <li> Fill in all fields marked * to enable Add.</li>
-              <li> Minimum of two expenditure categories and one income needs to be added to enable Done. </li> 
+                {!isFormComplete && (<li> Fill in all fields marked * to enable Add.</li>)}
+              {isDoneDisabled && (<li> Add at least two categories added to enable Done. {''} </li> )}
               </ul>
           
             </div>
           )} 
 
-          <p className="col-span-2"> Categories available : {categoryItems.length} </p>
+          <p className="col-span-2"> 
+            
+            Categories available : {categoryItems.length}
+            </p>
 
           <Button 
             add={handleAdd}
@@ -303,10 +337,13 @@ const [addedCategories, setAddedCategories] = useState([])
         <button 
           type="button" 
           onClick={handleDone} 
-          disabled={isDoneDisabled}
-          className={`btn-done ${isDoneDisabled ? 'opacity-50 cursor-not-allowed bg-gray-400 border-gray-400' : ''}`}
+          disabled={isDoneDisabled || saving}
+          className={`btn-done ${isDoneDisabled || saving ? 
+            'opacity-50 cursor-not-allowed bg-gray-400 border-gray-400' 
+            : ''
+          }`}
         >
-          Done
+         {saving ? 'Saving...':'Done'} 
         </button>
       </div>
 
@@ -336,6 +373,6 @@ const [addedCategories, setAddedCategories] = useState([])
   )
 
 
-   } 
-}
+   }
+
 export default BudgetSetup

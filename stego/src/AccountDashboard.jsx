@@ -4,7 +4,8 @@ import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
 import {useState, useEffect} from 'react'
 import { Button } from '@/components/ui/button'
 import {Card , CardContent, CardHeader, CardTitle} from '@/components/ui/card'
-import axios from 'axios'
+import { fetchAccounts } from './api';
+
 
 const Header = () => {
   const navigate = useNavigate() //initialise navigate 
@@ -38,14 +39,13 @@ const AccountDashboard = () => {
     
 
 useEffect(() => {
-    axios 
-    .get('') //fetch the list of accounts from the backend
+    fetchAccounts() //fetch the list of accounts from the backend
     .then((response) => {
-        setAccounts(response.data) //set the accounts state to the data received
+        setAccounts(response|| []) //set the accounts state to the data received
         
     })
-    .catch(() => {
-        setError('Couldnt load accounts. ') //set error message if fetch fails
+    .catch((err) => {
+        setError(err.response?.data?.error || 'Couldnt load accounts. ') //set error message if fetch fails
     })
     .finally(() => {
         setLoading(false) //set loading to false regardless of success or failure
@@ -93,19 +93,17 @@ const netWorth = currentTotal + savingsTotal //total net worth = current total  
 
     <Button 
     type="button" 
-    onClick ={onAddAccount} >
+    onClick={() => navigate('/AddAccount')}>
    Add account 
     </Button>
 
     <Button  
     type="button"
-    onClick={onViewSavings}>
+    onClick={() => navigate('/BudgetDashboard')}>
         View Savings 
      </Button>
  
 
-  {/*onViewSavings should navigate to budget dashboard page bc thats where savings are stored
-  onAddAccount should navigate back to create account*/}
 
         {/*navigation bar */}
 <nav className="bottom-nav">

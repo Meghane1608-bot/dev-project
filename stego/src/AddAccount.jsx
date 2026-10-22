@@ -223,7 +223,9 @@ the label changes to "Creating..." while saving is in progress*/}
        {/* the actual functional Navbar component that allows navigation*/}
        <Navbar/>
         </div> 
+        
     )
+
 }
 
 

@@ -76,20 +76,34 @@ app.get('/users', (req, res) => {
 });
 
 // ================= ACCOUNTS API =================
-app.get('/accounts', (req, res) => {
-  db.all('SELECT * FROM accounts', [], (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
+app.get('/accounts', async (req, res, next) => {
+  try{
+    //only this users accounts
+    const rows = await dbAll('SELECT * FROM accounts WHERE user_id=?',[1]);
     res.json(rows);
-  });
+  }
+  catch (error) {
+    next(error);
+  }
 });
 
-app.post('/accounts', (req, res) => {
+app.post('/accounts', (req, res, next) => {
   const { user_id, account_name, account_type, balance, overdraft_limits } = req.body;
-  const query = 'INSERT INTO accounts (user_id, account_name, account_type, balance, overdraft_limits) VALUES (?, ?, ?, ?, ?)';
-  db.run(query, [user_id || 1, account_name, account_type, balance || 0, overdraft_limits || 0], function(err) {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json({ status: 'success', accountId: this.lastID });
-  });
+
+  if(!account_name|| !account_type) {
+    return res.status(400).json({error:'account_name and account_type are required'})
+  }
+
+  try{
+    const result = await dbRun(
+      'INSERT INTO accounts (user_id, account_name, account_type, balance, overdraft_limits) VALUES (?, ?, ?, ?, ?)',
+      [user_id || 1, account_name, account_type, balance || 0, overdraft_limits || 0]
+    );
+    res.status(201).json({status: 'success' , accountId:result.lastID});
+  }
+  catch(error) {
+    next(error);
+  }
 });
 
 app.delete('/accounts/:id', (req, res) => {

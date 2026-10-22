@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import Navbar from './Navbar' 
-import { ChevronLeft, Home, User, CreditCard, Calculator } from 'lucide-react'
+import { ChevronLeft} from 'lucide-react'
 import './BudgetDashboard.css'
 import Savings from './Savings'
 import {useState, useEffect} from 'react'
@@ -38,7 +38,7 @@ const budgetMonth = location.state?.budgetPeriod || 'January' //doesnt display y
 
 const [items,setItems] = useState([])
 const [budgetMonth, setBudgetMonth] = useState('')
-const [transactions, setTransactions] = useSate([])
+const [transactions, setTransactions] = useState([])
 const [loading, setLoading] =useState(true)
 const [error, setError] = useState(null) 
 
@@ -234,20 +234,7 @@ let expenditureList
     
 
 
-      <nav className="bottom-nav">
-        <button type="button" className="nav-icon-btn">
-          <Home className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <User className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <CreditCard className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <Calculator className="nav-icon" />
-        </button>
-      </nav>
+      
        {/* The navbar componet that now makes the navbar functional and can navigate*/} 
       <Navbar/> 
     </div>

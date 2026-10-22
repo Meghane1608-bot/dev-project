@@ -105,7 +105,7 @@ const netWorth = currentTotal + savingsTotal //total net worth = current total  
  
 
 
-        {/*navigation bar */}
+        {/*navigation bar 
 <nav className="bottom-nav">
         <button type="button" className="nav-icon-btn">
           <Home className="nav-icon" />
@@ -119,7 +119,7 @@ const netWorth = currentTotal + savingsTotal //total net worth = current total  
         <button type="button" className="nav-icon-btn">
           <Calculator className="nav-icon" />
         </button>
-      </nav>
+      </nav>*/}
       <Navbar/>
       </div> //outermost div for account dashboard component 
   

@@ -219,20 +219,7 @@ disabled={!isFormComplete || saving}>
 the label changes to "Creating..." while saving is in progress*/}
 
 
-<nav className="bottom-nav">
-        <button type="button" className="nav-icon-btn">
-          <Home className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <User className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <CreditCard className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <Calculator className="nav-icon" />
-        </button>
-      </nav>
+
        {/* the actual functional Navbar component that allows navigation*/}
        <Navbar/>
         </div> 

@@ -33,6 +33,7 @@ const sum =(list) => list.reduce((total,acc) => total + acc.balance,0)
 const AccountDashboard = () => {
      //addAccount writes & collects and sends them to be saved
      //accDashboard reads them from the database  
+     const navigate = useNavigate()
      const [accounts, setAccounts] = useState([]) //holds the list of accounts
     const [loading,setLoading]= useState(true) 
     const [error, setError]= useState('')
@@ -53,8 +54,8 @@ useEffect(() => {
 }, []) 
 
 //filter only the current accounts and use reduce to add up the balances 
-const currentTotal = sum((accounts || []).filter(acc => acc.type === 'current')); //sum of balances where type is current meghane changed this line of code because caused crash
-const savingsTotal = sum((accounts || []).filter(acc => acc.type === 'savings')); //sum of balances where type is savings meghane changed this line of code because caused crash 
+const currentTotal = sum((accounts || []).filter(acc => acc.account_type === 'current')); //sum of balances where type is current meghane changed this line of code because caused crash
+const savingsTotal = sum((accounts || []).filter(acc => acc.account_type === 'savings')); //sum of balances where type is savings meghane changed this line of code because caused crash 
 const netWorth = currentTotal + savingsTotal //total net worth = current total  + savings acc total 
  
    if (loading) return <p > Loading...</p>

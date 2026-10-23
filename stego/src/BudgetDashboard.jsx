@@ -152,6 +152,9 @@ let expenditureList
   return (
     <div className="budget-page-container">
       <Header />
+      {loading && <p>Loading...</p>}
+{error && <p role="alert">{error}</p>}
+
 <div className="dashboard-grid-container" > 
       <main className="budget-main-card">
         <h2 className="page-subtitle">  {budgetMonth} Budget Overview:</h2>

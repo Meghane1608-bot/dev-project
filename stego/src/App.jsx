@@ -37,15 +37,16 @@ export default function App() {
           <Route path="/addaccount" element={<AddAccount />} />
           <Route path="/savings" element={<Savings />} />
 
-          {/* Older account route aliases (kept for now) */}
+          
           <Route path="/CreateAccount" element={<AddAccount />} />
           <Route path="/Home" element={<AccountDashboard />} />
 
-          {/* Daanyaal's screens */}
+          {/* Daanyaal's screen */}
           <Route path="/transactions" element={<TransactionDashboard />} />
+
           <Route path="/budgets" element={<BudgetSummary />} />
           <Route path="/categories" element={<CategoriesOverview />} />
-          {/* Add more routes here as your teammates merge their screens */}
+         
         </Routes>
       </div>
     </Router>

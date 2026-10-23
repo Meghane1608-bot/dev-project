@@ -91,7 +91,7 @@ useEffect( () => {
   //actual totals from transactions filtered by budgetMonth
   const thisMonthsTransactions = transactions.filter((t) => {
     if (!t.date) return false 
-  const tMonth = new Date(t.date) .toLocaleString('', 
+  const tMonth = new Date(t.date) .toLocaleString('en-ZA', 
       {month: 'long'}
     ) 
     return tMonth.toLowerCase()=== budgetMonth.toLowerCase()}
@@ -116,7 +116,7 @@ let expenditureList
     <li key={index} className="category-row" > 
        <span className="category-name" > {item.categoryName || item.category} </span>
        <span className="category-amount" > 
-        R{Number(item.limitAmount || item.amount || 0).toLocaleString()}
+        R{Number(item.limitAmount || item.amount || 0).toLocaleString('en-ZA',{minimumFractionDigits:2, maximumFractionDigits:2})}
        </span>
     </li>
     ) ) } 
@@ -135,7 +135,7 @@ let expenditureList
       <li key={index} className="category-row" > 
       <span className="category-name"> {item.categoryName || item.category}</span>
       <span className="category-amount" >
-        R{Number(item.expectedIncome || item.amount || 0).toLocaleString()}
+        R{Number(item.expectedIncome || item.amount || 0).toLocaleString('en-ZA',{minimumFractionDigits:2, maximumFractionDigits:2})}
       </span>
       </li>
     )
@@ -166,7 +166,7 @@ let expenditureList
               <span className="label-spending-limits"> spending limits</span>
               
              </div>
-
+ 
              </div>{/*section header div*/}
        {expenditureList}
 
@@ -207,14 +207,14 @@ let expenditureList
    <div className="side-card"> 
      <div className="side-card-title"> Left to spend:</div>
     <div className="stat-amount-large">
-      R {leftToSpend.toLocaleString()}
+      R {leftToSpend.toLocaleString("en-ZA", {minimumFractionDigits:2,maximumFractionDigits:2})}
     </div>
    </div> {/*outermost div*/}
 
    <div className="side-card">
     <div className="side-card-title" > Income received</div>
       <div className="stat-amount-large">
-        R {received.toLocaleString()} of R{''}{totalExpectedIncome.toLocaleString()}
+        R {received.toLocaleString("en-ZA", {minimumFractionDigits:2, maximumFractionDigits:2})} of R{totalExpectedIncome.toLocaleString("en-ZA",{minimumFractionDigits:2,maximumFractionDigits:2})}
         </div>
     </div>
     

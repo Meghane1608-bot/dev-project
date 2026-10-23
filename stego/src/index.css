@@ -260,6 +260,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  width: 100%;
 }
 
 .category-row {
@@ -267,17 +268,27 @@
   justify-content: space-between;
   align-items: center;
   font-size: 0.95rem;
-  padding-right: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2p rgba(0, 0, 0 , 0.02);
+  width: 100%;
+  box-sizing: border-box;
+
 }
 
 .category-name {
   color: var(--primary-teal);
   font-weight: 500;
+  display:flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .category-amount {
   color: var(--primary-teal);
   font-weight: 600;
+  margin-left: 600px;
 }
 
 .dashboard-side-panel {

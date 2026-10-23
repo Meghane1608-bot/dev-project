@@ -1,6 +1,8 @@
  
 import "./Category.css" ;
 import {ArrowLeft,Home,User,CreditCard,Receipt} from "lucide-react" 
+import Navbar from "./Navbar"; 
+
 export default function Category() { 
   return ( 
     <div className ="category-page"  > 
@@ -35,20 +37,8 @@ export default function Category() {
       </button>
     </div> 
     
-    <nav className="bottom-nav">
-        <button type="button" className="nav-icon-btn">
-          <Home className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <User className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <CreditCard className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <Receipt className="nav-icon" />
-        </button>
-      </nav>
+    <Navbar /> 
+  
     </div> 
  
 

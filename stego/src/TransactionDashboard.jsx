@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, Home, User, CreditCard, Calculator } from 'lucide-react';
-import { fetchTransactions, createTransaction, deleteTransaction, fetchAccounts } from '../api';
-import './dashboard.css';
+import { fetchTransactions, createTransaction, deleteTransaction, fetchAccounts, fetchCategories } from './api';
+import './components/dashboard.css';
 
 export default function TransactionDashboard() {
   const [transactions, setTransactions] = useState([]);
@@ -15,10 +15,11 @@ export default function TransactionDashboard() {
   const [type, setType] = useState('Income');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState('2026-08-19');
-  const [category, setCategory] = useState('Salary');
+  const [categoriesList, setCategoriesList] = useState([]);
+  const [categoryId, setCategoryId] = useState('');
   const [description, setDescription] = useState('');
 
-  // Filter State (Started blank so unfiltered list isn't hidden)
+  // Filter State
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [filterCategory, setFilterCategory] = useState('All');
@@ -51,9 +52,10 @@ export default function TransactionDashboard() {
     return true;
   });
 
-  useEffect(() => {
+    useEffect(() => {
     loadTransactions();
     loadAccounts();
+    loadCategories();
   }, []);
 
   async function loadTransactions() {
@@ -79,16 +81,22 @@ export default function TransactionDashboard() {
       console.error(err);
     }
   }
+    async function loadCategories() {
+    try {
+      setCategoriesList((await fetchCategories()) || []);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   const handleAddTransaction = async (e) => {
     e.preventDefault();
     try {
-      await createTransaction({
-        type,
-        amount: parseFloat(amount),
-        date,
+            await createTransaction({
         account_id: Number(accountId),
-        category,
+        category_id: Number(categoryId),
+        amount: parseFloat(amount),
+        transaction_date: date,
         description,
       });
       setAmount('');
@@ -114,12 +122,12 @@ export default function TransactionDashboard() {
   };
 
   // Calculations
-  const incomeTotal = transactions
-    .filter((t) => t.type === 'Income' || t.amount > 0)
+   const incomeTotal = transactions
+    .filter((t) => t.type === 'Income')
     .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
   const expenseTotal = transactions
-    .filter((t) => t.type === 'Expense' || t.amount < 0)
+    .filter((t) => t.type === 'Expense')
     .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
   const balanceTotal = incomeTotal - expenseTotal;
@@ -151,7 +159,7 @@ export default function TransactionDashboard() {
                     name="type"
                     value="Income"
                     checked={type === 'Income'}
-                    onChange={() => setType('Income')}
+                    onChange={() => { setType('Income'); setCategoryId(''); }}
                     className="accent-[#166534] w-4 h-4"
                   />
                   <span className="font-bold text-stone-800">Income</span>
@@ -162,7 +170,7 @@ export default function TransactionDashboard() {
                     name="type"
                     value="Expense"
                     checked={type === 'Expense'}
-                    onChange={() => setType('Expense')}
+                    onChange={() => { setType('Expense'); setCategoryId(''); }}
                     className="accent-[#166534] w-4 h-4"
                   />
                   <span className="font-bold text-stone-800">Expense</span>
@@ -215,18 +223,19 @@ export default function TransactionDashboard() {
               <label className="block text-sm font-semibold text-[#166534] mb-1">
                 Category
               </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                <select
+                value={categoryId}
+                onChange={(e) => setCategoryId(e.target.value)}
+                required
                 className="w-full bg-stone-200 border-none rounded px-3 py-2 text-stone-800 focus:outline-none focus:ring-2 focus:ring-[#166534]"
-              >
-                <option value="Salary">Salary</option>
-                <option value="Bursary stipend">Bursary stipend</option>
-                <option value="NSFAS">NSFAS</option>
-                <option value="Groceries">Groceries</option>
-                <option value="Entertainment">Entertainment</option>
-                <option value="Transport">Transport</option>
-              </select>
+                >
+                    <option value="">Select a category</option>
+                    {categoriesList
+                    .filter((c) => c.category_type === type.toLowerCase())
+                    .map((c) => (
+                    <option key={c.category_id} value={c.category_id}>{c.category_name}</option>
+                    ))}
+                </select>
             </div>
 
             <div>
@@ -344,12 +353,9 @@ export default function TransactionDashboard() {
               className="w-full bg-[#E2E8F0] border-none rounded px-3 py-2 text-stone-800"
             >
               <option value="All">All</option>
-              <option value="Salary">Salary</option>
-              <option value="Bursary stipend">Bursary stipend</option>
-              <option value="NSFAS">NSFAS</option>
-              <option value="Groceries">Groceries</option>
-              <option value="Entertainment">Entertainment</option>
-              <option value="Transport">Transport</option>
+              {categoriesList.map((c) => (
+              <option key={c.category_id} value={c.category_name}>{c.category_name}</option>
+            ))}
             </select>
           </div>
 

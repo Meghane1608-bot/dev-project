@@ -229,26 +229,21 @@ app.delete('/categories/:id', (req, res) => {
 
 // ================= TRANSACTIONS API =================
 app.get('/transactions', (req, res) => {
-  db.all('SELECT * FROM transactions', [], (err, rows) => {
+  const query = `
+    SELECT t.transaction_id   AS id,
+           t.transaction_date AS date,
+           t.amount, t.description,
+           t.account_id, t.category_id,
+           a.account_name     AS account,
+           c.category_name    AS category,
+           CASE c.category_type WHEN 'income' THEN 'Income' ELSE 'Expense' END AS type
+    FROM transactions t
+    JOIN accounts   a ON a.account_id  = t.account_id
+    JOIN categories c ON c.category_id = t.category_id
+    ORDER BY t.transaction_date DESC`;
+  db.all(query, [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
-  });
-});
-
-app.post('/transactions', (req, res) => {
-  const { user_id, account_id, category_id, amount, transaction_date, description } = req.body;
-  const query = 'INSERT INTO transactions (user_id, account_id, category_id, amount, transaction_date, description) VALUES (?, ?, ?, ?, ?, ?)';
-  db.run(query, [user_id || 1, account_id, category_id, amount, transaction_date, description], function(err) {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json({ status: 'success', transactionId: this.lastID });
-  });
-});
-
-app.delete('/transactions/:id', (req, res) => {
-  db.run('DELETE FROM transactions WHERE transaction_id = ?', [req.params.id], function(err) {
-    if (err) return res.status(500).json({ error: err.message });
-    if (this.changes === 0) return res.status(404).json({ message: 'Transaction not found' });
-    res.json({ status: 'success', message: 'Transaction deleted' });
   });
 });
 

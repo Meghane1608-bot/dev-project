@@ -1,80 +1,66 @@
 import db from './db.js';
 
-const seedDatabase = async () => {
-    db.serialize(() => {
+const seedDatabase = () => {
+    try {
         console.log('Seeding database with initial data...');
 
-        // Clear existing tables before seeding (in reverse order of foreign keys)
-        db.run('DELETE FROM transactions');
-        db.run('DELETE FROM budgets');
-        db.run('DELETE FROM categories');
-        db.run('DELETE FROM accounts');
-        db.run('DELETE FROM users');
+        // Clear existing tables in correct order to avoid foreign key constraints
+        db.exec(`
+            DELETE FROM transactions;
+            DELETE FROM savings_goals;
+            DELETE FROM categories;
+            DELETE FROM accounts;
+            DELETE FROM users;
+        `);
 
-        // 0. Seed Users (Including email and password to satisfy NOT NULL constraints)
-        db.run(`INSERT INTO users (username, email, password) VALUES 
-            ('john_doe', 'john.doe@example.com', 'password123'),
-            ('jane_smith', 'jane.smith@example.com', 'password456')`, (err) => {
-            if (err) {
-                console.error('Error seeding users:', err.message);
-            } else {
-                console.log('Users seeded successfully.');
-            }
-        });
+        // 1. Seed Users
+        const insertUser = db.prepare('INSERT INTO users (username, password) VALUES (?, ?)');
+        insertUser.run('john_doe', 'password123');
+        insertUser.run('jane_smith', 'password456');
+        console.log('Users seeded successfully.');
 
-        // 1. Seed Accounts
-        db.run(`INSERT INTO accounts (user_id, account_name, account_type, balance, overdraft_limits) VALUES
-            (1, 'Checking Account', 'checking', 1000.00, 500.00),
-            (1, 'Savings Account', 'savings', 5000.00, 0.00),
-            (2, 'Business Account', 'business', 2000.00, 1000.00)`, (err) => {
-            if (err) {
-                console.error('Error seeding accounts:', err.message);
-            } else {
-                console.log('Accounts seeded successfully.');
-            }
-        });
+        // 2. Seed Accounts
+        const insertAccount = db.prepare(`
+            INSERT INTO accounts (user_id, account_number, account_type, balance, overdraft_limit) 
+            VALUES (?, ?, ?, ?, ?)
+        `);
+        insertAccount.run(1, 'ACC-001', 'current', 1000.00, 500.00);
+        insertAccount.run(1, 'ACC-002', 'savings', 5000.00, 0.00);
+        insertAccount.run(2, 'ACC-003', 'current', 2000.00, 1000.00);
+        console.log('Accounts seeded successfully.');
 
-        // 2. Seed Categories
-        db.run(`INSERT INTO categories (category_type, category_name) VALUES
-            ('income', 'Salary'),
-            ('income', 'Freelance'),
-            ('expense', 'Groceries'),
-            ('expense', 'Utilities'),
-            ('expense', 'Entertainment')`, (err) => {
-            if (err) {
-                console.error('Error seeding categories:', err.message);
-            } else {
-                console.log('Categories seeded successfully.');
-            }
-        });
+        // 3. Seed Categories
+        const insertCategory = db.prepare('INSERT INTO categories (category_type, category_name) VALUES (?, ?)');
+        insertCategory.run('income', 'Salary');
+        insertCategory.run('income', 'Freelance');
+        insertCategory.run('expense', 'Groceries');
+        insertCategory.run('expense', 'Utilities');
+        console.log('Categories seeded successfully.');
 
-        // 3. Seed Budgets
-        db.run(`INSERT INTO budgets (user_id, category_id, budget_amount, start_date, end_date) VALUES
-            (1, 1, 3000.00, '2024-01-01', '2024-01-31'),
-            (1, 3, 500.00, '2024-01-01', '2024-01-31'),
-            (2, 2, 1500.00, '2024-01-01', '2024-01-31')`, (err) => {
-            if (err) {
-                console.error('Error seeding budgets:', err.message);
-            } else {
-                console.log('Budgets seeded successfully.');
-            }
-        });
+        // 4. Seed Transactions (matching your table schema: account_id, category_id, limit_amount, period)
+        const insertTransaction = db.prepare(`
+            INSERT INTO transactions (account_id, category_id, limit_amount, period) 
+            VALUES (?, ?, ?, ?)
+        `);
+        insertTransaction.run(1, 1, 3000.00, 'monthly');
+        insertTransaction.run(1, 3, 150.00, 'monthly');
+        insertTransaction.run(2, 2, 1500.00, 'monthly');
+        console.log('Transactions seeded successfully.');
 
-        // 4. Seed Transactions
-        db.run(`INSERT INTO transactions (user_id, account_id, category_id, amount, transaction_date, description) VALUES
-            (1, 1, 1, 3000.00, '2024-01-15', 'January Salary'),
-            (1, 1, 3, 150.00, '2024-01-20', 'Grocery Shopping'),
-            (2, 2, 2, 1500.00, '2024-01-10', 'Freelance Project')`, (err) => {
-            if (err) {
-                console.error('Error seeding transactions:', err.message);
-            } else {
-                console.log('Transactions seeded successfully.');
-            }
-        });
-    });
+        // 5. Seed Savings Goals
+        const insertGoal = db.prepare(`
+            INSERT INTO savings_goals (account_id, goal_name, target_amount) 
+            VALUES (?, ?, ?)
+        `);
+        insertGoal.run(2, 'Emergency Fund', 10000.00);
+        console.log('Savings goals seeded successfully.');
+
+        console.log('Database seeding completed successfully!');
+    } catch (error) {
+        console.error('Error seeding database:', error.message);
+    }
 };
 
-// Call the function to seed the database when this script is run
 seedDatabase();
 
 export default seedDatabase;

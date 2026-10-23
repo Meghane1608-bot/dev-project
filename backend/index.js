@@ -128,7 +128,7 @@ app.get('/budgets', async (req, res, next) => {
     rows.forEach((row) => {
       if (!grouped[row.start_date]){
         const monthNumber = Number(row.start_date.slice(5,7));
-        grouped=[row.start_date] = {id:row.start_date,period:months[monthNumber-1], items:[]};
+        grouped[row.start_date] = {id:row.start_date,period:months[monthNumber-1], items:[]};
       }
       const isIncome = row.category_type === 'income';
       grouped[row.start_date].items.push({
@@ -160,8 +160,8 @@ app.post('/budgets', async (req, res, next) => {
   const year= new Date().getFullYear();
   const monthNumber = String(monthIndex+1).padStart(2,'0');
   const lastDay = new Date(year, monthIndex +1, 0).getDate();
-  const start_date= `${year} - ${monthNumber}-01`;
-  const end_date= `${year} -${monthNumber} -${lastDay}`;
+  const start_date= `${year}-${monthNumber}-01`;
+  const end_date= `${year}-${monthNumber}-${lastDay}`;
 
   try {
     for (const item of items) {
@@ -213,32 +213,7 @@ app.delete('/categories/:id', (req, res) => {
   });
 });
 
-// ================= TRANSACTIONS API =================
-import express from 'express';
-import cors from 'cors';
-import db from './db.js';
 
-const app = express();
-const PORT = process.env.PORT || 5000;
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// Root Endpoint GET / - Test SQLite Connection
-app.get('/', (req, res) => {
-  db.get("SELECT 'SQLite connection successful!' AS db_status, datetime('now') AS server_time", (err, row) => {
-    if (err) {
-      console.error('Database query error:', err.message);
-      return res.status(500).json({ status: 'error', message: 'Internal Server Error' });
-    }
-    res.json({
-      status: 'success',
-      message: 'Welcome to the Stego Backend API!',
-      database: row,
-    });
-  });
-});
 
 // ================= USERS API =================
 
@@ -278,55 +253,6 @@ app.delete('/accounts/:id', (req, res) => {
   });
 });
 
-// ================= BUDGETS API =================
-app.get('/budgets', (req, res) => {
-  db.all('SELECT * FROM budgets', [], (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
-  });
-});
-
-app.post('/budgets', (req, res) => {
-  const { user_id, category_id, budget_amount, start_date, end_date } = req.body;
-  const query = 'INSERT INTO budgets (user_id, category_id, budget_amount, start_date, end_date) VALUES (?, ?, ?, ?, ?)';
-  db.run(query, [user_id || 1, category_id, budget_amount, start_date, end_date], function(err) {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json({ status: 'success', budgetId: this.lastID });
-  });
-});
-
-app.delete('/budgets/:id', (req, res) => {
-  db.run('DELETE FROM budgets WHERE budget_id = ?', [req.params.id], function(err) {
-    if (err) return res.status(500).json({ error: err.message });
-    if (this.changes === 0) return res.status(404).json({ message: 'Budget not found' });
-    res.json({ status: 'success', message: 'Budget deleted' });
-  });
-});
-
-// ================= CATEGORIES API =================
-app.get('/categories', (req, res) => {
-  db.all('SELECT * FROM categories', [], (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
-  });
-});
-
-app.post('/categories', (req, res) => {
-  const { category_type, category_name } = req.body;
-  const query = 'INSERT INTO categories (category_type, category_name) VALUES (?, ?)';
-  db.run(query, [category_type, category_name], function(err) {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json({ status: 'success', categoryId: this.lastID });
-  });
-});
-
-app.delete('/categories/:id', (req, res) => {
-  db.run('DELETE FROM categories WHERE category_id = ?', [req.params.id], function(err) {
-    if (err) return res.status(500).json({ error: err.message });
-    if (this.changes === 0) return res.status(404).json({ message: 'Category not found' });
-    res.json({ status: 'success', message: 'Category deleted' });
-  });
-});
 
 // ================= TRANSACTIONS API =================
 app.get('/transactions', (req, res) => {

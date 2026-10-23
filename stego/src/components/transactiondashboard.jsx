@@ -15,15 +15,41 @@ export default function TransactionDashboard() {
   const [type, setType] = useState('Income');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState('2026-08-19');
-  const [category, setCategory] = useState('Income');
+  const [category, setCategory] = useState('Salary');
   const [description, setDescription] = useState('');
 
-  // Filter State
-  const [fromDate, setFromDate] = useState('2026-08-01');
-  const [toDate, setToDate] = useState('2026-08-25');
+  // Filter State (Started blank so unfiltered list isn't hidden)
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const [filterCategory, setFilterCategory] = useState('All');
   const [filterAccount, setFilterAccount] = useState('All');
   const [filterType, setFilterType] = useState('All');
+
+  const [applied, setApplied] = useState(null); // null = no filters applied yet
+
+  const handleApplyFilters = () => {
+    setApplied({ fromDate, toDate, filterCategory, filterAccount, filterType });
+  };
+
+  const handleClearFilters = () => {
+    setFromDate('');
+    setToDate('');
+    setFilterCategory('All');
+    setFilterAccount('All');
+    setFilterType('All');
+    setApplied(null);
+  };
+
+  // The list the table actually shows based on filters
+  const visibleTransactions = transactions.filter((t) => {
+    if (!applied) return true;
+    if (applied.fromDate && t.date < applied.fromDate) return false;
+    if (applied.toDate && t.date > applied.toDate) return false;
+    if (applied.filterCategory !== 'All' && t.category !== applied.filterCategory) return false;
+    if (applied.filterAccount !== 'All' && t.account !== applied.filterAccount) return false;
+    if (applied.filterType !== 'All' && t.type !== applied.filterType) return false;
+    return true;
+  });
 
   useEffect(() => {
     loadTransactions();
@@ -194,7 +220,9 @@ export default function TransactionDashboard() {
                 onChange={(e) => setCategory(e.target.value)}
                 className="w-full bg-stone-200 border-none rounded px-3 py-2 text-stone-800 focus:outline-none focus:ring-2 focus:ring-[#166534]"
               >
-                <option value="Income">Income</option>
+                <option value="Salary">Salary</option>
+                <option value="Bursary stipend">Bursary stipend</option>
+                <option value="NSFAS">NSFAS</option>
                 <option value="Groceries">Groceries</option>
                 <option value="Entertainment">Entertainment</option>
                 <option value="Transport">Transport</option>
@@ -316,7 +344,9 @@ export default function TransactionDashboard() {
               className="w-full bg-[#E2E8F0] border-none rounded px-3 py-2 text-stone-800"
             >
               <option value="All">All</option>
-              <option value="Income">Income</option>
+              <option value="Salary">Salary</option>
+              <option value="Bursary stipend">Bursary stipend</option>
+              <option value="NSFAS">NSFAS</option>
               <option value="Groceries">Groceries</option>
               <option value="Entertainment">Entertainment</option>
               <option value="Transport">Transport</option>
@@ -353,10 +383,16 @@ export default function TransactionDashboard() {
           </div>
 
           <div className="flex space-x-3">
-            <button className="bg-[#E2E8F0] hover:bg-stone-300 text-stone-800 font-medium px-4 py-2 rounded text-sm transition-colors">
+            <button
+              onClick={handleApplyFilters}
+              className="bg-[#E2E8F0] hover:bg-stone-300 text-stone-800 font-medium px-4 py-2 rounded text-sm transition-colors"
+            >
               Apply Filters
             </button>
-            <button className="bg-[#E2E8F0] hover:bg-stone-300 text-stone-800 font-medium px-4 py-2 rounded text-sm transition-colors">
+            <button
+              onClick={handleClearFilters}
+              className="bg-[#E2E8F0] hover:bg-stone-300 text-stone-800 font-medium px-4 py-2 rounded text-sm transition-colors"
+            >
               Clear Filters
             </button>
             <button className="bg-[#C7D2FE] hover:bg-indigo-200 text-indigo-950 font-medium px-4 py-2 rounded text-sm border border-indigo-300 transition-colors">
@@ -389,7 +425,7 @@ export default function TransactionDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-200 text-sm text-stone-800">
-                  {transactions.map((t) => (
+                  {visibleTransactions.map((t) => (
                     <tr key={t.id || t._id} className="hover:bg-stone-100/50">
                       <td className="py-3 px-4">{t.date}</td>
                       <td className="py-3 px-4 font-medium">{t.description}</td>

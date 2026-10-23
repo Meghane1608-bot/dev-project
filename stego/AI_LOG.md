@@ -74,5 +74,77 @@ Gugu: 17 October 2026: Claude Sonnet 5.5 : debugging my account dashboard file :
 Gugu : 20 October 2025: Claude Sonnet 5.5 : gave claude my css for budget dashboard and my classNames that i had created in savings.jsx and asked it to give me the css to match the rest of the page : game me the css and i adjusted it according to my needs 
 Gugu : 20 October : Claude Sonnet 5.5 : needed help with understanding api.js alongside fullstackopen and asked it whether the names in the API are meant to match the files in src. : explained the concept of APIs and how it works with the useEffect hook and what was missing from our api.js file and why it would cause the app to crash. It also gave code that was cleaner than what we initially had in api.js to reduce repetition. 
 
+Daanyaal : 4 October 2026 : 
+    ChatGPT 6.1 SOl -
+        How to setup up and create a screen in jsx.
 
+Daanyaal : 6 October 2026 : 
+    ChatGPT 6.1 SOl -
+        How to install the different packages and dependencies
 
+Daanyaal : 6 October 2026 : 
+    ChatGPT 6.1 SOl -
+        What is the difference between PGlite and SQLite
+Daanyaal : 6 October 2026 : 
+    ChatGPT 6.1 SOl -
+        Asked ChatGPT to refine my backend code and debug it.
+
+Daanyaal : 6 October 2026 : 
+    ChatGPT 6.1 SOl -
+        To help create the backend files.
+
+Daanyaal : 15 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to resolve complex merge conflicts between DAANYAAL branch and main locally in VS Code Desktop : provided step-by-step instructions to fetch origin, merge main, use VS Code Source Control to accept both changes for App.jsx and App.css, and complete the merge commit.
+
+Daanyaal : 16 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to fix over 10,000 pending changes appearing in VS Code Source Control : identified that Git was initialized in the Windows user root directory (C:\Users\daany), instructed to delete the hidden .git directory, re-initialize tracking in C:\dev-project, and untrack node_modules.
+
+Daanyaal : 19 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        Downloaded a zip file of my branch and ask Gemini to help me add or remove code and make my code run better
+
+Daanyaal : 20 October 2026 : 
+    Gemini (Gemini 2.0 Pro) -
+        how to resolve merge conflicts section-by-section in main.jsx, package.json, and yarn.lock : provided specific resolution decisions for component imports, Tailwind v4/shadcn theme definitions, and dependency lockfile entries.
+
+Daanyaal : 17 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to create backend database tables for accounts, budgets, categories, and transactions : provided DDL statements in db.js with foreign key constraints enabled using PRAGMA foreign_keys = ON.
+
+Daanyaal : 21 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to fix [] empty array returns on API routes and populate seed data : provided backend/seed.js script using db.serialize() and sequential inserts for test accounts, categories, budgets, and transactions.
+
+Daanyaal : 22 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to fix Express 404 Not Found error when accessing /categories or /transactions in Codespaces : identified that API route handlers were declared inside the root app.get('/') callback, and refactored route definitions to top-level Express handlers.
+
+Daanyaal : 22 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to fix HTTP ERROR 401 Unauthorized in GitHub Codespaces on port 5000 : instructed setting port 5000 visibility to Public in VS Code Ports tab and updating app.listen to bind to 0.0.0.0.
+
+Daanyaal : 22 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to fix node-gyp Visual Studio C++ compilation errors for better-sqlite3 on Windows : identified runtime mismatch on Node v24, instructed removing better-sqlite3 from package.json, and installing the pre-compiled sqlite3 package.
+
+Daanyaal : 22 October 2026 : 
+    Gemini (Gemini 2.0 Pro) -
+         how to organize Express server routes following Full Stack Open patterns : refactored monolithic index.js routes into a modular Express router in routes/api.js mounted under /api.
+
+Daanyaal : 23 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to resolve SQLITE_CONSTRAINT foreign key failures and users.email NOT NULL errors during seeding : updated    seed.js to include required user fields (email, password), re-ordered sequential deletions, and instructed deleting cached stego.sqlite file to rebuild schema.
+
+Daanyaal : 23 October 2026 : 
+    Gemini (Gemini 2.0 Pro) -
+        how to fix useContext null hook crash from lucide-react in bottom navigation bar : added resolve.dedupe: ['react', 'react-dom'] to vite.    config.js and cleared node_modules/.vite cache to force a single React instance.
+
+Daanyaal : 23 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to structure frontend API service calls and handle 204 No Content HTTP status : verified api.js service module using async/await and fetch, added safe return for 204 responses on deleteTransaction, and aligned with Full Stack Open conventions.
+
+Daanyaal: 23 October 2026: 
+    Claude Sonnet 5.5
+        Used for debugging the code and making final changes to ensure to runs properly.

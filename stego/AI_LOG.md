@@ -77,27 +77,77 @@ Gugu: 21 October 2026: Claude Sonnet 5.5: asked for help with debugging how my A
 Gugu 22 October 2026 : Claude Sonnet 5.5: Asked about my console errors and how the mismatches in my frontend and backend affect each other : helped with fixing mismathes in index.js for accounts and budgets and also helped me identify that the system is blocked because of /api vs /api/accounts so I removed '/api' from api.js to remove that block
 Gugu: 23 October 2026: Claude Sonnet 5.5 : gave it all my css code from budgets and accounts and asked it to put it inot index.css so that the styling is shared and overiding can be prevented : it assisted in combining my styling code into one stylesheet
 
-22 October 2026 
-Group Member : Meghane Jansen 
-AI Tool : Claude Code (VS Code extension), model Claude Opus 5.5 
-Purpose : Used Claude Code to investigate the repository and help merge the Daanyaal branch into main. It inspected the branches, remotes and AI logs and reported the problems it found. These were already committed on Daanyaal from earlier merges: duplicate imports in main.jsx, two nested App components in App.jsx, a broken comment block in index.css, and backend routes (no /api prefix) not matching api.js. With my approval it stashed my uncommitted navbartesting2 work (stash plus backup tag backup/navbartesting2-wip-2026-10-22), fast-forwarded my local main and Daanyaal branches, ran git merge --no-ff --no-commit origin/Daanyaal on main, and removed the duplicate App and style.css imports from main.jsx (mechanical fix only). 
-Outcome : Merged origin/Daanyaal into main and pushed to origin/main with my approval. AI only fixed the duplicate imports in main.jsx. I fixed App.jsx myself (single router, kept my navbartesting2 Navbar instead of the global nav, combined routes) and also index.css (repaired the comment block). Claude then verified the result: vite build passes and eslint on App.jsx and main.jsx shows no errors. Backend startup was not tested because backend dependencies are not installed. Known open issue for the group: backend routes have no /api prefix but api.js calls /api/... . AI did not write or choose any application logic. Stego/AI_LOG.md agreed as the single canonical AI log. 
+Daanyaal : 4 October 2026 : 
+    ChatGPT 6.1 SOl -
+        How to setup up and create a screen in jsx.
 
-22 October 2026 (continued) 
-Group Member : Meghane Jansen 
-AI Tool : Claude Code (VS Code extension), model Claude Opus 5.5 
-Purpose : Used Claude Code to bring the updated main (with Daanyaal's merge) into my navbartesting2 branch. It ran git merge --no-ff --no-commit origin/main on navbartesting2, which conflicted in App.jsx and BudgetSetup.jsx. BudgetSetup.jsx was only an extra closing brace: Claude tested both options and kept main's single brace because mine caused a parsing error (my Navbar and Gugu's createBudget code both kept). For App.jsx I made the routing decisions: / opens Login, keep Daanyaal's /transactions, /budgets and /categories routes, keep the /Home and /CreateAccount aliases, keep the pb-20 wrapper, and do not remove any navbar code. Claude then combined the existing route lines from both branches into one App.jsx following my decisions. No new routes or logic were written. 
-Outcome : All merge conflicts resolved. eslint on App.jsx shows no errors and vite build passes. With my approval the merge was committed on navbartesting2 and pushed to origin/navbartesting2, then my stashed local changes were restored with git stash pop. Noted that BudgetSetup.jsx still has an old inline nav as well as my Navbar component (left unchanged as I asked). 
+Daanyaal : 6 October 2026 : 
+    ChatGPT 6.1 SOl -
+        How to install the different packages and dependencies
 
-22 October 2026 (continued) 
-Group Member : Meghane Jansen 
-AI Tool : Claude Code (VS Code extension), model Claude Opus 5.5 
-Purpose : Restored my stashed local changes after the merge. git stash pop conflicted only in stego/yarn.lock (auto-generated; my local copy had no new packages, only re-resolved entries). With my approval Claude kept the committed yarn.lock and restored my AccountDashboard.jsx and Navbar.jsx changes as uncommitted work. 
-Outcome : My local changes are back on navbartesting2. vite build passes. eslint found an existing bug that was already on main and was not caused by the merge: AccountDashboard.jsx calls navigate() in the AccountDashboard component (lines 96 and 102) but navigate is only declared inside Header. The Add Account and Budget Dashboard buttons will crash until the group fixes it. Claude did not change this code. The stash and backup tag were kept until I have checked everything. 
+Daanyaal : 6 October 2026 : 
+    ChatGPT 6.1 SOl -
+        What is the difference between PGlite and SQLite
+Daanyaal : 6 October 2026 : 
+    ChatGPT 6.1 SOl -
+        Asked ChatGPT to refine my backend code and debug it.
 
-22 October 2026 (continued) 
-Group Member : Meghane Jansen 
-AI Tool : Claude Code (VS Code extension), model Claude Opus 5.5 
-Purpose : Asked Claude to help install the backend dependencies and test the app. npm install failed because better-sqlite3 11.x has no prebuilt binary for Node 24 and needed Visual Studio C++ build tools. Claude found that better-sqlite3 is no longer used (db.js uses sqlite3) and explained the options (Build Tools, Node 22 LTS via nvm-windows, or removing the unused dependency). I ran npm uninstall better-sqlite3 in backend myself. Claude confirmed sqlite3 works on Node 24, so no Node switch was needed. Claude then started the backend and tested the endpoints. 
-Outcome : Backend starts and connects to SQLite. GET / and GET /accounts, /categories, /budgets, /transactions and /users return 200 (empty tables, database not seeded). Frontend dev server serves the app. Open issues for the group: every /api/... path that api.js calls returns 404 because the backend routes have no /api prefix, and the AccountDashboard navigate bug is still there. With my approval Claude undid an accidental root yarn.lock change, then committed and pushed my work to navbartesting2. I will open the pull request into main on GitHub myself. 
+Daanyaal : 6 October 2026 : 
+    ChatGPT 6.1 SOl -
+        To help create the backend files.
 
+Daanyaal : 15 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to resolve complex merge conflicts between DAANYAAL branch and main locally in VS Code Desktop : provided step-by-step instructions to fetch origin, merge main, use VS Code Source Control to accept both changes for App.jsx and App.css, and complete the merge commit.
+
+Daanyaal : 16 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to fix over 10,000 pending changes appearing in VS Code Source Control : identified that Git was initialized in the Windows user root directory (C:\Users\daany), instructed to delete the hidden .git directory, re-initialize tracking in C:\dev-project, and untrack node_modules.
+
+Daanyaal : 19 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        Downloaded a zip file of my branch and ask Gemini to help me add or remove code and make my code run better
+
+Daanyaal : 20 October 2026 : 
+    Gemini (Gemini 2.0 Pro) -
+        how to resolve merge conflicts section-by-section in main.jsx, package.json, and yarn.lock : provided specific resolution decisions for component imports, Tailwind v4/shadcn theme definitions, and dependency lockfile entries.
+
+Daanyaal : 17 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to create backend database tables for accounts, budgets, categories, and transactions : provided DDL statements in db.js with foreign key constraints enabled using PRAGMA foreign_keys = ON.
+
+Daanyaal : 21 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to fix [] empty array returns on API routes and populate seed data : provided backend/seed.js script using db.serialize() and sequential inserts for test accounts, categories, budgets, and transactions.
+
+Daanyaal : 22 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to fix Express 404 Not Found error when accessing /categories or /transactions in Codespaces : identified that API route handlers were declared inside the root app.get('/') callback, and refactored route definitions to top-level Express handlers.
+
+Daanyaal : 22 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to fix HTTP ERROR 401 Unauthorized in GitHub Codespaces on port 5000 : instructed setting port 5000 visibility to Public in VS Code Ports tab and updating app.listen to bind to 0.0.0.0.
+
+Daanyaal : 22 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to fix node-gyp Visual Studio C++ compilation errors for better-sqlite3 on Windows : identified runtime mismatch on Node v24, instructed removing better-sqlite3 from package.json, and installing the pre-compiled sqlite3 package.
+
+Daanyaal : 22 October 2026 : 
+    Gemini (Gemini 2.0 Pro) -
+         how to organize Express server routes following Full Stack Open patterns : refactored monolithic index.js routes into a modular Express router in routes/api.js mounted under /api.
+
+Daanyaal : 23 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to resolve SQLITE_CONSTRAINT foreign key failures and users.email NOT NULL errors during seeding : updated    seed.js to include required user fields (email, password), re-ordered sequential deletions, and instructed deleting cached stego.sqlite file to rebuild schema.
+
+Daanyaal : 23 October 2026 : 
+    Gemini (Gemini 2.0 Pro) -
+        how to fix useContext null hook crash from lucide-react in bottom navigation bar : added resolve.dedupe: ['react', 'react-dom'] to vite.    config.js and cleared node_modules/.vite cache to force a single React instance.
+
+Daanyaal : 23 October 2026 : 
+    Gemini (Gemini 2.0 Pro) - 
+        how to structure frontend API service calls and handle 204 No Content HTTP status : verified api.js service module using async/await and fetch, added safe return for 204 responses on deleteTransaction, and aligned with Full Stack Open conventions.
+
+Daanyaal: 23 October 2026: 
+    Claude Sonnet 5.5
+        Used for debugging the code and making final changes to ensure to runs properly.

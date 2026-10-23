@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import TransactionDashboard from './components/transactiondashboard';
+import TransactionDashboard from './components/TransactionDashboard';
 import BudgetDashboard from './components/Budgetdashboard';
 import CategoriesOverview from './components/CategoriesOverview';
 import BudgetSetup from './BudgetSetup';

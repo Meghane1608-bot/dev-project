@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, Home, User, CreditCard, Calculator } from 'lucide-react';
-import { fetchTransactions, createTransaction, deleteTransaction } from '../api';
+import { fetchTransactions, createTransaction, deleteTransaction, fetchAccounts } from '../api';
 import './dashboard.css';
 
 export default function TransactionDashboard() {
   const [transactions, setTransactions] = useState([]);
+  const [accountsList, setAccountsList] = useState([]); // real accounts from the database
+  const [accountId, setAccountId] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -13,7 +15,6 @@ export default function TransactionDashboard() {
   const [type, setType] = useState('Income');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState('2026-08-19');
-  const [account, setAccount] = useState('Savings Account');
   const [category, setCategory] = useState('Income');
   const [description, setDescription] = useState('');
 
@@ -26,6 +27,7 @@ export default function TransactionDashboard() {
 
   useEffect(() => {
     loadTransactions();
+    loadAccounts();
   }, []);
 
   async function loadTransactions() {
@@ -42,6 +44,16 @@ export default function TransactionDashboard() {
     }
   }
 
+  async function loadAccounts() {
+    try {
+      const data = await fetchAccounts();
+      setAccountsList(data || []);
+      if (data && data.length > 0) setAccountId(data[0].account_id);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   const handleAddTransaction = async (e) => {
     e.preventDefault();
     try {
@@ -49,10 +61,12 @@ export default function TransactionDashboard() {
         type,
         amount: parseFloat(amount),
         date,
-        account,
+        account_id: Number(accountId),
         category,
         description,
       });
+      setAmount('');
+      setDescription('');
       setShowAddForm(false);
       loadTransactions();
     } catch (err) {
@@ -161,12 +175,13 @@ export default function TransactionDashboard() {
                 Accounts
               </label>
               <select
-                value={account}
-                onChange={(e) => setAccount(e.target.value)}
+                value={accountId}
+                onChange={(e) => setAccountId(e.target.value)}
                 className="w-full bg-stone-200 border-none rounded px-3 py-2 text-stone-800 focus:outline-none focus:ring-2 focus:ring-[#166534]"
               >
-                <option value="Savings Account">Savings Account</option>
-                <option value="Current Account">Current Account</option>
+                {accountsList.map((a) => (
+                  <option key={a.account_id} value={a.account_id}>{a.account_name}</option>
+                ))}
               </select>
             </div>
 
@@ -316,8 +331,9 @@ export default function TransactionDashboard() {
               className="w-full bg-[#E2E8F0] border-none rounded px-3 py-2 text-stone-800"
             >
               <option value="All">All</option>
-              <option value="Savings Account">Savings Account</option>
-              <option value="Current Account">Current Account</option>
+              {accountsList.map((a) => (
+                <option key={a.account_id} value={a.account_name}>{a.account_name}</option>
+              ))}
             </select>
           </div>
         </div>

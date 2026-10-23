@@ -1,4 +1,5 @@
-//
+# AI Log
+
 10 October:
 
 11 October:

@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {Button} from "@/components/ui/button"
-
+//import {createAccount} from './services/api'
 
 
 const Header = () => {
@@ -88,7 +88,7 @@ const AddAccount = ({onAdd}) => {
     setSaving(true) //turn on saving 
     setError('')
     try {
-        await onAdd({
+        await createAccount({
             id : Date.now() ,
             name: form.accountName,
             type: form.accountType,
@@ -98,16 +98,18 @@ const AddAccount = ({onAdd}) => {
         //await tells it to wait until App has finished saving before continuing
         
         setMessage('Account added successfully!')
-        setForm(emptyForm)
         setTimeout(() => 
             setMessage(''), 3000) //hide the message after 3 secs
+        setForm(emptyForm)
+        navigate('/AccountDashboard') //handle create should navigate to acc dasboard after saving
+        
         } catch (err) { //if anything failed , catch will show an error but leaves form as is so user doesnt lose their input 
-            setError('Failed to add account. Please try again.') 
+            setError(err.response?.data?.error|| 'Failed to add account. Please try again.') 
         } finally {
             setSaving(false)
         }
     }
-      //handle create should also navigate to acc dasboard after saving  
+        
 
 
 

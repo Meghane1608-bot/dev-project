@@ -13,7 +13,7 @@ import {
   SelectLabel
 } from "@/components/ui/select"
 import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
-import './BudgetSetup.css'
+import "./BudgetSetup.css"
 import { createBudget } from './api'
 
 const Header = ({onBack}) => {
@@ -172,7 +172,7 @@ const [addedCategories, setAddedCategories] = useState([])
     } catch (err) {
       console.error('createBugdet failed:', err)
       setMessage(
-        err?.response?.data?.message ||
+        err?.response?.data?.error ||
         err.message||
         'Failed to save budget.Please try again'
       )
@@ -309,7 +309,7 @@ const [addedCategories, setAddedCategories] = useState([])
           
 
           {/*if the form isnt Complete*/}
-          {!isFormComplete || isDoneDisabled && (
+          {(!isFormComplete || isDoneDisabled) && (
             <div className="text-sm text-muted-foreground col-span-2">
               <ul>     
                 {!isFormComplete && (<li> Fill in all fields marked * to enable Add.</li>)}
@@ -352,21 +352,7 @@ const [addedCategories, setAddedCategories] = useState([])
         
       </main>
 
-      {/*bottom navigation bar*/}
-      <nav className="bottom-nav">
-        <button type="button" className="nav-icon-btn">
-          <Home className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <User className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <CreditCard className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <Calculator className="nav-icon" />
-        </button>
-      </nav>
+      
       {/*The navbar component that is functional*/}
       <Navbar/>
     </div>

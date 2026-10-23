@@ -1,11 +1,11 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
-import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
+import { ChevronLeft } from 'lucide-react'
 import {useState, useEffect} from 'react'
 import { Button } from '@/components/ui/button'
 import {Card , CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 import { fetchAccounts } from './api';
-
+import "./index.css"
 
 const Header = () => {
   const navigate = useNavigate() //initialise navigate 
@@ -33,6 +33,7 @@ const sum =(list) => list.reduce((total,acc) => total + acc.balance,0)
 const AccountDashboard = () => {
      //addAccount writes & collects and sends them to be saved
      //accDashboard reads them from the database  
+     const navigate = useNavigate()
      const [accounts, setAccounts] = useState([]) //holds the list of accounts
     const [loading,setLoading]= useState(true) 
     const [error, setError]= useState('')
@@ -53,8 +54,8 @@ useEffect(() => {
 }, []) 
 
 //filter only the current accounts and use reduce to add up the balances 
-const currentTotal = sum((accounts || []).filter(acc => acc.type === 'current')); //sum of balances where type is current meghane changed this line of code because caused crash
-const savingsTotal = sum((accounts || []).filter(acc => acc.type === 'savings')); //sum of balances where type is savings meghane changed this line of code because caused crash 
+const currentTotal = sum((accounts || []).filter(acc => acc.account_type === 'current')); //sum of balances where type is current meghane changed this line of code because caused crash
+const savingsTotal = sum((accounts || []).filter(acc => acc.account_type === 'savings')); //sum of balances where type is savings meghane changed this line of code because caused crash 
 const netWorth = currentTotal + savingsTotal //total net worth = current total  + savings acc total 
  
    if (loading) return <p > Loading...</p>
@@ -63,7 +64,7 @@ const netWorth = currentTotal + savingsTotal //total net worth = current total  
     return(
 <div>
     <Header/>
-
+ <div className="account-cards-wrapper">
     <Card className="account-card">
         <CardHeader>
         <CardTitle> Total net worth </CardTitle>
@@ -90,6 +91,7 @@ const netWorth = currentTotal + savingsTotal //total net worth = current total  
             {formatMoney(savingsTotal)}
         </CardContent>
     </Card>
+</div> 
 
     <Button 
     type="button" 
@@ -105,7 +107,7 @@ const netWorth = currentTotal + savingsTotal //total net worth = current total  
  
 
 
-        {/*navigation bar */}
+        {/*navigation bar 
 <nav className="bottom-nav">
         <button type="button" className="nav-icon-btn">
           <Home className="nav-icon" />
@@ -119,7 +121,7 @@ const netWorth = currentTotal + savingsTotal //total net worth = current total  
         <button type="button" className="nav-icon-btn">
           <Calculator className="nav-icon" />
         </button>
-      </nav>
+      </nav>*/}
       <Navbar/>
       </div> //outermost div for account dashboard component 
   

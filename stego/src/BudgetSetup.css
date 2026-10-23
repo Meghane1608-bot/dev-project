@@ -189,7 +189,7 @@
 /* Action Buttons */
 .action-buttons-wrapper {
   display: flex;
-  items-align: flex-end;
+  align-items: flex-end;
   justify-content: flex-start;
   gap: 1rem;
   margin-top: 1rem;
@@ -250,32 +250,5 @@
   background-color: #E08E0B;
 }
 
-/* Navigation Bar */
-.bottom-nav {
-  width: 100%;
-  background-color: #1C5B65;
-  border-radius: 1rem;
-  padding: 1rem 3rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1.5rem;
-  box-sizing: border-box;
-}
 
-.nav-icon-btn {
-  background: transparent;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
 
-.nav-icon-btn:hover {
-  opacity: 0.8;
-}
-
-.nav-icon {
-  width: 2rem;
-  height: 2rem;
-}

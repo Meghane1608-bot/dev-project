@@ -10,6 +10,8 @@ const seedDatabase = async () => {
         db.run('DELETE FROM categories');
         db.run('DELETE FROM accounts');
         db.run('DELETE FROM users');
+        db.run('DELETE from users');
+        db.run('DELETE FROM sqlite_sequence');
 
         // 0. Seed Users (Including email and password to satisfy NOT NULL constraints)
         db.run(`INSERT INTO users (username, email, password) VALUES 
@@ -24,7 +26,7 @@ const seedDatabase = async () => {
 
         // 1. Seed Accounts
         db.run(`INSERT INTO accounts (user_id, account_name, account_type, balance, overdraft_limits) VALUES
-            (1, 'Checking Account', 'checking', 1000.00, 500.00),
+            (1, 'Current Account', 'current', 1000.00, 500.00), 
             (1, 'Savings Account', 'savings', 5000.00, 0.00),
             (2, 'Business Account', 'business', 2000.00, 1000.00)`, (err) => {
             if (err) {
@@ -37,10 +39,11 @@ const seedDatabase = async () => {
         // 2. Seed Categories
         db.run(`INSERT INTO categories (category_type, category_name) VALUES
             ('income', 'Salary'),
-            ('income', 'Freelance'),
+            ('income', 'Bursary stipend'),
             ('expense', 'Groceries'),
-            ('expense', 'Utilities'),
-            ('expense', 'Entertainment')`, (err) => {
+            ('expense', 'Transport'),
+            ('expense', 'Entertainment'),
+            ('income', 'NSFAS')`,  (err) => {
             if (err) {
                 console.error('Error seeding categories:', err.message);
             } else {
@@ -61,10 +64,11 @@ const seedDatabase = async () => {
         });
 
         // 4. Seed Transactions
+        //expenses should be stored as negative amnts so dashboard can tell inc from exp
         db.run(`INSERT INTO transactions (user_id, account_id, category_id, amount, transaction_date, description) VALUES
             (1, 1, 1, 3000.00, '2024-01-15', 'January Salary'),
-            (1, 1, 3, 150.00, '2024-01-20', 'Grocery Shopping'),
-            (2, 2, 2, 1500.00, '2024-01-10', 'Freelance Project')`, (err) => {
+            (1, 1, 3, -150.00, '2024-01-20', 'Grocery Shopping'),
+            (2, 2, 2, 1500.00, '2024-01-10', 'Bursary stipend payment')`, (err) => {
             if (err) {
                 console.error('Error seeding transactions:', err.message);
             } else {

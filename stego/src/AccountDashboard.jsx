@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
-import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
+import { ChevronLeft } from 'lucide-react'
 import {useState, useEffect} from 'react'
 import { Button } from '@/components/ui/button'
 import {Card , CardContent, CardHeader, CardTitle} from '@/components/ui/card'
@@ -64,7 +64,7 @@ const netWorth = currentTotal + savingsTotal //total net worth = current total  
     return(
 <div>
     <Header/>
-
+ <div className="account-cards-wrapper">
     <Card className="account-card">
         <CardHeader>
         <CardTitle> Total net worth </CardTitle>
@@ -91,6 +91,7 @@ const netWorth = currentTotal + savingsTotal //total net worth = current total  
             {formatMoney(savingsTotal)}
         </CardContent>
     </Card>
+</div> 
 
     <Button 
     type="button" 

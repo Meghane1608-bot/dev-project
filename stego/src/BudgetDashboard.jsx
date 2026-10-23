@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { ChevronLeft, Home, User, CreditCard, Calculator } from 'lucide-react'
-import './BudgetDashboard.css'
+import Navbar from './Navbar' 
+import { ChevronLeft} from 'lucide-react'
+import './index.css'
 import Savings from './Savings'
 import {useState, useEffect} from 'react'
 import { fetchBudgets, fetchTransactions } from './api'
@@ -37,7 +38,7 @@ const budgetMonth = location.state?.budgetPeriod || 'January' //doesnt display y
 
 const [items,setItems] = useState([])
 const [budgetMonth, setBudgetMonth] = useState('')
-const [transactions, setTransactions] = useSate([])
+const [transactions, setTransactions] = useState([])
 const [loading, setLoading] =useState(true)
 const [error, setError] = useState(null) 
 
@@ -90,19 +91,19 @@ useEffect( () => {
   //actual totals from transactions filtered by budgetMonth
   const thisMonthsTransactions = transactions.filter((t) => {
     if (!t.date) return false 
-  const tMonth = new Date(t.date) .toLocaleString('', 
+  const tMonth = new Date(t.date) .toLocaleString('en-ZA', 
       {month: 'long'}
     ) 
     return tMonth.toLowerCase()=== budgetMonth.toLowerCase()}
   )
 
   const received= thisMonthsTransactions
-  .filter(() => t.type ==='Income' || t.amount>0)
-  .reduce((acc,curr) => acc+ Maths.abs(Number(curr.amount||0)), 0)
+  .filter((t) => t.type ==='Income' || t.amount>0)
+  .reduce((acc,curr) => acc+ Math.abs(Number(curr.amount||0)), 0)
 
   const totalSpent = thisMonthsTransactions
-  .filter(() => t.type === 'Expense'|| t.amount<0)
-  .reduce((acc,curr) => acc + Maths.abs(Number(curr.amount || 0)) ,0)
+  .filter((t) => t.type === 'Expense'|| t.amount<0)
+  .reduce((acc,curr) => acc + Math.abs(Number(curr.amount || 0)) ,0)
 
   const leftToSpend=totalExpenditure-totalSpent
 
@@ -115,7 +116,7 @@ let expenditureList
     <li key={index} className="category-row" > 
        <span className="category-name" > {item.categoryName || item.category} </span>
        <span className="category-amount" > 
-        R{Number(item.limitAmount || item.amount || 0).toLocaleString()}
+        R{Number(item.limitAmount || item.amount || 0).toLocaleString('en-ZA',{minimumFractionDigits:2, maximumFractionDigits:2})}
        </span>
     </li>
     ) ) } 
@@ -134,7 +135,7 @@ let expenditureList
       <li key={index} className="category-row" > 
       <span className="category-name"> {item.categoryName || item.category}</span>
       <span className="category-amount" >
-        R{Number(item.expectedIncome || item.amount || 0).toLocaleString()}
+        R{Number(item.expectedIncome || item.amount || 0).toLocaleString('en-ZA',{minimumFractionDigits:2, maximumFractionDigits:2})}
       </span>
       </li>
     )
@@ -151,6 +152,9 @@ let expenditureList
   return (
     <div className="budget-page-container">
       <Header />
+      {loading && <p>Loading...</p>}
+{error && <p role="alert">{error}</p>}
+
 <div className="dashboard-grid-container" > 
       <main className="budget-main-card">
         <h2 className="page-subtitle">  {budgetMonth} Budget Overview:</h2>
@@ -165,7 +169,7 @@ let expenditureList
               <span className="label-spending-limits"> spending limits</span>
               
              </div>
-
+ 
              </div>{/*section header div*/}
        {expenditureList}
 
@@ -206,14 +210,14 @@ let expenditureList
    <div className="side-card"> 
      <div className="side-card-title"> Left to spend:</div>
     <div className="stat-amount-large">
-      R {leftToSpend.toLocaleString()}
+      R {leftToSpend.toLocaleString("en-ZA", {minimumFractionDigits:2,maximumFractionDigits:2})}
     </div>
    </div> {/*outermost div*/}
 
    <div className="side-card">
     <div className="side-card-title" > Income received</div>
       <div className="stat-amount-large">
-        R {received.toLocaleString()} of R{''}{totalExpectedIncome.toLocaleString()}
+        R {received.toLocaleString("en-ZA", {minimumFractionDigits:2, maximumFractionDigits:2})} of R{totalExpectedIncome.toLocaleString("en-ZA",{minimumFractionDigits:2,maximumFractionDigits:2})}
         </div>
     </div>
     
@@ -233,20 +237,9 @@ let expenditureList
     
 
 
-      <nav className="bottom-nav">
-        <button type="button" className="nav-icon-btn">
-          <Home className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <User className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <CreditCard className="nav-icon" />
-        </button>
-        <button type="button" className="nav-icon-btn">
-          <Calculator className="nav-icon" />
-        </button>
-      </nav>
+      
+       {/* The navbar componet that now makes the navbar functional and can navigate*/} 
+      <Navbar/> 
     </div>
   )
 }

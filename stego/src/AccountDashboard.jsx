@@ -5,7 +5,7 @@ import {useState, useEffect} from 'react'
 import { Button } from '@/components/ui/button'
 import {Card , CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 import { fetchAccounts } from './api';
-import "./Accounts.css"
+import "./index.css"
 
 const Header = () => {
   const navigate = useNavigate() //initialise navigate 

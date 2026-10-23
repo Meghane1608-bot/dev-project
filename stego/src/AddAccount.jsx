@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select";
 import {Button} from "@/components/ui/button"
 import {createAccount} from './api'
-import "./Accounts.css"
+import "./index.css"
 
 const Header = () => {
   const navigate = useNavigate() //initialise navigate 

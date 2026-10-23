@@ -13,7 +13,7 @@ import {
   SelectLabel
 } from "@/components/ui/select"
 import { ChevronLeft, Home, User, CreditCard,  Calculator  } from 'lucide-react'
-import './BudgetSetup.css'
+import "./index.css"
 import { createBudget } from './api'
 
 const Header = ({onBack}) => {

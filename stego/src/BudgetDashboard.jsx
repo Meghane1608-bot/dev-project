@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import Navbar from './Navbar' 
 import { ChevronLeft} from 'lucide-react'
-import './BudgetDashboard.css'
+import './index.css'
 import Savings from './Savings'
 import {useState, useEffect} from 'react'
 import { fetchBudgets, fetchTransactions } from './api'

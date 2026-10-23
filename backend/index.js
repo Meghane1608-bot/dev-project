@@ -115,20 +115,69 @@ app.delete('/accounts/:id', (req, res) => {
 });
 
 // ================= BUDGETS API =================
-app.get('/budgets', (req, res) => {
-  db.all('SELECT * FROM budgets', [], (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
-  });
+app.get('/budgets', async (req, res, next) => {
+  const query =`SELECT b.budget_id, b.budget_amount , b.start_date,c.category_name , c.category_type
+  FROM budgets b
+  JOIN categories c ON b.category_id =c.category_id
+  WHERE b.user_id = ?
+  ORDER BY b.budget_id`;
+  try {
+    const rows= await dbAll(query,[1]);
+    //group the rows into one budget per month
+    const grouped ={};
+    rows.forEach((row) => {
+      if (!grouped[row.start_date]){
+        const monthNumber = Number(row.start_date.slice(5,7));
+        grouped=[row.start_date] = {id:row.start_date,period:months[monthNumber-1], items:[]};
+      }
+      const isIncome = row.category_type === 'income';
+      grouped[row.start_date].items.push({
+        categoryName: row.category_name,
+        categoryType: isIncome ? 'Income': 'Expenditure',
+        expectedIncome: isIncome ? row.budget_amount:0,
+        limitAmount: isIncome ? 0: row.budget_amount,
+      });
+    });
+    res.json(Object.values(grouped)) //most recently saved
+  }catch(error){
+    next(error);
+  }
 });
 
-app.post('/budgets', (req, res) => {
-  const { user_id, category_id, budget_amount, start_date, end_date } = req.body;
-  const query = 'INSERT INTO budgets (user_id, category_id, budget_amount, start_date, end_date) VALUES (?, ?, ?, ?, ?)';
-  db.run(query, [user_id || 1, category_id, budget_amount, start_date, end_date], function(err) {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json({ status: 'success', budgetId: this.lastID });
-  });
+app.post('/budgets', async (req, res, next) => {
+  const { user_id, period, items } = req.body;
+  const userId = user_id|| 1;
+  
+  if (!period || !Array.isArray(items) || items.length === 0) {
+    return res.status(400).json( {error: 'period and items are required'})
+  }
+  const monthIndex = months.indexOf(period);
+  if (monthIndex===-1) {
+    return res.status(400).json({error:'Invalid budget period'})
+  }
+
+  //turn the month name into start and end dates 
+  const year= new Date().getFullYear();
+  const monthNumber = String(monthIndex+1).padStart(2,'0');
+  const lastDay = new Date(year, monthIndex +1, 0).getDate();
+  const start_date= `${year} - ${monthNumber}-01`;
+  const end_date= `${year} -${monthNumber} -${lastDay}`;
+
+  try {
+    for (const item of items) {
+      const isIncome = item.categoryType === 'Income';
+      const category_id = await findOrCreateCategory(item.categoryName, isIncome ? 'income': 'expense');
+      const budget_amount = isIncome ? item.expectedIncome: item.limitAmount;
+      await dbRun(
+  'INSERT INTO budgets (user_id, category_id, budget_amount, start_date, end_date) VALUES (?, ?, ?, ?, ?)',
+        [userId, category_id,budget_amount,start_date,end_date]
+      )
+    }
+    //send back period and items so budgetSetup can pass it to budgetDashboard
+    res.status(201).json({status:'success', period, items});
+  }catch(error) {
+    next(error);
+  }
 });
 
 app.delete('/budgets/:id', (req, res) => {

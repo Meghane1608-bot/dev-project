@@ -1,15 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import TransactionDashboard from './TransactionDashboard';
-import BudgetDashboard from './components/Budgetdashboard';
-import CategoriesOverview from './components/CategoriesOverview';
-import BudgetSetup from './BudgetSetup';
-import Category from './Category.jsx';
-import Overview from './Overview.jsx';
-import AddAccount from './AddAccount';
-import AccountDashboard from './AccountDashboard';
-import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import TransactionDashboard from './components/transactiondashboard';
+import TransactionDashboard from './TransactionDashboard';
 import BudgetSummary from './components/Budgetdashboard';
 import CategoriesOverview from './components/CategoriesOverview';
 import BudgetSetup from './BudgetSetup';
@@ -21,7 +11,7 @@ import ForgotPassword from './ForgotPassword.jsx';
 import AccountDashboard from './AccountDashboard.jsx';
 import AddAccount from './AddAccount.jsx';
 import Savings from './Savings.jsx';
-import './App.css'; // Import your CSS file for styling
+import './App.css';
 
 
 export default function App() {
